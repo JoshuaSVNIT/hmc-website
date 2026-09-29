@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+@theme {
+  /* Primary: Deep warm charcoal-teal — moves away from generic blue */
+  --color-primary-50:  #f0f4f8;
+  --color-primary-100: #d9e4ee;
+  --color-primary-200: #b0c8da;
+  --color-primary-300: #7da8be;
+  --color-primary-400: #4e869e;
+  --color-primary-500: #326780;
+  --color-primary-600: #255168;
+  --color-primary-700: #1d3f54;
+  --color-primary-800: #152e3e;
+  --color-primary-900: #0f2030;
+  --color-primary-950: #09151f;
+  --color-primary: #255168;
+
+  /* Urgent — red stays exactly as-is (emergency role) */
+  --color-urgent-50:  #fef2f2;
+  --color-urgent-100: #fee2e2;
+  --color-urgent-500: #ef4444;
+  --color-urgent-600: #dc2626;
+  --color-urgent-700: #b91c1c;
+  --color-urgent: #ef4444;
+
+  /* CTA — yellow stays exactly as-is (action/highlight role) */
+  --color-cta-50:  #fefce8;
+  --color-cta-100: #fef9c3;
+  --color-cta-400: #facc15;
+  --color-cta-500: #eab308;
+  --color-cta-600: #ca8a04;
+  --color-cta: #eab308;
+}
+
+:root {
+  --background: #f4f6f8;
+  --foreground: #0f1e28;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+/* ─── Mess menu attention glow ──────────────────────────────────────────────── */
+/* Slow border/shadow pulse. Disabled entirely for prefers-reduced-motion.      */
+@keyframes mess-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
+    border-color: rgb(253 230 138); /* amber-200 */
+  }
+  50% {
+    box-shadow: 0 0 18px 6px rgba(251, 191, 36, 0.30);
+    border-color: rgb(245 158 11); /* amber-500 */
+  }
+}
+
+.animate-mess-glow {
+  animation: mess-glow 3.5s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-mess-glow {
+    animation: none;
+  }
+}
+
+/* Print utility specified in PROJECT_SPEC.md section 7 */
+@media print {
+  .no-print,
+  nav,
+  footer,
+  button,
+  .print-hide {
+    display: none !important;
+  }
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+}
