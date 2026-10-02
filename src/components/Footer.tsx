@@ -11,11 +11,10 @@ export default function Footer() {
 
   return (
     <footer
-      className="no-print border-t mt-auto"
+      className="no-print border-t mt-auto text-slate-400"
       style={{
         backgroundColor: "var(--color-ink)",
-        borderColor: "rgba(255,255,255,0.07)",
-        color: "rgba(243,241,235,0.5)",
+        borderColor: "rgba(255,255,255,0.08)",
       }}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
@@ -24,31 +23,28 @@ export default function Footer() {
           <div className="space-y-3">
             <div className="flex items-center gap-2.5">
               <div
-                className="w-8 h-8 rounded flex items-center justify-center font-bold text-sm shrink-0"
+                className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 shadow-xs"
                 style={{
                   backgroundColor: "var(--color-accent-primary)",
-                  color: "var(--color-ink)",
+                  color: "#0B0F17",
                   fontFamily: "var(--font-ibm-plex-mono), monospace",
                 }}
               >
                 SV
               </div>
               <span
-                className="font-bold text-base"
-                style={{
-                  color: "var(--color-paper)",
-                  fontFamily: "var(--font-space-grotesk), system-ui",
-                }}
+                className="font-bold text-base text-white tracking-tight"
+                style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
               >
                 SV Bhavan HMC
               </span>
             </div>
-            <p className="text-sm leading-relaxed">
+            <p className="text-xs sm:text-sm leading-relaxed text-slate-400">
               Swami Vivekanand Bhavan Hostel Management Committee, SVNIT Surat.
               Dedicated to prompt complaint resolution and transparent
               communication with hostel residents.
             </p>
-            <p className="text-xs" style={{ color: "rgba(243,241,235,0.3)" }}>
+            <p className="text-xs text-slate-500">
               SVNIT Surat, Gujarat — 395007
             </p>
           </div>
@@ -56,15 +52,12 @@ export default function Footer() {
           {/* Col 2: Complaint Services */}
           <div>
             <h3
-              className="text-sm font-semibold mb-3"
-              style={{
-                color: "var(--color-paper)",
-                fontFamily: "var(--font-space-grotesk), system-ui",
-              }}
+              className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3"
+              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               Complaint Services
             </h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm">
               {[
                 { href: "/raise-ticket", label: "Raise a Ticket" },
                 { href: "/track-ticket", label: "Track Ticket Status" },
@@ -74,8 +67,7 @@ export default function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="transition-colors hover:text-white"
-                    style={{ color: "rgba(243,241,235,0.55)" }}
+                    className="text-slate-300 hover:text-amber-400 transition-colors"
                   >
                     {l.label}
                   </Link>
@@ -87,20 +79,16 @@ export default function Footer() {
           {/* Col 3: Hostel Life */}
           <div>
             <h3
-              className="text-sm font-semibold mb-3"
-              style={{
-                color: "var(--color-paper)",
-                fontFamily: "var(--font-space-grotesk), system-ui",
-              }}
+              className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3"
+              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               Hostel Life
             </h3>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm">
               <li>
                 <Link
                   href="/notices"
-                  className="transition-colors hover:text-white"
-                  style={{ color: "rgba(243,241,235,0.55)" }}
+                  className="text-slate-300 hover:text-amber-400 transition-colors"
                 >
                   Important Notices
                 </Link>
@@ -108,8 +96,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/gallery"
-                  className="transition-colors hover:text-white"
-                  style={{ color: "rgba(243,241,235,0.55)" }}
+                  className="text-slate-300 hover:text-amber-400 transition-colors"
                 >
                   Event Photo Gallery
                 </Link>
@@ -117,8 +104,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="transition-colors hover:text-white"
-                  style={{ color: "rgba(243,241,235,0.55)" }}
+                  className="text-slate-300 hover:text-amber-400 transition-colors"
                 >
                   About the HMC Team
                 </Link>
@@ -127,8 +113,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/events"
-                    className="transition-colors hover:text-white"
-                    style={{ color: "rgba(243,241,235,0.55)" }}
+                    className="text-slate-300 hover:text-amber-400 transition-colors"
                   >
                     Upcoming Events
                   </Link>
@@ -138,8 +123,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/leaderboard"
-                    className="transition-colors hover:text-white"
-                    style={{ color: "rgba(243,241,235,0.55)" }}
+                    className="text-slate-300 hover:text-amber-400 transition-colors"
                   >
                     Gaming Leaderboard
                   </Link>
@@ -148,9 +132,9 @@ export default function Footer() {
               <li>
                 <Link
                   href="/contacts"
-                  className="transition-colors font-medium"
-                  style={{ color: "var(--color-accent-urgent-300)" }}
+                  className="text-rose-400 hover:text-rose-300 font-semibold transition-colors flex items-center gap-1.5"
                 >
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
                   Emergency Contacts
                 </Link>
               </li>
@@ -160,23 +144,19 @@ export default function Footer() {
           {/* Col 4: HMC Administration */}
           <div>
             <h3
-              className="text-sm font-semibold mb-3"
-              style={{
-                color: "var(--color-paper)",
-                fontFamily: "var(--font-space-grotesk), system-ui",
-              }}
+              className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3"
+              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               HMC Administration
             </h3>
-            <p className="text-xs mb-3" style={{ color: "rgba(243,241,235,0.35)" }}>
-              Restricted portal for authorized HMC members only.
+            <p className="text-xs text-slate-400 mb-3 leading-relaxed">
+              Restricted portal for authorized committee members and wardens.
             </p>
-            <ul className="space-y-2 text-sm">
+            <ul className="space-y-2 text-xs sm:text-sm">
               <li>
                 <Link
                   href="/admin"
-                  className="transition-colors hover:text-white"
-                  style={{ color: "rgba(243,241,235,0.55)" }}
+                  className="text-slate-300 hover:text-amber-400 transition-colors"
                 >
                   Admin Dashboard
                 </Link>
@@ -184,8 +164,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/admin/login"
-                  className="transition-colors hover:text-white"
-                  style={{ color: "rgba(243,241,235,0.55)" }}
+                  className="text-slate-300 hover:text-amber-400 transition-colors"
                 >
                   Member Login
                 </Link>
@@ -196,14 +175,11 @@ export default function Footer() {
 
         {/* Bottom bar */}
         <div
-          className="mt-8 pt-6 border-t flex flex-col sm:flex-row items-center justify-between text-xs gap-3"
-          style={{
-            borderColor: "rgba(255,255,255,0.06)",
-            color: "rgba(243,241,235,0.3)",
-          }}
+          className="mt-8 pt-6 border-t flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3"
+          style={{ borderColor: "rgba(255,255,255,0.06)" }}
         >
           <p>© {new Date().getFullYear()} Swami Vivekanand Bhavan HMC. All rights reserved.</p>
-          <p>Technical Secretary Project — Built with Next.js, Supabase &amp; Sanity</p>
+          <p>Technical Secretary Portal — SVNIT Surat</p>
         </div>
       </div>
     </footer>

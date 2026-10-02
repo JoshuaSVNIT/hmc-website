@@ -21,40 +21,39 @@ export default async function GalleryPage() {
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            Campus Life &amp; Events
+          </div>
           <h1
-            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Hostel Photo Gallery
           </h1>
-          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+          <p className="mt-2 text-base leading-relaxed text-slate-600">
             Celebrations, sports competitions, cultural gatherings, and campus
             memories from Swami Vivekanand Bhavan.
           </p>
         </div>
 
         {items.length === 0 ? (
-          <div
-            className="rounded border p-12 text-center"
-            style={{ backgroundColor: "#fff", borderColor: "rgba(31,27,22,0.12)" }}
-          >
-            <p className="text-base" style={{ color: "var(--color-ink-500)" }}>
+          <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-xs">
+            <p className="text-base font-semibold text-slate-600">
               No photo albums published yet.
             </p>
-            <p className="text-xs mt-1" style={{ color: "var(--color-ink-400)" }}>
+            <p className="text-xs mt-1 text-slate-400">
               Albums uploaded via Sanity Studio will appear here.
             </p>
           </div>
         ) : (
           <>
             <div
-              className="flex items-center justify-between gap-4 mb-6 text-xs"
+              className="flex items-center justify-between gap-4 mb-6 text-xs text-slate-600 font-semibold"
               style={{
                 fontFamily: "var(--font-ibm-plex-mono), monospace",
-                color: "var(--color-ink-500)",
               }}
             >
               <p>
@@ -66,11 +65,10 @@ export default async function GalleryPage() {
           </>
         )}
 
-        <div className="mt-12 pt-6 border-t" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
+        <div className="mt-12 pt-6 border-t border-slate-200">
           <Link
             href="/"
-            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
-            style={{ color: "var(--color-ink-600)" }}
+            className="text-sm font-semibold text-slate-600 hover:text-slate-900 hover:underline inline-flex items-center gap-1.5"
           >
             ← Back to Home
           </Link>

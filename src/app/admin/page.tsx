@@ -38,19 +38,19 @@ export default async function AdminPage() {
     >
       {/* Top bar */}
       <header
-        className="px-6 py-4 flex items-center justify-between border-b print:hidden"
+        className="px-6 py-4 flex items-center justify-between border-b print:hidden shadow-sm"
         style={{
-          backgroundColor: "var(--color-ink)",
+          backgroundColor: "#0B0F17",
           borderColor: "rgba(255,255,255,0.08)",
-          color: "var(--color-paper)",
+          color: "#ffffff",
         }}
       >
         <div className="flex items-center gap-3">
           <div
-            className="w-8 h-8 rounded flex items-center justify-center font-bold text-xs shrink-0"
+            className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 shadow-xs"
             style={{
-              backgroundColor: "var(--color-accent-secondary)",
-              color: "#fff",
+              backgroundColor: "var(--color-accent-primary)",
+              color: "#0B0F17",
               fontFamily: "var(--font-ibm-plex-mono), monospace",
             }}
           >
@@ -58,12 +58,12 @@ export default async function AdminPage() {
           </div>
           <div>
             <h1
-              className="text-base font-bold leading-tight"
+              className="text-base font-bold leading-tight text-white tracking-tight"
               style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               HMC Administrative Portal
             </h1>
-            <p className="text-xs" style={{ color: "rgba(243,241,235,0.5)" }}>
+            <p className="text-xs text-slate-400">
               Swami Vivekanand Bhavan
             </p>
           </div>
@@ -71,9 +71,8 @@ export default async function AdminPage() {
 
         <div className="flex items-center gap-4">
           <span
-            className="text-xs hidden sm:block"
+            className="text-xs hidden sm:block text-slate-400"
             style={{
-              color: "rgba(243,241,235,0.5)",
               fontFamily: "var(--font-ibm-plex-mono), monospace",
             }}
           >
@@ -83,12 +82,7 @@ export default async function AdminPage() {
             <button
               id="admin-logout-btn"
               type="submit"
-              className="text-xs font-semibold px-3 py-1.5 rounded border transition-colors cursor-pointer"
-              style={{
-                borderColor: "rgba(255,255,255,0.15)",
-                backgroundColor: "rgba(255,255,255,0.06)",
-                color: "var(--color-paper)",
-              }}
+              className="text-xs font-bold px-3 py-1.5 rounded-lg border transition-colors cursor-pointer border-white/20 bg-white/10 text-white hover:bg-white/20"
             >
               Sign out
             </button>
@@ -99,17 +93,16 @@ export default async function AdminPage() {
       <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-screen-2xl mx-auto">
         <div className="mb-6">
           <h2
-            className="text-2xl sm:text-3xl font-bold tracking-tight"
+            className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Complaint Tickets
           </h2>
-          <p className="text-sm mt-1" style={{ color: "var(--color-ink-500)" }}>
+          <p className="text-sm mt-1 text-slate-600">
             <span
-              className="font-semibold"
+              className="font-bold text-slate-900"
               style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
             >
               {tickets?.length ?? 0}
@@ -121,12 +114,7 @@ export default async function AdminPage() {
         {error ? (
           <div
             role="alert"
-            className="rounded border p-4 text-sm"
-            style={{
-              backgroundColor: "rgba(179,63,46,0.08)",
-              borderColor: "rgba(179,63,46,0.3)",
-              color: "var(--color-accent-urgent)",
-            }}
+            className="rounded-xl border p-4 text-sm bg-rose-50 border-rose-300 text-rose-800"
           >
             <strong>Failed to load tickets:</strong> {error.message}
           </div>

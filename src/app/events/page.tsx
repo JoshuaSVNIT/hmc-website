@@ -25,16 +25,19 @@ export default async function EventsPage() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            Hostel Activities
+          </div>
           <h1
-            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Hostel Events
           </h1>
-          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+          <p className="mt-2 text-base leading-relaxed text-slate-600">
             Competitions, festivals, sports tournaments, and student activities. Register directly
             using the linked registration forms.
           </p>
@@ -42,11 +45,10 @@ export default async function EventsPage() {
 
         <EventsList events={events} />
 
-        <div className="mt-12 pt-6 border-t" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
+        <div className="mt-12 pt-6 border-t border-slate-200">
           <Link
             href="/"
-            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
-            style={{ color: "var(--color-ink-600)" }}
+            className="text-sm font-semibold text-slate-600 hover:text-slate-900 hover:underline inline-flex items-center gap-1.5"
           >
             ← Back to Home
           </Link>

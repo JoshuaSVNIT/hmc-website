@@ -15,20 +15,22 @@ export default function RaiseTicketPage() {
       style={{ backgroundColor: "var(--color-paper)" }}
     >
       <div className="max-w-2xl mx-auto">
-        {/* Page header — clean, no pill badges, consistent heading */}
+        {/* Page header */}
         <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            Resident Support Portal
+          </div>
           <h1
-            className="text-3xl sm:text-4xl font-bold tracking-tight"
+            className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Raise a Complaint Ticket
           </h1>
           <p
-            className="mt-2 text-base leading-relaxed"
-            style={{ color: "var(--color-ink-500)" }}
+            className="mt-2 text-base leading-relaxed text-slate-600"
           >
             Submit your hostel complaint and receive an instant tracking code. The
             HMC maintenance team reviews and resolves issues according to urgency.
@@ -36,40 +38,24 @@ export default function RaiseTicketPage() {
         </div>
 
         {/* Form Card */}
-        <div
-          className="rounded border p-6 sm:p-8"
-          style={{
-            backgroundColor: "#ffffff",
-            borderColor: "rgba(31,27,22,0.12)",
-            boxShadow: "0 1px 3px rgba(31,27,22,0.05)",
-          }}
-        >
+        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
           <RaiseTicketForm />
         </div>
 
         {/* Advisory box */}
-        <div
-          className="mt-6 rounded border p-4 text-sm"
-          style={{
-            backgroundColor: "rgba(184,134,11,0.06)",
-            borderColor: "rgba(184,134,11,0.22)",
-            color: "var(--color-ink)",
-          }}
-        >
-          <span className="font-semibold">Note:</span> Before submitting LAN or
+        <div className="mt-6 rounded-xl border border-amber-300/80 bg-gradient-to-r from-amber-50/80 to-amber-50/40 p-4 text-sm text-slate-800 shadow-2xs">
+          <span className="font-bold text-amber-900">Note:</span> Before submitting LAN or
           electrical complaints, consider reviewing the{" "}
           <Link
             href="/guides/lan"
-            className="underline font-medium hover:text-amber-800"
-            style={{ color: "var(--color-accent-primary-600)" }}
+            className="underline font-bold text-amber-800 hover:text-amber-950"
           >
             LAN Guide
           </Link>{" "}
           or{" "}
           <Link
             href="/guides/electrical"
-            className="underline font-medium hover:text-amber-800"
-            style={{ color: "var(--color-accent-primary-600)" }}
+            className="underline font-bold text-amber-800 hover:text-amber-950"
           >
             Electrical Guide
           </Link>{" "}

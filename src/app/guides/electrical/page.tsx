@@ -16,49 +16,43 @@ export default function ElectricalGuidePage() {
       style={{ backgroundColor: "var(--color-paper)" }}
     >
       <div className="max-w-5xl mx-auto">
-        {/* Header — clean, no pill badges */}
+        {/* Header */}
         <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            Safety Protocols
+          </div>
           <h1
-            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Electrical Complaint &amp; Safety Guide
           </h1>
-          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+          <p className="mt-2 text-base leading-relaxed text-slate-600">
             Standard procedures, safety checks, and official reporting steps for room and common-area
             electrical maintenance.
           </p>
         </div>
 
         {/* Notice strip */}
-        <div
-          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded border p-3.5 sm:px-4 mb-5 text-xs sm:text-sm"
-          style={{
-            backgroundColor: "rgba(184,134,11,0.06)",
-            borderColor: "rgba(184,134,11,0.25)",
-            color: "var(--color-ink)",
-          }}
-        >
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50/80 p-3.5 sm:px-4 mb-5 text-xs sm:text-sm text-slate-900 shadow-2xs">
           <span>If the embedded PDF document does not render in your browser, use the direct links.</span>
           <div className="flex items-center gap-3 shrink-0">
             <a
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline font-semibold hover:text-amber-800"
-              style={{ color: "var(--color-accent-primary-600)" }}
+              className="underline font-bold text-amber-800 hover:text-amber-950"
             >
               Open in new tab ↗
             </a>
-            <span style={{ color: "rgba(31,27,22,0.2)" }}>|</span>
+            <span className="text-amber-300">|</span>
             <a
               href={pdfUrl}
               download="SVB-Electrical-Complaint-Guide.pdf"
-              className="underline font-semibold hover:text-amber-800"
-              style={{ color: "var(--color-accent-primary-600)" }}
+              className="underline font-bold text-amber-800 hover:text-amber-950"
             >
               Download PDF ↓
             </a>
@@ -66,26 +60,19 @@ export default function ElectricalGuidePage() {
         </div>
 
         {/* Embedded PDF */}
-        <div
-          className="rounded border overflow-hidden shadow-xs"
-          style={{
-            backgroundColor: "#fff",
-            borderColor: "rgba(31,27,22,0.12)",
-          }}
-        >
+        <div className="rounded-xl border border-slate-200/90 bg-white overflow-hidden shadow-sm">
           <iframe
             src={pdfUrl}
             title="Electrical Complaint Guide PDF"
             className="w-full min-h-[75vh] h-[80vh] border-0"
           >
-            <p className="p-6 text-center text-sm" style={{ color: "var(--color-ink-500)" }}>
+            <p className="p-6 text-center text-sm text-slate-600">
               Your browser does not support embedded PDFs. Please{" "}
               <a
                 href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline font-semibold"
-                style={{ color: "var(--color-accent-primary-600)" }}
+                className="underline font-bold text-amber-700"
               >
                 open the PDF in a new tab
               </a>
@@ -95,21 +82,15 @@ export default function ElectricalGuidePage() {
         </div>
 
         {/* Document action bar */}
-        <div
-          className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded border"
-          style={{
-            backgroundColor: "#fff",
-            borderColor: "rgba(31,27,22,0.1)",
-          }}
-        >
+        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded-xl border border-slate-200/90 bg-white shadow-xs">
           <div className="flex items-center gap-3">
-            <span className="text-xl">⚡</span>
+            <span className="text-2xl">⚡</span>
             <div>
-              <p className="text-sm font-semibold" style={{ color: "var(--color-ink)" }}>
+              <p className="text-sm font-bold text-slate-900">
                 SVB Electrical Maintenance Guide
               </p>
-              <p className="text-xs" style={{ color: "var(--color-ink-400)" }}>
-                Official SVNIT Estate section procedure
+              <p className="text-xs text-slate-500">
+                Official SVNIT Estate section safety protocol
               </p>
             </div>
           </div>
@@ -119,23 +100,14 @@ export default function ElectricalGuidePage() {
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-none text-center px-4 py-2 rounded border text-xs font-semibold transition-colors"
-              style={{
-                borderColor: "rgba(31,27,22,0.2)",
-                backgroundColor: "#fff",
-                color: "var(--color-ink)",
-              }}
+              className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-bold transition-colors shadow-2xs"
             >
               Open new tab ↗
             </a>
             <a
               href={pdfUrl}
               download="SVB-Electrical-Complaint-Guide.pdf"
-              className="flex-1 sm:flex-none text-center px-4 py-2 rounded text-xs font-semibold transition-colors"
-              style={{
-                backgroundColor: "var(--color-ink)",
-                color: "var(--color-paper)",
-              }}
+              className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-xs bg-slate-950 hover:bg-slate-900 text-amber-400"
             >
               Download PDF ↓
             </a>
@@ -143,21 +115,19 @@ export default function ElectricalGuidePage() {
         </div>
 
         {/* Footer CTAs */}
-        <div className="mt-10 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
+        <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
           <Link
             href="/"
-            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
-            style={{ color: "var(--color-ink-600)" }}
+            className="text-sm font-semibold text-slate-600 hover:text-slate-900 hover:underline inline-flex items-center gap-1.5"
           >
             ← Back to Home
           </Link>
 
           <div className="flex items-center gap-3 text-sm">
-            <span style={{ color: "var(--color-ink-400)" }}>Urgent electrical hazard or issue?</span>
+            <span className="text-slate-500">Urgent electrical hazard or issue?</span>
             <Link
               href="/raise-ticket"
-              className="font-semibold underline"
-              style={{ color: "var(--color-accent-primary-600)" }}
+              className="font-bold underline text-amber-700 hover:text-amber-800"
             >
               Raise an electrical ticket →
             </Link>

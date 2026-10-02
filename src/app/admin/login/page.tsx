@@ -21,41 +21,49 @@ export default function AdminLoginPage() {
 
   return (
     <main
-      className="min-h-screen flex items-center justify-center px-4 py-12"
-      style={{ backgroundColor: "var(--color-ink)" }}
+      className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
+      style={{ backgroundColor: "#0B0F17" }}
     >
-      <div className="w-full max-w-sm">
+      {/* Ambient gold glow behind login card */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "radial-gradient(circle at 50% 40%, rgba(245, 158, 11, 0.08) 0%, transparent 60%)",
+        }}
+      />
+
+      <div className="relative z-10 w-full max-w-sm">
         {/* Branding */}
         <div className="text-center mb-8">
           <div
-            className="inline-flex items-center justify-center w-12 h-12 rounded mb-3 font-bold text-base"
+            className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 font-bold text-base shadow-md shadow-amber-500/20"
             style={{
-              backgroundColor: "var(--color-accent-secondary)",
-              color: "#fff",
+              backgroundColor: "var(--color-accent-primary)",
+              color: "#0B0F17",
               fontFamily: "var(--font-ibm-plex-mono), monospace",
             }}
           >
             SV
           </div>
           <h1
-            className="text-2xl font-bold tracking-tight"
+            className="text-2xl font-bold tracking-tight text-white"
             style={{
-              color: "var(--color-paper)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             HMC Committee Login
           </h1>
-          <p className="mt-1 text-xs" style={{ color: "rgba(243,241,235,0.5)" }}>
+          <p className="mt-1 text-xs text-slate-400">
             Swami Vivekanand Bhavan administrative access
           </p>
         </div>
 
         {/* Card */}
         <div
-          className="rounded border p-6 sm:p-7"
+          className="rounded-2xl border p-6 sm:p-7 shadow-xl backdrop-blur-sm"
           style={{
-            backgroundColor: "rgba(255,255,255,0.03)",
+            backgroundColor: "rgba(255,255,255,0.04)",
             borderColor: "rgba(255,255,255,0.1)",
           }}
         >
@@ -63,12 +71,7 @@ export default function AdminLoginPage() {
             {error && (
               <div
                 role="alert"
-                className="rounded border p-3 text-xs"
-                style={{
-                  backgroundColor: "rgba(179,63,46,0.15)",
-                  borderColor: "rgba(179,63,46,0.35)",
-                  color: "var(--color-accent-urgent-200)",
-                }}
+                className="rounded-lg border p-3 text-xs bg-rose-950/50 border-rose-800 text-rose-300"
               >
                 {error}
               </div>
@@ -77,8 +80,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--color-paper)" }}
+                className="block text-xs font-semibold mb-1.5 text-slate-200"
               >
                 Account Email
               </label>
@@ -89,11 +91,11 @@ export default function AdminLoginPage() {
                 autoComplete="email"
                 required
                 placeholder="member@svbhavan.in"
-                className="w-full rounded border px-3 py-2 text-sm transition focus:outline-none focus:ring-1"
+                className="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
                 style={{
                   borderColor: "rgba(255,255,255,0.18)",
-                  backgroundColor: "rgba(0,0,0,0.25)",
-                  color: "var(--color-paper)",
+                  backgroundColor: "rgba(0,0,0,0.4)",
+                  color: "#ffffff",
                   fontFamily: "var(--font-ibm-plex-mono), monospace",
                 }}
               />
@@ -102,8 +104,7 @@ export default function AdminLoginPage() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-xs font-medium mb-1.5"
-                style={{ color: "var(--color-paper)" }}
+                className="block text-xs font-semibold mb-1.5 text-slate-200"
               >
                 Password
               </label>
@@ -114,11 +115,11 @@ export default function AdminLoginPage() {
                 autoComplete="current-password"
                 required
                 placeholder="••••••••"
-                className="w-full rounded border px-3 py-2 text-sm transition focus:outline-none focus:ring-1"
+                className="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
                 style={{
                   borderColor: "rgba(255,255,255,0.18)",
-                  backgroundColor: "rgba(0,0,0,0.25)",
-                  color: "var(--color-paper)",
+                  backgroundColor: "rgba(0,0,0,0.4)",
+                  color: "#ffffff",
                 }}
               />
             </div>
@@ -127,10 +128,10 @@ export default function AdminLoginPage() {
               id="admin-login-btn"
               type="submit"
               disabled={isPending}
-              className="w-full py-2.5 px-4 rounded text-xs font-semibold transition-colors mt-2 cursor-pointer disabled:opacity-50"
+              className="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all mt-2 cursor-pointer disabled:opacity-50 shadow-md shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105 active:scale-[0.99]"
               style={{
                 backgroundColor: "var(--color-accent-primary)",
-                color: "var(--color-ink)",
+                color: "#0B0F17",
                 fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
               }}
             >
@@ -140,13 +141,12 @@ export default function AdminLoginPage() {
         </div>
 
         <div className="mt-6 text-center space-y-2">
-          <p className="text-xs" style={{ color: "rgba(243,241,235,0.4)" }}>
+          <p className="text-xs text-slate-500">
             Access restricted to authorized committee members and wardens.
           </p>
           <Link
             href="/"
-            className="text-xs underline block transition-colors"
-            style={{ color: "rgba(243,241,235,0.6)" }}
+            className="text-xs underline block text-slate-400 hover:text-amber-400 transition-colors"
           >
             ← Back to Public Portal
           </Link>

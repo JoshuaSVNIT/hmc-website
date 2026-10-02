@@ -28,29 +28,29 @@ const TAG_META: Record<
   Elevator:        { label: "Elevator",          emoji: "🛗" },
   Cleanliness:     { label: "Cleanliness",       emoji: "🧹" },
   Pests:           { label: "Pests",              emoji: "🐜" },
-  Others:          { label: "Others",            emoji: "📋" },
+  Others:          { label: "Others",             emoji: "📋" },
 };
 
 function getStatusStyle(status: TicketStatus) {
   switch (status) {
     case "Resolved":
       return {
-        bg: "rgba(47,79,62,0.12)",
-        text: "var(--color-accent-secondary)",
-        border: "rgba(47,79,62,0.3)",
+        bg: "#ecfdf5",
+        text: "#065f46",
+        border: "#a7f3d0",
       };
     case "In Progress":
       return {
-        bg: "rgba(184,134,11,0.12)",
-        text: "var(--color-accent-primary-600)",
-        border: "rgba(184,134,11,0.3)",
+        bg: "#fffbeb",
+        text: "#92400e",
+        border: "#fde68a",
       };
     case "Open":
     default:
       return {
-        bg: "rgba(31,27,22,0.08)",
-        text: "var(--color-ink)",
-        border: "rgba(31,27,22,0.2)",
+        bg: "#f1f5f9",
+        text: "#334155",
+        border: "#cbd5e1",
       };
   }
 }
@@ -84,13 +84,7 @@ function FilterBar({
   filtered: number;
 }) {
   return (
-    <div
-      className="flex flex-wrap items-center gap-3 mb-6 p-3 sm:p-4 rounded border shadow-xs"
-      style={{
-        backgroundColor: "#fff",
-        borderColor: "rgba(31,27,22,0.12)",
-      }}
-    >
+    <div className="flex flex-wrap items-center gap-3 mb-6 p-3 sm:p-4 rounded-xl border border-slate-200/90 bg-white shadow-xs">
       {/* Search */}
       <div className="relative flex-1 min-w-[200px]">
         <input
@@ -99,11 +93,7 @@ function FilterBar({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search ticket code, raiser, room, or problem…"
-          className="w-full pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded border transition focus:outline-none focus:ring-1"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            color: "var(--color-ink)",
-          }}
+          className="w-full pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
         />
       </div>
 
@@ -112,11 +102,7 @@ function FilterBar({
         id="admin-tag-filter"
         value={tagFilter}
         onChange={(e) => onTagChange(e.target.value as TicketTag | "All")}
-        className="px-3 py-1.5 text-xs sm:text-sm rounded border bg-white transition focus:outline-none focus:ring-1"
-        style={{
-          borderColor: "rgba(31,27,22,0.2)",
-          color: "var(--color-ink)",
-        }}
+        className="px-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-800 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
       >
         <option value="All">All Categories</option>
         {TAG_OPTIONS.map((t) => (
@@ -133,11 +119,7 @@ function FilterBar({
         onChange={(e) =>
           onStatusChange(e.target.value as TicketStatus | "All")
         }
-        className="px-3 py-1.5 text-xs sm:text-sm rounded border bg-white transition focus:outline-none focus:ring-1"
-        style={{
-          borderColor: "rgba(31,27,22,0.2)",
-          color: "var(--color-ink)",
-        }}
+        className="px-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-800 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
       >
         <option value="All">All Statuses</option>
         {STATUS_OPTIONS.map((s) => (
@@ -149,13 +131,13 @@ function FilterBar({
 
       {/* Count badge */}
       <span
-        className="ml-auto text-xs shrink-0"
+        className="ml-auto text-xs shrink-0 text-slate-500"
         style={{
           fontFamily: "var(--font-ibm-plex-mono), monospace",
-          color: "var(--color-ink-500)",
         }}
       >
-        Showing <strong>{filtered}</strong> of <strong>{total}</strong>
+        Showing <strong className="text-slate-900">{filtered}</strong> of{" "}
+        <strong className="text-slate-900">{total}</strong>
       </span>
     </div>
   );
@@ -171,7 +153,7 @@ function StatusDropdown({
   ticketId: string;
   currentStatus: TicketStatus;
   onOptimisticChange: (id: string, status: TicketStatus) => void;
-  }) {
+}) {
   const [isPending, startTransition] = useTransition();
   const [saveError, setSaveError] = useState<string | null>(null);
 
@@ -198,7 +180,7 @@ function StatusDropdown({
           value={currentStatus}
           onChange={handleChange}
           disabled={isPending}
-          className="pr-6 pl-2 py-1 text-xs font-semibold rounded border cursor-pointer transition disabled:opacity-50"
+          className="pr-6 pl-2.5 py-1 text-xs font-bold rounded-lg border cursor-pointer transition disabled:opacity-50"
           style={{
             backgroundColor: style.bg,
             color: style.text,
@@ -213,7 +195,7 @@ function StatusDropdown({
         </select>
       </div>
       {saveError && (
-        <p className="text-[11px]" style={{ color: "var(--color-accent-urgent)" }}>
+        <p className="text-[11px] text-rose-600 font-medium">
           {saveError}
         </p>
       )}
@@ -265,26 +247,20 @@ function AdminNotesField({
         onBlur={handleSave}
         placeholder="Add resolution or update notes…"
         maxLength={1000}
-        className="w-full text-xs rounded border px-2 py-1 resize-none transition focus:outline-none focus:ring-1"
-        style={{
-          borderColor: "rgba(31,27,22,0.18)",
-          backgroundColor: "#fff",
-          color: "var(--color-ink)",
-        }}
+        className="w-full text-xs rounded-lg border border-slate-300 bg-white px-2 py-1 text-slate-800 resize-none transition focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20"
       />
       <div className="flex items-center justify-between gap-2 text-[11px]">
         {saveError && (
-          <p className="flex-1" style={{ color: "var(--color-accent-urgent)" }}>{saveError}</p>
+          <p className="flex-1 text-rose-600 font-medium">{saveError}</p>
         )}
         {saved && (
-          <p className="flex-1 font-medium" style={{ color: "var(--color-accent-secondary)" }}>Saved</p>
+          <p className="flex-1 font-bold text-emerald-700">Saved</p>
         )}
         <button
           type="button"
           onClick={handleSave}
           disabled={isPending || value === (initialNotes ?? "")}
-          className="ml-auto font-medium hover:underline disabled:opacity-40 transition cursor-pointer"
-          style={{ color: "var(--color-accent-primary-600)" }}
+          className="ml-auto font-bold text-amber-700 hover:text-amber-900 disabled:opacity-40 transition cursor-pointer"
         >
           {isPending ? "Saving…" : "Save"}
         </button>
@@ -304,14 +280,8 @@ function TicketTable({
 }) {
   if (tickets.length === 0) {
     return (
-      <div
-        className="text-center py-16 rounded border"
-        style={{
-          backgroundColor: "#fff",
-          borderColor: "rgba(31,27,22,0.12)",
-        }}
-      >
-        <p className="text-sm" style={{ color: "var(--color-ink-400)" }}>
+      <div className="text-center py-16 rounded-xl border border-slate-200 bg-white shadow-xs">
+        <p className="text-sm font-medium text-slate-500">
           No tickets match your filters.
         </p>
       </div>
@@ -319,22 +289,10 @@ function TicketTable({
   }
 
   return (
-    <div
-      className="rounded border shadow-xs overflow-x-auto"
-      style={{
-        backgroundColor: "#fff",
-        borderColor: "rgba(31,27,22,0.12)",
-      }}
-    >
+    <div className="rounded-xl border border-slate-200/90 bg-white shadow-sm overflow-x-auto">
       <table className="min-w-full text-xs sm:text-sm">
         <thead>
-          <tr
-            className="border-b"
-            style={{
-              backgroundColor: "rgba(31,27,22,0.03)",
-              borderColor: "rgba(31,27,22,0.1)",
-            }}
-          >
+          <tr className="border-b border-slate-200 bg-slate-50/80">
             {[
               "Ticket",
               "Raised by",
@@ -348,50 +306,47 @@ function TicketTable({
             ].map((h) => (
               <th
                 key={h}
-                className="px-3.5 py-2.5 text-left text-xs font-semibold whitespace-nowrap"
-                style={{ color: "var(--color-ink-500)" }}
+                className="px-3.5 py-3 text-left text-xs font-bold text-slate-700 whitespace-nowrap"
               >
                 {h}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y" style={{ borderColor: "rgba(31,27,22,0.06)" }}>
+        <tbody className="divide-y divide-slate-100">
           {tickets.map((ticket) => {
             const tag = TAG_META[ticket.tag] ?? TAG_META.Others;
             return (
               <tr
                 key={ticket.id}
-                className="hover:bg-black/[0.015] transition-colors align-top"
+                className="hover:bg-amber-50/20 transition-colors align-top"
               >
                 {/* Ticket code */}
                 <td
-                  className="px-3.5 py-3 font-bold whitespace-nowrap"
+                  className="px-3.5 py-3 font-bold whitespace-nowrap text-slate-900"
                   style={{
                     fontFamily: "var(--font-ibm-plex-mono), monospace",
-                    color: "var(--color-ink)",
                   }}
                 >
                   {ticket.ticket_code}
                 </td>
 
                 {/* Raised by */}
-                <td className="px-3.5 py-3 whitespace-nowrap" style={{ color: "var(--color-ink)" }}>
+                <td className="px-3.5 py-3 whitespace-nowrap text-slate-800">
                   {ticket.is_anonymous ? (
-                    <span className="italic text-xs" style={{ color: "var(--color-ink-400)" }}>
+                    <span className="italic text-xs text-slate-400">
                       Anonymous
                     </span>
                   ) : (
-                    ticket.raiser_name ?? <span style={{ color: "var(--color-ink-400)" }}>—</span>
+                    <span className="font-medium">{ticket.raiser_name ?? "—"}</span>
                   )}
                 </td>
 
                 {/* Room */}
                 <td
-                  className="px-3.5 py-3 font-semibold whitespace-nowrap"
+                  className="px-3.5 py-3 font-bold whitespace-nowrap text-slate-900"
                   style={{
                     fontFamily: "var(--font-ibm-plex-mono), monospace",
-                    color: "var(--color-ink)",
                   }}
                 >
                   {ticket.room_no || "—"}
@@ -399,35 +354,33 @@ function TicketTable({
 
                 {/* Phone */}
                 <td
-                  className="px-3.5 py-3 whitespace-nowrap text-xs"
+                  className="px-3.5 py-3 whitespace-nowrap text-xs font-bold text-slate-800"
                   style={{
                     fontFamily: "var(--font-ibm-plex-mono), monospace",
-                    color: "var(--color-ink)",
                   }}
                 >
                   {ticket.phone_no ? (
                     <a
                       href={`tel:${ticket.phone_no.replace(/[\s\-().]/g, "")}`}
-                      className="hover:underline font-semibold"
-                      style={{ color: "var(--color-accent-primary-600)" }}
+                      className="hover:underline text-amber-700 font-bold"
                     >
                       {ticket.phone_no}
                     </a>
                   ) : (
-                    <span style={{ color: "var(--color-ink-400)" }}>—</span>
+                    <span className="text-slate-300 font-normal">—</span>
                   )}
                 </td>
 
                 {/* Category */}
                 <td className="px-3.5 py-3 whitespace-nowrap">
-                  <span className="inline-flex items-center gap-1 text-xs font-medium">
+                  <span className="inline-flex items-center gap-1 text-xs font-semibold text-slate-800">
                     <span>{tag.emoji}</span>
                     <span>{tag.label}</span>
                   </span>
                 </td>
 
                 {/* Description */}
-                <td className="px-3.5 py-3 max-w-xs" style={{ color: "var(--color-ink-500)" }}>
+                <td className="px-3.5 py-3 max-w-xs text-slate-600">
                   <p className="line-clamp-2 text-xs leading-relaxed" title={ticket.description}>
                     {ticket.description}
                   </p>
@@ -436,8 +389,7 @@ function TicketTable({
                       href={ticket.photo_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs hover:underline mt-0.5 inline-block"
-                      style={{ color: "var(--color-accent-primary-600)" }}
+                      className="text-xs hover:underline mt-0.5 inline-block font-bold text-amber-700"
                     >
                       View photo ↗
                     </a>
@@ -463,10 +415,9 @@ function TicketTable({
 
                 {/* Date */}
                 <td
-                  className="px-3.5 py-3 text-xs whitespace-nowrap"
+                  className="px-3.5 py-3 text-xs whitespace-nowrap text-slate-500 font-medium"
                   style={{
                     fontFamily: "var(--font-ibm-plex-mono), monospace",
-                    color: "var(--color-ink-400)",
                   }}
                 >
                   {formatDate(ticket.created_at)}

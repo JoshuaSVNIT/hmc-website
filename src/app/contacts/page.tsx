@@ -17,26 +17,32 @@ function getCategoryConfig(category: ContactCategory) {
     case "Emergency":
       return {
         title: "Emergency Helplines",
-        description: "Direct lines for immediate medical, security, and urgent assistance.",
-        badgeBg: "rgba(179,63,46,0.1)",
-        badgeText: "var(--color-accent-urgent)",
-        accentColor: "var(--color-accent-urgent)",
+        description: "Direct lines for immediate medical, security, and urgent safety assistance.",
+        badgeBg: "#fee2e2",
+        badgeText: "#991b1b",
+        borderColor: "border-rose-200/90 border-l-4 border-l-rose-500",
+        btnCls: "bg-rose-600 hover:bg-rose-700 text-white shadow-xs shadow-rose-600/20",
+        phoneColor: "text-rose-700",
       };
     case "Supervisor":
       return {
         title: "Hostel Supervisors & Caretakers",
         description: "Facility maintenance, block supervisors, and night assistance.",
-        badgeBg: "rgba(184,134,11,0.12)",
-        badgeText: "var(--color-accent-primary-600)",
-        accentColor: "var(--color-accent-primary-600)",
+        badgeBg: "#fef3c7",
+        badgeText: "#92400e",
+        borderColor: "border-amber-200/90 border-l-4 border-l-amber-500",
+        btnCls: "bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-xs shadow-amber-500/20",
+        phoneColor: "text-amber-800",
       };
     case "HMC Member":
       return {
         title: "Hostel Management Committee",
         description: "Elected student representatives and wardens overseeing student welfare.",
-        badgeBg: "rgba(47,79,62,0.1)",
-        badgeText: "var(--color-accent-secondary)",
-        accentColor: "var(--color-accent-secondary)",
+        badgeBg: "#d1fae5",
+        badgeText: "#065f46",
+        borderColor: "border-emerald-200/90 border-l-4 border-l-emerald-500",
+        btnCls: "bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs shadow-emerald-600/20",
+        phoneColor: "text-emerald-800",
       };
   }
 }
@@ -67,18 +73,21 @@ export default async function ContactsPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-10">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            SV Bhavan Helplines
+          </div>
           <h1
-            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Directory &amp; Helplines
           </h1>
-          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+          <p className="mt-2 text-base leading-relaxed text-slate-600">
             Direct contact numbers for hostel administration, emergency services,
-            and HMC representatives. Tap any number to call.
+            and HMC representatives. Tap any number to call immediately.
           </p>
         </div>
 
@@ -92,24 +101,23 @@ export default async function ContactsPage() {
             return (
               <section key={category} aria-labelledby={`heading-${category}`}>
                 {/* Category Header */}
-                <div className="pb-3 border-b flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-3" style={{ borderColor: "rgba(31,27,22,0.15)" }}>
+                <div className="pb-3 border-b border-slate-200 flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-4">
                   <div>
                     <h2
                       id={`heading-${category}`}
-                      className="text-lg sm:text-xl font-bold"
+                      className="text-lg sm:text-xl font-bold text-slate-900"
                       style={{
-                        color: isUrgent ? "var(--color-accent-urgent)" : "var(--color-ink)",
                         fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
                       }}
                     >
                       {cfg.title}
                     </h2>
-                    <p className="text-xs sm:text-sm mt-0.5" style={{ color: "var(--color-ink-500)" }}>
+                    <p className="text-xs sm:text-sm mt-0.5 text-slate-500">
                       {cfg.description}
                     </p>
                   </div>
                   <span
-                    className="self-start sm:self-auto text-xs px-2 py-0.5 rounded font-mono font-medium"
+                    className="self-start sm:self-auto text-xs px-2.5 py-0.5 rounded-full font-mono font-bold"
                     style={{
                       backgroundColor: cfg.badgeBg,
                       color: cfg.badgeText,
@@ -121,16 +129,12 @@ export default async function ContactsPage() {
 
                 {/* Directory Table / List */}
                 {list.length === 0 ? (
-                  <p className="text-xs italic py-3" style={{ color: "var(--color-ink-400)" }}>
+                  <p className="text-xs italic text-slate-400 py-3">
                     No contacts configured in this category yet.
                   </p>
                 ) : (
                   <div
-                    className="rounded border overflow-hidden divide-y"
-                    style={{
-                      backgroundColor: "#fff",
-                      borderColor: isUrgent ? "rgba(179,63,46,0.2)" : "rgba(31,27,22,0.12)",
-                    }}
+                    className={`rounded-xl border ${cfg.borderColor} bg-white overflow-hidden shadow-xs divide-y divide-slate-100`}
                   >
                     {list.map((contact) => {
                       const telHref = `tel:${contact.phone.replace(/[\s\-().]/g, "")}`;
@@ -141,10 +145,7 @@ export default async function ContactsPage() {
                       return (
                         <div
                           key={contact._id}
-                          className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 gap-3 transition-colors hover:bg-black/[0.015]"
-                          style={{
-                            borderColor: isUrgent ? "rgba(179,63,46,0.1)" : "rgba(31,27,22,0.06)",
-                          }}
+                          className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 gap-3 transition-colors hover:bg-slate-50/80"
                         >
                           {/* Name & Title */}
                           <div className="flex items-center gap-3 min-w-0">
@@ -153,15 +154,15 @@ export default async function ContactsPage() {
                               icon={contact.icon}
                               defaultEmoji={isUrgent ? "🚨" : category === "Supervisor" ? "👷" : "🏛️"}
                               sizeClass="w-9 h-9"
-                              fallbackBgClass={isUrgent ? "bg-red-100" : "bg-stone-100"}
+                              fallbackBgClass={isUrgent ? "bg-rose-100 text-rose-700" : category === "Supervisor" ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800"}
                               alt={contact.label}
                             />
                             <div className="min-w-0">
-                              <div className="text-sm font-semibold truncate" style={{ color: "var(--color-ink)" }}>
+                              <div className="text-sm font-bold text-slate-900 truncate">
                                 {contact.label}
                               </div>
                               {contact.title && (
-                                <div className="text-xs" style={{ color: cfg.accentColor }}>
+                                <div className={`text-xs font-semibold ${cfg.phoneColor}`}>
                                   {contact.title}
                                 </div>
                               )}
@@ -169,25 +170,19 @@ export default async function ContactsPage() {
                           </div>
 
                           {/* Phone & CTA */}
-                          <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-black/5">
+                          <div className="flex items-center justify-between sm:justify-end gap-4 shrink-0 pt-2 sm:pt-0 border-t sm:border-0 border-slate-100">
                             <a
                               href={telHref}
-                              className="font-bold text-sm tracking-wide hover:underline inline-flex items-center gap-1.5"
+                              className={`font-bold text-sm sm:text-base tracking-wide hover:underline inline-flex items-center gap-1.5 ${cfg.phoneColor}`}
                               style={{
                                 fontFamily: "var(--font-ibm-plex-mono), monospace",
-                                color: isUrgent ? "var(--color-accent-urgent)" : "var(--color-ink)",
                               }}
                             >
                               <span>{contact.phone}</span>
                             </a>
                             <a
                               href={telHref}
-                              className="px-3 py-1 rounded text-xs font-semibold border transition-colors inline-flex items-center gap-1.5"
-                              style={{
-                                borderColor: isUrgent ? "var(--color-accent-urgent)" : "rgba(31,27,22,0.2)",
-                                backgroundColor: isUrgent ? "var(--color-accent-urgent)" : "transparent",
-                                color: isUrgent ? "#fff" : "var(--color-ink)",
-                              }}
+                              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs hover:brightness-105 inline-flex items-center gap-1.5 ${cfg.btnCls}`}
                             >
                               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -206,11 +201,10 @@ export default async function ContactsPage() {
         </div>
 
         {/* Back Link */}
-        <div className="mt-12 pt-6 border-t" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
+        <div className="mt-12 pt-6 border-t border-slate-200">
           <Link
             href="/"
-            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
-            style={{ color: "var(--color-ink-600)" }}
+            className="text-sm font-semibold text-slate-600 hover:text-slate-900 hover:underline inline-flex items-center gap-1.5"
           >
             ← Back to Home
           </Link>

@@ -16,41 +16,28 @@ function EventCard({ event }: { event: SanityEvent }) {
 
   return (
     <article
-      className="rounded border overflow-hidden p-5 sm:p-6"
-      style={{
-        backgroundColor: "#fff",
-        borderColor: "rgba(31,27,22,0.12)",
-      }}
+      className="rounded-xl border border-slate-200/90 bg-white overflow-hidden p-5 sm:p-6 shadow-xs hover:border-slate-300 transition-colors"
     >
       {/* Header */}
-      <div className="pb-4 border-b" style={{ borderColor: "rgba(31,27,22,0.07)" }}>
+      <div className="pb-4 border-b border-slate-100">
         <div className="flex items-center gap-2 flex-wrap mb-1.5">
           {isPast ? (
             <span
-              className="text-xs px-2 py-0.5 rounded-sm font-medium"
-              style={{
-                backgroundColor: "rgba(31,27,22,0.06)",
-                color: "var(--color-ink-400)",
-              }}
+              className="text-xs px-2.5 py-0.5 rounded-full font-medium bg-slate-100 text-slate-500"
             >
               Past event
             </span>
           ) : (
             <span
-              className="text-xs px-2 py-0.5 rounded-sm font-semibold"
-              style={{
-                backgroundColor: "rgba(47,79,62,0.1)",
-                color: "var(--color-accent-secondary)",
-              }}
+              className="text-xs px-2.5 py-0.5 rounded-full font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200"
             >
               Upcoming
             </span>
           )}
         </div>
         <h2
-          className="text-lg sm:text-xl font-bold"
+          className="text-lg sm:text-xl font-bold text-slate-900"
           style={{
-            color: "var(--color-ink)",
             fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
           }}
         >
@@ -59,10 +46,9 @@ function EventCard({ event }: { event: SanityEvent }) {
         {event.date && (
           <time
             dateTime={event.date}
-            className="text-xs block mt-1"
+            className="text-xs block mt-1 text-slate-500"
             style={{
               fontFamily: "var(--font-ibm-plex-mono), monospace",
-              color: "var(--color-ink-400)",
             }}
           >
             {formatDate(event.date)}
@@ -70,7 +56,7 @@ function EventCard({ event }: { event: SanityEvent }) {
         )}
 
         {event.description && (
-          <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+          <p className="mt-2 text-sm leading-relaxed text-slate-600">
             {event.description}
           </p>
         )}
@@ -85,10 +71,10 @@ function EventCard({ event }: { event: SanityEvent }) {
                 id={`event-register-${event._id}`}
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="px-4 py-2 rounded text-xs font-semibold transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105"
                 style={{
                   backgroundColor: "var(--color-accent-primary)",
-                  color: "var(--color-ink)",
+                  color: "#0B0F17",
                   fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
                 }}
               >
@@ -99,12 +85,7 @@ function EventCard({ event }: { event: SanityEvent }) {
                 href={event.googleFormUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded border text-xs font-medium transition-colors"
-                style={{
-                  borderColor: "rgba(31,27,22,0.2)",
-                  backgroundColor: "#fff",
-                  color: "var(--color-ink)",
-                }}
+                className="px-4 py-2 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold transition-colors"
               >
                 Open in new tab ↗
               </a>
@@ -113,11 +94,7 @@ function EventCard({ event }: { event: SanityEvent }) {
             {open && (
               <div className="mt-4 space-y-2">
                 <div
-                  className="rounded overflow-hidden border"
-                  style={{
-                    borderColor: "rgba(31,27,22,0.15)",
-                    backgroundColor: "rgba(31,27,22,0.02)",
-                  }}
+                  className="rounded-xl overflow-hidden border border-slate-200 bg-slate-50"
                 >
                   <iframe
                     src={event.googleFormUrl}
@@ -132,7 +109,7 @@ function EventCard({ event }: { event: SanityEvent }) {
             )}
           </div>
         ) : (
-          <p className="text-xs italic" style={{ color: "var(--color-ink-400)" }}>
+          <p className="text-xs italic text-slate-400">
             Registration details will be posted soon.
           </p>
         )}
@@ -150,9 +127,8 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
       {upcoming.length > 0 && (
         <section>
           <h2
-            className="text-base font-bold mb-3"
+            className="text-base font-bold mb-3 text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
@@ -169,9 +145,8 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
       {past.length > 0 && (
         <section>
           <h2
-            className="text-sm font-semibold mb-3"
+            className="text-sm font-semibold mb-3 text-slate-500"
             style={{
-              color: "var(--color-ink-400)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
@@ -187,10 +162,9 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
 
       {upcoming.length === 0 && past.length === 0 && (
         <div
-          className="text-center py-16 rounded border"
-          style={{ backgroundColor: "#fff", borderColor: "rgba(31,27,22,0.12)" }}
+          className="text-center py-16 rounded-xl border border-slate-200 bg-white shadow-xs"
         >
-          <p className="text-sm" style={{ color: "var(--color-ink-500)" }}>
+          <p className="text-sm text-slate-500">
             No events scheduled right now. Check back soon!
           </p>
         </div>

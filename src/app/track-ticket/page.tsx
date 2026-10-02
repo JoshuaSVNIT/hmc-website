@@ -15,29 +15,25 @@ export default function TrackTicketPage() {
       style={{ backgroundColor: "var(--color-paper)" }}
     >
       <div className="max-w-2xl mx-auto">
-        {/* Page header — clean, no pill badges */}
+        {/* Page header */}
         <div className="mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+            Live Resolution Status
+          </div>
           <h1
-            className="text-3xl sm:text-4xl font-bold tracking-tight"
+            className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900"
             style={{
-              color: "var(--color-ink)",
               fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
             }}
           >
             Track Your Ticket
           </h1>
-          <p
-            className="mt-2 text-base leading-relaxed"
-            style={{ color: "var(--color-ink-500)" }}
-          >
+          <p className="mt-2 text-base leading-relaxed text-slate-600">
             Enter your ticket code (e.g.{" "}
             <code
-              className="px-1.5 py-0.5 rounded text-sm font-semibold"
-              style={{
-                fontFamily: "var(--font-ibm-plex-mono), monospace",
-                backgroundColor: "rgba(31,27,22,0.08)",
-                color: "var(--color-ink)",
-              }}
+              className="px-2 py-0.5 rounded text-sm font-bold bg-slate-100 border border-slate-200 text-slate-900"
+              style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
             >
               HMC-1042
             </code>
@@ -46,24 +42,16 @@ export default function TrackTicketPage() {
         </div>
 
         {/* Card */}
-        <div
-          className="rounded border p-6 sm:p-8"
-          style={{
-            backgroundColor: "#ffffff",
-            borderColor: "rgba(31,27,22,0.12)",
-            boxShadow: "0 1px 3px rgba(31,27,22,0.05)",
-          }}
-        >
+        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
           <TrackTicketClient />
         </div>
 
         {/* Raise new ticket link */}
-        <p className="mt-6 text-center text-sm" style={{ color: "var(--color-ink-500)" }}>
+        <p className="mt-6 text-center text-sm text-slate-500">
           Need to report a new issue?{" "}
           <Link
             href="/raise-ticket"
-            className="underline font-medium hover:text-amber-800"
-            style={{ color: "var(--color-accent-primary-600)" }}
+            className="underline font-bold text-amber-700 hover:text-amber-800"
           >
             Raise a ticket →
           </Link>

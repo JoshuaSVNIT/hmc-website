@@ -5,63 +5,61 @@
 /* Loaded via Google Fonts in layout.tsx                                        */
 
 @theme {
-  /* Brand palette */
-  --color-ink:              #1F1B16;
-  --color-paper:            #F3F1EB;
-  --color-accent-primary:   #B8860B;
-  --color-accent-urgent:    #B33F2E;
-  --color-accent-secondary: #2F4F3E;
+  /* Brand palette - Alive, Vibrant & High-Contrast */
+  --color-ink:              #0B0F17;
+  --color-paper:            #F8FAFC;
+  --color-accent-primary:   #F59E0B;
+  --color-accent-urgent:    #EF4444;
+  --color-accent-secondary: #10B981;
 
-  /* Tonal variants for accent-primary (dark gold) */
-  --color-accent-primary-50:  #fdf8e8;
-  --color-accent-primary-100: #f9edba;
-  --color-accent-primary-200: #f0d574;
-  --color-accent-primary-300: #dbb83a;
-  --color-accent-primary-400: #c99910;
-  --color-accent-primary-500: #B8860B;
-  --color-accent-primary-600: #9a6e09;
-  --color-accent-primary-700: #7a5607;
+  /* Tonal variants for accent-primary (radiant energetic gold / amber) */
+  --color-accent-primary-50:  #fffbeb;
+  --color-accent-primary-100: #fef3c7;
+  --color-accent-primary-200: #fde68a;
+  --color-accent-primary-300: #fcd34d;
+  --color-accent-primary-400: #fbbf24;
+  --color-accent-primary-500: #F59E0B;
+  --color-accent-primary-600: #d97706;
+  --color-accent-primary-700: #b45309;
 
-  /* Tonal variants for accent-urgent (deep red) */
-  --color-accent-urgent-50:  #fdf2f0;
-  --color-accent-urgent-100: #faddd9;
-  --color-accent-urgent-200: #f2afa6;
-  --color-accent-urgent-300: #e07268;
-  --color-accent-urgent-400: #c75246;
-  --color-accent-urgent-500: #B33F2E;
-  --color-accent-urgent-600: #922f21;
-  --color-accent-urgent-700: #702218;
+  /* Tonal variants for accent-urgent (vibrant crimson red) */
+  --color-accent-urgent-50:  #fef2f2;
+  --color-accent-urgent-100: #fee2e2;
+  --color-accent-urgent-200: #fecaca;
+  --color-accent-urgent-300: #fca5a5;
+  --color-accent-urgent-400: #f87171;
+  --color-accent-urgent-500: #EF4444;
+  --color-accent-urgent-600: #dc2626;
+  --color-accent-urgent-700: #b91c1c;
 
-  /* Tonal variants for accent-secondary (forest green) */
-  --color-accent-secondary-50:  #f0f4f1;
-  --color-accent-secondary-100: #d5e4da;
-  --color-accent-secondary-200: #a8c9b4;
-  --color-accent-secondary-300: #6fa58b;
-  --color-accent-secondary-400: #467a64;
-  --color-accent-secondary-500: #2F4F3E;
-  --color-accent-secondary-600: #253e30;
-  --color-accent-secondary-700: #1a2d22;
+  /* Tonal variants for accent-secondary (vibrant emerald green) */
+  --color-accent-secondary-50:  #ecfdf5;
+  --color-accent-secondary-100: #d1fae5;
+  --color-accent-secondary-200: #a7f3d0;
+  --color-accent-secondary-300: #6ee7b7;
+  --color-accent-secondary-400: #34d399;
+  --color-accent-secondary-500: #10B981;
+  --color-accent-secondary-600: #059669;
+  --color-accent-secondary-700: #047857;
 
-  /* Ink / Paper tonal variants */
-  --color-ink-50:  #f5f3f0;
-  --color-ink-100: #e8e4de;
-  --color-ink-200: #ccc5b9;
-  --color-ink-300: #aea591;
-  --color-ink-400: #8e8471;
-  --color-ink-500: #716452;
-  --color-ink-600: #584d3d;
-  --color-ink-700: #403825;
-  --color-ink-800: #2d2618;
-  --color-ink-900: #1F1B16;
-  --color-ink-950: #120f0b;
-
-  /* Keep Tailwind's built-in slate/red/amber/etc. untouched for admin UI */
+  /* Ink / Modern deep midnight slate tones */
+  --color-ink-50:  #f8fafc;
+  --color-ink-100: #f1f5f9;
+  --color-ink-200: #e2e8f0;
+  --color-ink-300: #cbd5e1;
+  --color-ink-400: #94a3b8;
+  --color-ink-500: #64748b;
+  --color-ink-600: #475569;
+  --color-ink-700: #334155;
+  --color-ink-800: #1e293b;
+  --color-ink-900: #0f172a;
+  --color-ink-950: #0b0f17;
 }
 
 /* ─── CSS Custom Properties ────────────────────────────────────────────────── */
 :root {
-  --bg-base:     var(--color-paper);
-  --fg-base:     var(--color-ink);
+  --bg-base:      var(--color-paper);
+  --fg-base:      var(--color-ink);
   --font-heading: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
   --font-body:    var(--font-ibm-plex-sans), "IBM Plex Sans", system-ui, sans-serif;
   --font-mono:    var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
@@ -86,7 +84,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-/* ─── Utility classes for the new design system ─────────────────────────────── */
+/* ─── Utility classes for the design system ─────────────────────────────────── */
 .font-heading { font-family: var(--font-heading); }
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
@@ -94,17 +92,17 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Mess menu attention glow ──────────────────────────────────────────────── */
 @keyframes mess-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(184, 134, 11, 0);
-    border-color: #f0d574;
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+    border-color: rgba(245, 158, 11, 0.25);
   }
   50% {
-    box-shadow: 0 0 18px 6px rgba(184, 134, 11, 0.22);
-    border-color: #B8860B;
+    box-shadow: 0 0 20px 4px rgba(245, 158, 11, 0.2);
+    border-color: #F59E0B;
   }
 }
 
 .animate-mess-glow {
-  animation: mess-glow 3.5s ease-in-out infinite;
+  animation: mess-glow 3s ease-in-out infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -115,11 +113,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* ─── Emergency pulse ───────────────────────────────────────────────────────── */
 @keyframes emergency-pulse {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0.45; }
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.92); }
 }
 .animate-emergency-pulse {
-  animation: emergency-pulse 1.8s ease-in-out infinite;
+  animation: emergency-pulse 1.6s ease-in-out infinite;
 }
 
 /* ─── Print utility ─────────────────────────────────────────────────────────── */

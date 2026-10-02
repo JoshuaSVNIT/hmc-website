@@ -64,45 +64,44 @@ function SuccessView({
       </div>
 
       <div
-        className="w-12 h-12 rounded flex items-center justify-center mb-4 shrink-0"
+        className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 shrink-0 shadow-xs"
         style={{
-          backgroundColor: "rgba(47,79,62,0.12)",
+          backgroundColor: "rgba(16,185,129,0.15)",
           color: "var(--color-accent-secondary)",
         }}
       >
         <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
         </svg>
       </div>
 
       <h2
-        className="text-2xl font-bold tracking-tight print:text-black"
+        className="text-2xl font-bold tracking-tight text-slate-900 print:text-black"
         style={{
-          color: "var(--color-ink)",
           fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
         }}
       >
-        Ticket Submitted
+        Ticket Submitted Successfully
       </h2>
-      <p className="mt-2 text-sm max-w-md print:text-black" style={{ color: "var(--color-ink-500)" }}>
+      <p className="mt-2 text-sm max-w-md text-slate-600 print:text-black">
         Your complaint has been logged in the HMC system. Record your ticket code to track progress and supervisor notes.
       </p>
 
       {/* Ticket Code display */}
       <div className="mt-6 w-full max-w-md">
-        <div className="text-xs font-medium mb-1.5 text-left print:text-black" style={{ color: "var(--color-ink-500)" }}>
-          Ticket code
+        <div className="text-xs font-semibold mb-1.5 text-left text-slate-500 uppercase tracking-wider print:text-black">
+          Your unique ticket code
         </div>
         <div
-          className="flex items-center justify-between px-4 py-3 rounded border print:border-black print:bg-white"
+          className="flex items-center justify-between px-5 py-4 rounded-xl border print:border-black print:bg-white shadow-sm"
           style={{
-            backgroundColor: "var(--color-ink)",
-            borderColor: "rgba(255,255,255,0.1)",
-            color: "var(--color-paper)",
+            backgroundColor: "#0B0F17",
+            borderColor: "rgba(245,158,11,0.3)",
+            color: "#ffffff",
           }}
         >
           <span
-            className="text-2xl font-bold tracking-wider"
+            className="text-2xl font-bold tracking-widest text-amber-400"
             style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
           >
             {ticketCode}
@@ -111,30 +110,19 @@ function SuccessView({
             id="copy-ticket-code-btn"
             type="button"
             onClick={handleCopy}
-            className="print:hidden px-3 py-1.5 rounded text-xs font-semibold transition-colors flex items-center gap-1.5 border"
-            style={{
-              borderColor: "rgba(255,255,255,0.2)",
-              backgroundColor: "rgba(255,255,255,0.08)",
-              color: "var(--color-paper)",
-            }}
+            className="print:hidden px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 border border-amber-400/40 text-amber-300 hover:bg-amber-400/10 cursor-pointer"
             aria-label="Copy ticket code"
           >
-            {copied ? "Copied" : "Copy"}
+            {copied ? "Copied!" : "Copy"}
           </button>
         </div>
-        <p className="mt-2 text-xs text-left print:hidden" style={{ color: "var(--color-ink-400)" }}>
-          Check resolution status anytime on the{" "}
-          <Link href="/track-ticket" className="underline font-medium" style={{ color: "var(--color-accent-primary-600)" }}>
+        <p className="mt-2 text-xs text-left text-slate-500 print:hidden">
+          Check resolution updates anytime on the{" "}
+          <Link href="/track-ticket" className="underline font-bold text-amber-700 hover:text-amber-800">
             Track Ticket
           </Link>{" "}
           page.
         </p>
-      </div>
-
-      {/* Print-only details */}
-      <div className="hidden print:block mt-6 text-left w-full max-w-md text-xs text-black">
-        <p>Visit <strong>svbhavan.in/track-ticket</strong> to view updates.</p>
-        <p className="mt-1 text-gray-500">Printed: {new Date().toLocaleString("en-IN")}</p>
       </div>
 
       {/* Action buttons */}
@@ -143,24 +131,19 @@ function SuccessView({
           id="print-ticket-btn"
           type="button"
           onClick={handlePrint}
-          className="flex-1 py-2.5 px-4 rounded text-sm font-semibold border transition-colors flex items-center justify-center gap-2"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            backgroundColor: "#fff",
-            color: "var(--color-ink)",
-          }}
+          className="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold border border-slate-300 bg-white hover:bg-slate-50 text-slate-800 transition-colors flex items-center justify-center gap-2 shadow-xs cursor-pointer"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
           </svg>
           Print receipt
         </button>
         <Link
           href="/track-ticket"
-          className="flex-1 py-2.5 px-4 rounded text-sm font-semibold transition-colors flex items-center justify-center gap-1.5"
+          className="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm hover:brightness-105"
           style={{
             backgroundColor: "var(--color-accent-primary)",
-            color: "var(--color-ink)",
+            color: "#0B0F17",
             fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
           }}
         >
@@ -172,8 +155,7 @@ function SuccessView({
         id="raise-another-ticket-btn"
         type="button"
         onClick={onReset}
-        className="print:hidden mt-5 text-xs underline transition-colors"
-        style={{ color: "var(--color-ink-400)" }}
+        className="print:hidden mt-5 text-xs text-slate-500 hover:text-slate-800 underline transition-colors cursor-pointer"
       >
         Submit another complaint
       </button>
@@ -235,9 +217,9 @@ function PhotoField({
 
   return (
     <div>
-      <label className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
+      <label className="block text-sm font-semibold mb-1.5 text-slate-900">
         Photo attachment{" "}
-        <span className="font-normal text-xs" style={{ color: "var(--color-ink-400)" }}>
+        <span className="font-normal text-xs text-slate-500">
           (optional — max 5 MB, jpg / png / webp)
         </span>
       </label>
@@ -248,14 +230,12 @@ function PhotoField({
           <img
             src={preview}
             alt="Preview"
-            className="h-28 rounded border object-cover"
-            style={{ borderColor: "rgba(31,27,22,0.15)" }}
+            className="h-28 rounded-lg border border-slate-200 object-cover shadow-xs"
           />
           <button
             type="button"
             onClick={handleRemove}
-            className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white shadow"
-            style={{ backgroundColor: "var(--color-accent-urgent)" }}
+            className="absolute -top-2 -right-2 w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold text-white shadow bg-rose-600 hover:bg-rose-700 cursor-pointer"
             aria-label="Remove photo"
           >
             ✕
@@ -264,19 +244,15 @@ function PhotoField({
       ) : (
         <label
           htmlFor="photo-input"
-          className="flex flex-col items-center justify-center w-full h-24 border border-dashed rounded cursor-pointer transition-colors"
-          style={{
-            borderColor: "rgba(31,27,22,0.25)",
-            backgroundColor: "rgba(243,241,235,0.3)",
-          }}
+          className="flex flex-col items-center justify-center w-full h-24 border border-dashed border-slate-300 hover:border-amber-500 rounded-xl cursor-pointer transition-colors bg-slate-50 hover:bg-amber-50/20"
         >
-          <svg className="w-6 h-6 mb-1" style={{ color: "var(--color-ink-400)" }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-6 h-6 mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
-          <span className="text-xs font-medium" style={{ color: "var(--color-ink-600)" }}>
+          <span className="text-xs font-semibold text-slate-700">
             Attach a photo
           </span>
-          <span className="text-[11px] mt-0.5" style={{ color: "var(--color-ink-400)" }}>
+          <span className="text-[11px] text-slate-400 mt-0.5">
             JPG, PNG, or WEBP up to 5 MB
           </span>
         </label>
@@ -293,7 +269,7 @@ function PhotoField({
       />
 
       {fileError && (
-        <p className="mt-1.5 text-xs flex items-center gap-1" style={{ color: "var(--color-accent-urgent)" }}>
+        <p className="mt-1.5 text-xs text-rose-600 flex items-center gap-1 font-medium">
           {fileError}
         </p>
       )}
@@ -351,17 +327,12 @@ export default function RaiseTicketForm() {
       {serverError && (
         <div
           role="alert"
-          className="flex items-start gap-2.5 rounded border p-3 text-sm"
-          style={{
-            backgroundColor: "rgba(179,63,46,0.08)",
-            borderColor: "rgba(179,63,46,0.25)",
-            color: "var(--color-accent-urgent)",
-          }}
+          className="flex items-start gap-2.5 rounded-lg border border-rose-300 bg-rose-50 p-3 text-xs sm:text-sm text-rose-800"
         >
-          <svg className="w-5 h-5 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+          <svg className="w-5 h-5 shrink-0 mt-0.5 text-rose-600" fill="currentColor" viewBox="0 0 20 20">
             <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
           </svg>
-          <span>{serverError}</span>
+          <span className="font-medium">{serverError}</span>
         </div>
       )}
 
@@ -378,12 +349,11 @@ export default function RaiseTicketForm() {
             value="true"
             checked={isAnonymous}
             onChange={(e) => setIsAnonymous(e.target.checked)}
-            className="w-4 h-4 rounded border-gray-400 cursor-pointer"
-            style={{ accentColor: "var(--color-accent-primary)" }}
+            className="w-4 h-4 rounded border-slate-300 cursor-pointer accent-amber-500"
           />
-          <span className="text-sm font-medium" style={{ color: "var(--color-ink)" }}>
+          <span className="text-sm font-semibold text-slate-800">
             Submit anonymously
-            <span className="ml-1 text-xs font-normal" style={{ color: "var(--color-ink-400)" }}>
+            <span className="ml-1 text-xs font-normal text-slate-500">
               (your name, room number, and phone number won&apos;t be recorded)
             </span>
           </span>
@@ -392,8 +362,8 @@ export default function RaiseTicketForm() {
 
       {/* Raiser name — hidden when anonymous */}
       <div className={isAnonymous ? "hidden" : undefined} aria-hidden={isAnonymous}>
-        <label htmlFor="raiser_name" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
-          Your Name {!isAnonymous && <span style={{ color: "var(--color-accent-urgent)" }}>*</span>}
+        <label htmlFor="raiser_name" className="block text-sm font-semibold mb-1.5 text-slate-900">
+          Your Name {!isAnonymous && <span className="text-rose-600">*</span>}
         </label>
         <input
           id="raiser_name"
@@ -403,19 +373,14 @@ export default function RaiseTicketForm() {
           required={!isAnonymous}
           disabled={isAnonymous}
           maxLength={120}
-          className="w-full rounded border px-3.5 py-2.5 text-sm transition focus:outline-none focus:ring-1"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            backgroundColor: "#fff",
-            color: "var(--color-ink)",
-          }}
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
         />
       </div>
 
       {/* Room Number — hidden when anonymous */}
       <div className={isAnonymous ? "hidden" : undefined} aria-hidden={isAnonymous}>
-        <label htmlFor="room_no" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
-          Room Number {!isAnonymous && <span style={{ color: "var(--color-accent-urgent)" }}>*</span>}
+        <label htmlFor="room_no" className="block text-sm font-semibold mb-1.5 text-slate-900">
+          Room Number {!isAnonymous && <span className="text-rose-600">*</span>}
         </label>
         <input
           id="room_no"
@@ -425,21 +390,16 @@ export default function RaiseTicketForm() {
           required={!isAnonymous}
           disabled={isAnonymous}
           maxLength={20}
-          className="w-full rounded border px-3.5 py-2.5 text-sm transition focus:outline-none focus:ring-1"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            backgroundColor: "#fff",
-            color: "var(--color-ink)",
-            fontFamily: "var(--font-ibm-plex-mono), monospace",
-          }}
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
         />
       </div>
 
       {/* Phone Number — hidden when anonymous, optional when not anonymous */}
       <div className={isAnonymous ? "hidden" : undefined} aria-hidden={isAnonymous}>
-        <label htmlFor="phone_no" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
+        <label htmlFor="phone_no" className="block text-sm font-semibold mb-1.5 text-slate-900">
           Phone No. (for contacting you){" "}
-          <span className="font-normal text-xs" style={{ color: "var(--color-ink-400)" }}>
+          <span className="font-normal text-xs text-slate-500">
             (optional)
           </span>
         </label>
@@ -450,31 +410,22 @@ export default function RaiseTicketForm() {
           placeholder="e.g. 9876543210"
           disabled={isAnonymous}
           maxLength={20}
-          className="w-full rounded border px-3.5 py-2.5 text-sm transition focus:outline-none focus:ring-1"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            backgroundColor: "#fff",
-            color: "var(--color-ink)",
-            fontFamily: "var(--font-ibm-plex-mono), monospace",
-          }}
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
         />
       </div>
 
       {/* Category */}
       <div>
-        <label htmlFor="tag" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
-          Complaint Category <span style={{ color: "var(--color-accent-urgent)" }}>*</span>
+        <label htmlFor="tag" className="block text-sm font-semibold mb-1.5 text-slate-900">
+          Complaint Category <span className="text-rose-600">*</span>
         </label>
         <select
           id="tag"
           name="tag"
           required
           defaultValue=""
-          className="w-full rounded border px-3.5 py-2.5 text-sm bg-white transition focus:outline-none focus:ring-1"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            color: "var(--color-ink)",
-          }}
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
         >
           <option value="" disabled>
             Select category…
@@ -489,8 +440,8 @@ export default function RaiseTicketForm() {
 
       {/* Description */}
       <div>
-        <label htmlFor="description" className="block text-sm font-semibold mb-1.5" style={{ color: "var(--color-ink)" }}>
-          Describe the problem <span style={{ color: "var(--color-accent-urgent)" }}>*</span>
+        <label htmlFor="description" className="block text-sm font-semibold mb-1.5 text-slate-900">
+          Describe the problem <span className="text-rose-600">*</span>
         </label>
         <textarea
           id="description"
@@ -499,12 +450,7 @@ export default function RaiseTicketForm() {
           required
           placeholder="Specify exact location, symptoms, when the issue began, and any relevant details."
           maxLength={2000}
-          className="w-full rounded border px-3.5 py-2.5 text-sm resize-none transition focus:outline-none focus:ring-1"
-          style={{
-            borderColor: "rgba(31,27,22,0.2)",
-            backgroundColor: "#fff",
-            color: "var(--color-ink)",
-          }}
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 resize-none transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
         />
       </div>
 
@@ -516,16 +462,16 @@ export default function RaiseTicketForm() {
         id="submit-ticket-btn"
         type="submit"
         disabled={isPending || !!photoError}
-        className="w-full py-3 px-4 rounded font-semibold text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3.5 px-4 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
         style={{
           backgroundColor: "var(--color-accent-primary)",
-          color: "var(--color-ink)",
+          color: "#0B0F17",
           fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
         }}
       >
         {isPending ? (
           <>
-            <svg className="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+            <svg className="animate-spin w-4 h-4 text-slate-950" fill="none" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
               <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
             </svg>
@@ -536,7 +482,7 @@ export default function RaiseTicketForm() {
         )}
       </button>
 
-      <p className="text-xs text-center" style={{ color: "var(--color-ink-400)" }}>
+      <p className="text-xs text-center text-slate-500">
         No account required. An instant ticket code will be generated for tracking.
       </p>
     </form>
