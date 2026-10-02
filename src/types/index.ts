@@ -14,6 +14,7 @@ export interface Ticket {
   ticket_code: string;
   raiser_name: string | null;
   room_no: string;
+  phone_no?: string | null;
   tag: TicketTag;
   description: string;
   photo_url: string | null;

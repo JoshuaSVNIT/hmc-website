@@ -4,28 +4,27 @@ import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { getAllNotices, type SanityNotice } from "@/lib/sanity/queries";
 
 export const metadata: Metadata = {
-  title: "Notices — SV Bhavan HMC",
+  title: "Notices & Circulars — SV Bhavan HMC",
   description:
     "Official notices, circulars, and announcements from the Hostel Management Committee.",
 };
 
-// ─── Portable Text component overrides ───────────────────────────────────────
-// Spec §5: supports bold text and bullet lists at minimum.
-
 const ptComponents: PortableTextComponents = {
   marks: {
     strong: ({ children }) => (
-      <strong className="font-bold text-slate-900">{children}</strong>
+      <strong className="font-semibold" style={{ color: "var(--color-ink)" }}>
+        {children}
+      </strong>
     ),
     em: ({ children }) => <em className="italic">{children}</em>,
     underline: ({ children }) => <u className="underline">{children}</u>,
-    // Links in Portable Text (if HMC adds them)
     link: ({ value, children }) => (
       <a
         href={value?.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="text-blue-700 underline hover:text-blue-900"
+        className="underline font-medium hover:text-amber-800"
+        style={{ color: "var(--color-accent-primary-600)" }}
       >
         {children}
       </a>
@@ -33,32 +32,52 @@ const ptComponents: PortableTextComponents = {
   },
   block: {
     normal: ({ children }) => (
-      <p className="text-slate-700 leading-relaxed text-sm sm:text-base">
+      <p className="leading-relaxed text-sm sm:text-base mb-2" style={{ color: "var(--color-ink-500)" }}>
         {children}
       </p>
     ),
     h2: ({ children }) => (
-      <h2 className="text-lg font-bold text-slate-900 mt-4 mb-1">{children}</h2>
+      <h2
+        className="text-lg font-bold mt-4 mb-1"
+        style={{
+          color: "var(--color-ink)",
+          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+        }}
+      >
+        {children}
+      </h2>
     ),
     h3: ({ children }) => (
-      <h3 className="text-base font-semibold text-slate-900 mt-3 mb-1">
+      <h3
+        className="text-base font-bold mt-3 mb-1"
+        style={{
+          color: "var(--color-ink)",
+          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+        }}
+      >
         {children}
       </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-blue-300 pl-4 italic text-slate-600 my-2">
+      <blockquote
+        className="border-l-2 pl-3 italic my-2 text-sm"
+        style={{
+          borderColor: "var(--color-accent-primary)",
+          color: "var(--color-ink-400)",
+        }}
+      >
         {children}
       </blockquote>
     ),
   },
   list: {
     bullet: ({ children }) => (
-      <ul className="list-disc list-inside space-y-1 text-slate-700 text-sm sm:text-base">
+      <ul className="list-disc list-inside space-y-1 text-sm sm:text-base mb-2" style={{ color: "var(--color-ink-500)" }}>
         {children}
       </ul>
     ),
     number: ({ children }) => (
-      <ol className="list-decimal list-inside space-y-1 text-slate-700 text-sm sm:text-base">
+      <ol className="list-decimal list-inside space-y-1 text-sm sm:text-base mb-2" style={{ color: "var(--color-ink-500)" }}>
         {children}
       </ol>
     ),
@@ -69,8 +88,6 @@ const ptComponents: PortableTextComponents = {
   },
 };
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-IN", {
     day: "numeric",
@@ -79,52 +96,68 @@ function formatDate(iso: string): string {
   });
 }
 
-// ─── Single notice card ───────────────────────────────────────────────────────
-
 function NoticeCard({ notice }: { notice: SanityNotice }) {
   return (
     <article
-      className={`bg-white rounded-2xl border shadow-sm overflow-hidden transition-shadow hover:shadow-md ${
-        notice.pinned ? "border-yellow-300" : "border-slate-200"
-      }`}
+      className="rounded border overflow-hidden transition-shadow"
+      style={{
+        backgroundColor: "#fff",
+        borderColor: notice.pinned
+          ? "rgba(184,134,11,0.35)"
+          : "rgba(31,27,22,0.12)",
+      }}
     >
-      {/* Card header */}
+      {/* Header */}
       <div
-        className={`px-5 py-4 flex items-start justify-between gap-3 border-b ${
-          notice.pinned
-            ? "bg-yellow-50 border-yellow-200"
-            : "bg-slate-50 border-slate-100"
-        }`}
+        className="px-5 py-3.5 flex items-start justify-between gap-3 border-b"
+        style={{
+          backgroundColor: notice.pinned ? "rgba(184,134,11,0.06)" : "#faf9f6",
+          borderColor: notice.pinned
+            ? "rgba(184,134,11,0.2)"
+            : "rgba(31,27,22,0.07)",
+        }}
       >
         <div className="flex items-center gap-2 min-w-0">
           {notice.pinned && (
             <span
-              title="Pinned"
-              className="text-yellow-500 text-base shrink-0"
-              aria-label="Pinned notice"
+              className="text-xs px-2 py-0.5 rounded-sm font-semibold shrink-0"
+              style={{
+                backgroundColor: "rgba(184,134,11,0.15)",
+                color: "var(--color-accent-primary-600)",
+              }}
             >
-              📌
+              Pinned
             </span>
           )}
-          <h2 className="text-base sm:text-lg font-extrabold text-slate-900 leading-snug">
+          <h2
+            className="text-base sm:text-lg font-bold leading-snug truncate"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
             {notice.title}
           </h2>
         </div>
         <time
           dateTime={notice.date}
-          className="shrink-0 text-xs text-slate-500 font-medium mt-0.5 whitespace-nowrap"
+          className="shrink-0 text-xs mt-0.5 whitespace-nowrap"
+          style={{
+            fontFamily: "var(--font-ibm-plex-mono), monospace",
+            color: "var(--color-ink-400)",
+          }}
         >
           {formatDate(notice.date)}
         </time>
       </div>
 
-      {/* Portable Text body */}
+      {/* Body */}
       {notice.body && notice.body.length > 0 ? (
-        <div className="px-5 py-4 space-y-2">
+        <div className="p-5">
           <PortableText value={notice.body} components={ptComponents} />
         </div>
       ) : (
-        <p className="px-5 py-4 text-sm text-slate-400 italic">
+        <p className="p-5 text-xs italic" style={{ color: "var(--color-ink-400)" }}>
           No body content.
         </p>
       )}
@@ -132,55 +165,54 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
   );
 }
 
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
 export default async function NoticesPage() {
   const notices = await getAllNotices();
-
   const pinned = notices.filter((n) => n.pinned);
   const rest = notices.filter((n) => !n.pinned);
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-purple-100 text-purple-800 text-xs font-bold px-3 py-1 rounded-full mb-4">
-            📢 Official Announcements
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Hostel Notices
+    <main
+      className="min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "var(--color-paper)" }}
+    >
+      <div className="max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="mb-10">
+          <h1
+            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            Notices &amp; Circulars
           </h1>
-          <p className="mt-2 text-slate-600 text-base max-w-xl">
-            Circulars, maintenance alerts, and important updates from HMC.
-            Pinned notices appear at the top.
+          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+            Official announcements, maintenance schedules, and administrative notices
+            from the Hostel Management Committee.
           </p>
         </div>
-      </div>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {notices.length === 0 ? (
-          <div className="text-center py-24">
-            <p className="text-5xl mb-4">📭</p>
-            <p className="text-slate-500 text-base">No notices yet.</p>
-            <p className="text-slate-400 text-sm mt-1">
-              HMC members can publish notices from Sanity Studio.
+          <div
+            className="rounded border p-12 text-center"
+            style={{ backgroundColor: "#fff", borderColor: "rgba(31,27,22,0.12)" }}
+          >
+            <p className="text-base" style={{ color: "var(--color-ink-500)" }}>
+              No notices published yet.
+            </p>
+            <p className="text-xs mt-1" style={{ color: "var(--color-ink-400)" }}>
+              New circulars published in Sanity Studio will appear here automatically.
             </p>
           </div>
         ) : (
-          <div className="space-y-5">
-            {/* Pinned notices first */}
+          <div className="space-y-4">
             {pinned.map((n) => (
               <NoticeCard key={n._id} notice={n} />
             ))}
-            {/* Divider between pinned and regular */}
             {pinned.length > 0 && rest.length > 0 && (
-              <div className="flex items-center gap-3 py-2">
-                <hr className="flex-1 border-slate-200" />
-                <span className="text-xs text-slate-400 font-medium">
-                  Older notices
-                </span>
-                <hr className="flex-1 border-slate-200" />
+              <div className="py-2 text-xs font-semibold" style={{ color: "var(--color-ink-400)" }}>
+                Earlier notices
               </div>
             )}
             {rest.map((n) => (
@@ -189,10 +221,11 @@ export default async function NoticesPage() {
           </div>
         )}
 
-        <div className="pt-10 border-t border-slate-200 mt-10">
+        <div className="mt-12 pt-6 border-t" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
           <Link
             href="/"
-            className="text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
+            style={{ color: "var(--color-ink-600)" }}
           >
             ← Back to Home
           </Link>

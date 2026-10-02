@@ -1,22 +1,33 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Swami Vivekanand Bhavan - HMC",
-  description: "Hostel Management Committee website for Swami Vivekanand Bhavan",
+  title: "Swami Vivekanand Bhavan — HMC",
+  description:
+    "Hostel Management Committee portal for Swami Vivekanand Bhavan, SVNIT. Raise tickets, track complaints, view contacts and notices.",
 };
 
 export default function RootLayout({
@@ -27,9 +38,16 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-slate-50 text-slate-900 selection:bg-yellow-200 selection:text-slate-900">
+      <body
+        className="min-h-full flex flex-col selection:bg-accent-primary/20 selection:text-ink"
+        style={{
+          fontFamily: "var(--font-ibm-plex-sans), system-ui, sans-serif",
+          backgroundColor: "var(--color-paper)",
+          color: "var(--color-ink)",
+        }}
+      >
         <Navbar />
         <div className="flex-1 flex flex-col">{children}</div>
         <Footer />

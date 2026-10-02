@@ -12,9 +12,6 @@ export const metadata: Metadata = {
 export default async function AdminPage() {
   const supabase = await createClient();
 
-  // Defence-in-depth: verify session even though proxy already redirected
-  // unauthenticated requests.  getUser() validates the JWT with Supabase's
-  // server rather than trusting the local cookie value alone.
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -23,12 +20,10 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  // Authenticated user's RLS context → "authenticated full select on tickets"
-  // policy (§4) allows this read.  No secret key bypass used or needed.
   const { data: tickets, error } = await supabase
     .from("tickets")
     .select(
-      "id, ticket_code, raiser_name, room_no, tag, description, photo_url, status, admin_notes, is_anonymous, created_at, updated_at"
+      "id, ticket_code, raiser_name, room_no, phone_no, tag, description, photo_url, status, admin_notes, is_anonymous, created_at, updated_at"
     )
     .order("created_at", { ascending: false });
 
@@ -37,43 +32,63 @@ export default async function AdminPage() {
   }
 
   return (
-    <main className="min-h-screen bg-slate-50">
+    <main
+      className="min-h-screen"
+      style={{ backgroundColor: "var(--color-paper)" }}
+    >
       {/* Top bar */}
-      <header className="bg-slate-900 text-white px-6 py-4 flex items-center justify-between shadow-md print:hidden">
+      <header
+        className="px-6 py-4 flex items-center justify-between border-b print:hidden"
+        style={{
+          backgroundColor: "var(--color-ink)",
+          borderColor: "rgba(255,255,255,0.08)",
+          color: "var(--color-paper)",
+        }}
+      >
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center shrink-0">
-            <svg
-              className="w-4 h-4 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-              />
-            </svg>
+          <div
+            className="w-8 h-8 rounded flex items-center justify-center font-bold text-xs shrink-0"
+            style={{
+              backgroundColor: "var(--color-accent-secondary)",
+              color: "#fff",
+              fontFamily: "var(--font-ibm-plex-mono), monospace",
+            }}
+          >
+            HMC
           </div>
           <div>
-            <h1 className="text-base font-bold leading-tight">HMC Admin</h1>
-            <p className="text-xs text-slate-400 leading-tight">
+            <h1
+              className="text-base font-bold leading-tight"
+              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
+            >
+              HMC Administrative Portal
+            </h1>
+            <p className="text-xs" style={{ color: "rgba(243,241,235,0.5)" }}>
               Swami Vivekanand Bhavan
             </p>
           </div>
         </div>
 
         <div className="flex items-center gap-4">
-          <span className="text-xs text-slate-400 hidden sm:block">
+          <span
+            className="text-xs hidden sm:block"
+            style={{
+              color: "rgba(243,241,235,0.5)",
+              fontFamily: "var(--font-ibm-plex-mono), monospace",
+            }}
+          >
             {user.email}
           </span>
-          {/* Logout — Server Action via form so it works without JS */}
           <form action={logout}>
             <button
               id="admin-logout-btn"
               type="submit"
-              className="text-xs font-semibold bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg transition-colors"
+              className="text-xs font-semibold px-3 py-1.5 rounded border transition-colors cursor-pointer"
+              style={{
+                borderColor: "rgba(255,255,255,0.15)",
+                backgroundColor: "rgba(255,255,255,0.06)",
+                color: "var(--color-paper)",
+              }}
             >
               Sign out
             </button>
@@ -83,22 +98,37 @@ export default async function AdminPage() {
 
       <div className="px-4 sm:px-6 lg:px-8 py-8 max-w-screen-2xl mx-auto">
         <div className="mb-6">
-          <h2 className="text-2xl font-extrabold text-slate-900 tracking-tight">
-            All Tickets
+          <h2
+            className="text-2xl sm:text-3xl font-bold tracking-tight"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            Complaint Tickets
           </h2>
-          <p className="text-sm text-slate-500 mt-1">
-            {tickets?.length ?? 0} ticket{tickets?.length !== 1 ? "s" : ""}{" "}
-            total · filterable by tag and status below
+          <p className="text-sm mt-1" style={{ color: "var(--color-ink-500)" }}>
+            <span
+              className="font-semibold"
+              style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
+            >
+              {tickets?.length ?? 0}
+            </span>{" "}
+            total tickets logged in system. Filter by category, status, or search keywords below.
           </p>
         </div>
 
         {error ? (
           <div
             role="alert"
-            className="bg-red-50 border border-red-200 rounded-xl px-5 py-4 text-sm text-red-800"
+            className="rounded border p-4 text-sm"
+            style={{
+              backgroundColor: "rgba(179,63,46,0.08)",
+              borderColor: "rgba(179,63,46,0.3)",
+              color: "var(--color-accent-urgent)",
+            }}
           >
-            <strong>Failed to load tickets.</strong> Check the server logs and
-            try refreshing. ({error.message})
+            <strong>Failed to load tickets:</strong> {error.message}
           </div>
         ) : (
           <AdminDashboard tickets={(tickets as Ticket[]) ?? []} />

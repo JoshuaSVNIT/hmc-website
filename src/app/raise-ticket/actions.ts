@@ -30,6 +30,7 @@ export async function submitTicket(
   const isAnonymous = formData.get("is_anonymous") === "true";
   const raiserName = (formData.get("raiser_name") as string | null)?.trim() ?? "";
   const roomNo = (formData.get("room_no") as string | null)?.trim() ?? "";
+  const phoneNo = (formData.get("phone_no") as string | null)?.trim() ?? "";
   const tag = (formData.get("tag") as string | null) as TicketTag | null;
   const description = (formData.get("description") as string | null)?.trim() ?? "";
   const photoFile = formData.get("photo") as File | null;
@@ -105,10 +106,11 @@ export async function submitTicket(
   }
 
   // --- Insert ticket row ---
-  const payload = {
+  const payload: Record<string, unknown> = {
     ticket_code: ticketCode,
     raiser_name: isAnonymous ? null : raiserName,
     room_no: isAnonymous ? "" : roomNo,
+    phone_no: isAnonymous || !phoneNo ? null : phoneNo,
     tag,
     description,
     photo_url: photoUrl,

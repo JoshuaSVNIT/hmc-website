@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import RaiseTicketForm from "./RaiseTicketForm";
 
 export const metadata: Metadata = {
@@ -9,46 +10,70 @@ export const metadata: Metadata = {
 
 export default function RaiseTicketPage() {
   return (
-    <main className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6 lg:px-8">
+    <main
+      className="min-h-screen py-10 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "var(--color-paper)" }}
+    >
       <div className="max-w-2xl mx-auto">
-        {/* Page header */}
-        <div className="mb-8 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-4">
-            <span className="w-2 h-2 rounded-full bg-blue-600"></span>
-            No Login Required
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+        {/* Page header — clean, no pill badges, consistent heading */}
+        <div className="mb-8">
+          <h1
+            className="text-3xl sm:text-4xl font-bold tracking-tight"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
             Raise a Complaint Ticket
           </h1>
-          <p className="mt-2 text-slate-600 text-base">
-            Submit your hostel complaint and get an instant ticket code. HMC
-            will review and update the status.
+          <p
+            className="mt-2 text-base leading-relaxed"
+            style={{ color: "var(--color-ink-500)" }}
+          >
+            Submit your hostel complaint and receive an instant tracking code. The
+            HMC maintenance team reviews and resolves issues according to urgency.
           </p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 sm:p-8">
+        <div
+          className="rounded border p-6 sm:p-8"
+          style={{
+            backgroundColor: "#ffffff",
+            borderColor: "rgba(31,27,22,0.12)",
+            boxShadow: "0 1px 3px rgba(31,27,22,0.05)",
+          }}
+        >
           <RaiseTicketForm />
         </div>
 
-        {/* Tip box */}
-        <div className="mt-6 bg-amber-50 border border-amber-200 rounded-xl px-4 py-4 text-sm text-amber-900">
-          <strong>💡 Tip:</strong> If your issue is a LAN or electrical problem,
-          check our{" "}
-          <a
+        {/* Advisory box */}
+        <div
+          className="mt-6 rounded border p-4 text-sm"
+          style={{
+            backgroundColor: "rgba(184,134,11,0.06)",
+            borderColor: "rgba(184,134,11,0.22)",
+            color: "var(--color-ink)",
+          }}
+        >
+          <span className="font-semibold">Note:</span> Before submitting LAN or
+          electrical complaints, consider reviewing the{" "}
+          <Link
             href="/guides/lan"
-            className="underline font-semibold hover:text-amber-700"
+            className="underline font-medium hover:text-amber-800"
+            style={{ color: "var(--color-accent-primary-600)" }}
           >
             LAN Guide
-          </a>{" "}
+          </Link>{" "}
           or{" "}
-          <a
+          <Link
             href="/guides/electrical"
-            className="underline font-semibold hover:text-amber-700"
+            className="underline font-medium hover:text-amber-800"
+            style={{ color: "var(--color-accent-primary-600)" }}
           >
             Electrical Guide
-          </a>{" "}
-          first — you might be able to fix it yourself!
+          </Link>{" "}
+          for common self-resolvable steps.
         </div>
       </div>
     </main>

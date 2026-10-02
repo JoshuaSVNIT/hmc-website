@@ -4,9 +4,9 @@ import { getAllGalleryItems } from "@/lib/sanity/queries";
 import GalleryGrid from "./GalleryGrid";
 
 export const metadata: Metadata = {
-  title: "Gallery — SV Bhavan HMC",
+  title: "Event Gallery — SV Bhavan HMC",
   description:
-    "Photos and posters from hostel events at Swami Vivekanand Bhavan.",
+    "Photos and posters from hostel celebrations, cultural events, and activities at Swami Vivekanand Bhavan.",
 };
 
 export default async function GalleryPage() {
@@ -14,47 +14,63 @@ export default async function GalleryPage() {
   const totalPhotos = items.reduce((acc, item) => acc + (item.images?.length ?? 0), 0);
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="max-w-6xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full mb-4">
-            📸 Hostel Events
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Event Gallery
+    <main
+      className="min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "var(--color-paper)" }}
+    >
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="mb-10">
+          <h1
+            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            Hostel Photo Gallery
           </h1>
-          <p className="mt-2 text-slate-600 text-base max-w-xl">
-            Celebrations, competitions, posters, and memories from SV Bhavan.
+          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+            Celebrations, sports competitions, cultural gatherings, and campus
+            memories from Swami Vivekanand Bhavan.
           </p>
         </div>
-      </div>
 
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {items.length === 0 ? (
-          <div className="text-center py-24">
-            <p className="text-5xl mb-4">🖼️</p>
-            <p className="text-slate-500 text-base">No albums or photos yet.</p>
-            <p className="text-slate-400 text-sm mt-1">
-              HMC members can upload photos from Sanity Studio.
+          <div
+            className="rounded border p-12 text-center"
+            style={{ backgroundColor: "#fff", borderColor: "rgba(31,27,22,0.12)" }}
+          >
+            <p className="text-base" style={{ color: "var(--color-ink-500)" }}>
+              No photo albums published yet.
+            </p>
+            <p className="text-xs mt-1" style={{ color: "var(--color-ink-400)" }}>
+              Albums uploaded via Sanity Studio will appear here.
             </p>
           </div>
         ) : (
           <>
-            <div className="flex items-center justify-between gap-4 mb-6 text-sm text-slate-500">
+            <div
+              className="flex items-center justify-between gap-4 mb-6 text-xs"
+              style={{
+                fontFamily: "var(--font-ibm-plex-mono), monospace",
+                color: "var(--color-ink-500)",
+              }}
+            >
               <p>
-                {items.length} {items.length === 1 ? "album" : "albums"} • {totalPhotos}{" "}
-                {totalPhotos === 1 ? "photo" : "photos"}
+                {items.length} {items.length === 1 ? "album" : "albums"},{" "}
+                {totalPhotos} {totalPhotos === 1 ? "photo" : "photos"}
               </p>
             </div>
             <GalleryGrid items={items} />
           </>
         )}
 
-        <div className="pt-10 border-t border-slate-200 mt-10">
+        <div className="mt-12 pt-6 border-t" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
           <Link
             href="/"
-            className="text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
+            style={{ color: "var(--color-ink-600)" }}
           >
             ← Back to Home
           </Link>

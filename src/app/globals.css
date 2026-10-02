@@ -1,65 +1,105 @@
 @import "tailwindcss";
 
+/* ─── Design System Tokens ─────────────────────────────────────────────────── */
+/* Space Grotesk (headings) + IBM Plex Sans (body) + IBM Plex Mono (data values) */
+/* Loaded via Google Fonts in layout.tsx                                        */
+
 @theme {
-  /* Primary: Deep warm charcoal-teal — moves away from generic blue */
-  --color-primary-50:  #f0f4f8;
-  --color-primary-100: #d9e4ee;
-  --color-primary-200: #b0c8da;
-  --color-primary-300: #7da8be;
-  --color-primary-400: #4e869e;
-  --color-primary-500: #326780;
-  --color-primary-600: #255168;
-  --color-primary-700: #1d3f54;
-  --color-primary-800: #152e3e;
-  --color-primary-900: #0f2030;
-  --color-primary-950: #09151f;
-  --color-primary: #255168;
+  /* Brand palette */
+  --color-ink:              #1F1B16;
+  --color-paper:            #F3F1EB;
+  --color-accent-primary:   #B8860B;
+  --color-accent-urgent:    #B33F2E;
+  --color-accent-secondary: #2F4F3E;
 
-  /* Urgent — red stays exactly as-is (emergency role) */
-  --color-urgent-50:  #fef2f2;
-  --color-urgent-100: #fee2e2;
-  --color-urgent-500: #ef4444;
-  --color-urgent-600: #dc2626;
-  --color-urgent-700: #b91c1c;
-  --color-urgent: #ef4444;
+  /* Tonal variants for accent-primary (dark gold) */
+  --color-accent-primary-50:  #fdf8e8;
+  --color-accent-primary-100: #f9edba;
+  --color-accent-primary-200: #f0d574;
+  --color-accent-primary-300: #dbb83a;
+  --color-accent-primary-400: #c99910;
+  --color-accent-primary-500: #B8860B;
+  --color-accent-primary-600: #9a6e09;
+  --color-accent-primary-700: #7a5607;
 
-  /* CTA — yellow stays exactly as-is (action/highlight role) */
-  --color-cta-50:  #fefce8;
-  --color-cta-100: #fef9c3;
-  --color-cta-400: #facc15;
-  --color-cta-500: #eab308;
-  --color-cta-600: #ca8a04;
-  --color-cta: #eab308;
+  /* Tonal variants for accent-urgent (deep red) */
+  --color-accent-urgent-50:  #fdf2f0;
+  --color-accent-urgent-100: #faddd9;
+  --color-accent-urgent-200: #f2afa6;
+  --color-accent-urgent-300: #e07268;
+  --color-accent-urgent-400: #c75246;
+  --color-accent-urgent-500: #B33F2E;
+  --color-accent-urgent-600: #922f21;
+  --color-accent-urgent-700: #702218;
+
+  /* Tonal variants for accent-secondary (forest green) */
+  --color-accent-secondary-50:  #f0f4f1;
+  --color-accent-secondary-100: #d5e4da;
+  --color-accent-secondary-200: #a8c9b4;
+  --color-accent-secondary-300: #6fa58b;
+  --color-accent-secondary-400: #467a64;
+  --color-accent-secondary-500: #2F4F3E;
+  --color-accent-secondary-600: #253e30;
+  --color-accent-secondary-700: #1a2d22;
+
+  /* Ink / Paper tonal variants */
+  --color-ink-50:  #f5f3f0;
+  --color-ink-100: #e8e4de;
+  --color-ink-200: #ccc5b9;
+  --color-ink-300: #aea591;
+  --color-ink-400: #8e8471;
+  --color-ink-500: #716452;
+  --color-ink-600: #584d3d;
+  --color-ink-700: #403825;
+  --color-ink-800: #2d2618;
+  --color-ink-900: #1F1B16;
+  --color-ink-950: #120f0b;
+
+  /* Keep Tailwind's built-in slate/red/amber/etc. untouched for admin UI */
 }
 
+/* ─── CSS Custom Properties ────────────────────────────────────────────────── */
 :root {
-  --background: #f4f6f8;
-  --foreground: #0f1e28;
+  --bg-base:     var(--color-paper);
+  --fg-base:     var(--color-ink);
+  --font-heading: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
+  --font-body:    var(--font-ibm-plex-sans), "IBM Plex Sans", system-ui, sans-serif;
+  --font-mono:    var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
 }
+
+/* ─── Base Styles ───────────────────────────────────────────────────────────── */
 
 html {
   scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--background);
-  color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  background-color: var(--bg-base);
+  color: var(--fg-base);
+  font-family: var(--font-body);
   margin: 0;
   padding: 0;
   min-height: 100vh;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* ─── Utility classes for the new design system ─────────────────────────────── */
+.font-heading { font-family: var(--font-heading); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+
 /* ─── Mess menu attention glow ──────────────────────────────────────────────── */
-/* Slow border/shadow pulse. Disabled entirely for prefers-reduced-motion.      */
 @keyframes mess-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(251, 191, 36, 0);
-    border-color: rgb(253 230 138); /* amber-200 */
+    box-shadow: 0 0 0 0 rgba(184, 134, 11, 0);
+    border-color: #f0d574;
   }
   50% {
-    box-shadow: 0 0 18px 6px rgba(251, 191, 36, 0.30);
-    border-color: rgb(245 158 11); /* amber-500 */
+    box-shadow: 0 0 18px 6px rgba(184, 134, 11, 0.22);
+    border-color: #B8860B;
   }
 }
 
@@ -73,7 +113,16 @@ body {
   }
 }
 
-/* Print utility specified in PROJECT_SPEC.md section 7 */
+/* ─── Emergency pulse ───────────────────────────────────────────────────────── */
+@keyframes emergency-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+.animate-emergency-pulse {
+  animation: emergency-pulse 1.8s ease-in-out infinite;
+}
+
+/* ─── Print utility ─────────────────────────────────────────────────────────── */
 @media print {
   .no-print,
   nav,
@@ -85,5 +134,6 @@ body {
   body {
     background: #ffffff !important;
     color: #000000 !important;
+    font-family: serif !important;
   }
 }

@@ -123,3 +123,33 @@ export async function getAllEvents(): Promise<SanityEvent[]> {
   return client.fetch<SanityEvent[]>(ALL_EVENTS_QUERY, {}, REVALIDATE_5MIN);
 }
 
+// ─── TeamMember ──────────────────────────────────────────────────────────────
+
+export interface SanityTeamMember {
+  _id: string;
+  name: string;
+  position: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  bio: any[] | null;
+}
+
+const ALL_TEAM_MEMBERS_QUERY = `
+  *[_type == "teamMember"] | order(position asc, name asc) {
+    _id, name, position, bio
+  }
+`;
+
+export async function getAllTeamMembers(): Promise<SanityTeamMember[]> {
+  try {
+    return await client.fetch<SanityTeamMember[]>(
+      ALL_TEAM_MEMBERS_QUERY,
+      {},
+      REVALIDATE_5MIN
+    );
+  } catch (err) {
+    console.error("Error fetching team members:", err);
+    return [];
+  }
+}
+
+

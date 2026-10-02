@@ -10,12 +10,6 @@ export const metadata: Metadata = {
     "Upcoming hostel events and competitions at Swami Vivekanand Bhavan. Register via Google Forms.",
 };
 
-/**
- * Feature-gated page per §7.
- * NEXT_PUBLIC_SHOW_EVENTS="true"  → render the page.
- * NEXT_PUBLIC_SHOW_EVENTS="false" (or unset) → call notFound() so Next.js
- * returns a 404 and the Navbar omits the link entirely.
- */
 export default async function EventsPage() {
   if (process.env.NEXT_PUBLIC_SHOW_EVENTS !== "true") {
     notFound();
@@ -24,31 +18,35 @@ export default async function EventsPage() {
   const events = await getAllEvents();
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-4">
-            🎉 Hostel Events
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Upcoming Events
+    <main
+      className="min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "var(--color-paper)" }}
+    >
+      <div className="max-w-3xl mx-auto">
+        {/* Header */}
+        <div className="mb-10">
+          <h1
+            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            Hostel Events
           </h1>
-          <p className="mt-2 text-slate-600 text-base max-w-xl">
-            Competitions, fests, and hostel activities. Tap{" "}
-            <strong>Register</strong> on any event to open the Google Form
-            inline.
+          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+            Competitions, festivals, sports tournaments, and student activities. Register directly
+            using the linked registration forms.
           </p>
         </div>
-      </div>
 
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         <EventsList events={events} />
 
-        <div className="pt-10 border-t border-slate-200 mt-10">
+        <div className="mt-12 pt-6 border-t" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
           <Link
             href="/"
-            className="text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
+            style={{ color: "var(--color-ink-600)" }}
           >
             ← Back to Home
           </Link>

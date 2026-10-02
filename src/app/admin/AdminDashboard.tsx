@@ -20,73 +20,44 @@ const STATUS_OPTIONS: TicketStatus[] = ["Open", "In Progress", "Resolved"];
 
 const TAG_META: Record<
   TicketTag,
-  { label: string; emoji: string; bg: string; text: string }
+  { label: string; emoji: string }
 > = {
-  Mess: {
-    label: "Mess",
-    emoji: "🍽️",
-    bg: "bg-orange-100",
-    text: "text-orange-800",
-  },
-  Electrical: {
-    label: "Electrical",
-    emoji: "⚡",
-    bg: "bg-yellow-100",
-    text: "text-yellow-800",
-  },
-  "Plumbing/Water": {
-    label: "Plumbing / Water",
-    emoji: "🚿",
-    bg: "bg-cyan-100",
-    text: "text-cyan-800",
-  },
-  Elevator: {
-    label: "Elevator",
-    emoji: "🛗",
-    bg: "bg-purple-100",
-    text: "text-purple-800",
-  },
-  Cleanliness: {
-    label: "Cleanliness",
-    emoji: "🧹",
-    bg: "bg-green-100",
-    text: "text-green-800",
-  },
-  Pests: {
-    label: "Pests",
-    emoji: "🐜",
-    bg: "bg-red-100",
-    text: "text-red-800",
-  },
-  Others: {
-    label: "Others",
-    emoji: "📋",
-    bg: "bg-slate-100",
-    text: "text-slate-700",
-  },
+  Mess:            { label: "Mess",             emoji: "🍽️" },
+  Electrical:      { label: "Electrical",        emoji: "⚡" },
+  "Plumbing/Water":{ label: "Plumbing / Water",  emoji: "🚿" },
+  Elevator:        { label: "Elevator",          emoji: "🛗" },
+  Cleanliness:     { label: "Cleanliness",       emoji: "🧹" },
+  Pests:           { label: "Pests",              emoji: "🐜" },
+  Others:          { label: "Others",            emoji: "📋" },
 };
 
-const STATUS_META: Record<
-  TicketStatus,
-  { dot: string; badge: string }
-> = {
-  Open: {
-    dot: "bg-amber-400",
-    badge: "bg-amber-50 text-amber-800 border-amber-200",
-  },
-  "In Progress": {
-    dot: "bg-blue-500",
-    badge: "bg-blue-50 text-blue-800 border-blue-200",
-  },
-  Resolved: {
-    dot: "bg-green-500",
-    badge: "bg-green-50 text-green-800 border-green-200",
-  },
-};
+function getStatusStyle(status: TicketStatus) {
+  switch (status) {
+    case "Resolved":
+      return {
+        bg: "rgba(47,79,62,0.12)",
+        text: "var(--color-accent-secondary)",
+        border: "rgba(47,79,62,0.3)",
+      };
+    case "In Progress":
+      return {
+        bg: "rgba(184,134,11,0.12)",
+        text: "var(--color-accent-primary-600)",
+        border: "rgba(184,134,11,0.3)",
+      };
+    case "Open":
+    default:
+      return {
+        bg: "rgba(31,27,22,0.08)",
+        text: "var(--color-ink)",
+        border: "rgba(31,27,22,0.2)",
+      };
+  }
+}
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleString("en-IN", {
-    dateStyle: "medium",
+    dateStyle: "short",
     timeStyle: "short",
   });
 }
@@ -113,29 +84,26 @@ function FilterBar({
   filtered: number;
 }) {
   return (
-    <div className="flex flex-wrap items-center gap-3 mb-6 p-4 bg-white rounded-2xl border border-slate-200 shadow-sm">
+    <div
+      className="flex flex-wrap items-center gap-3 mb-6 p-3 sm:p-4 rounded border shadow-xs"
+      style={{
+        backgroundColor: "#fff",
+        borderColor: "rgba(31,27,22,0.12)",
+      }}
+    >
       {/* Search */}
-      <div className="relative flex-1 min-w-[180px]">
-        <svg
-          className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-          />
-        </svg>
+      <div className="relative flex-1 min-w-[200px]">
         <input
           id="admin-search"
           type="text"
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          placeholder="Search code, name, room, description…"
-          className="w-full pl-9 pr-4 py-2 text-sm rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+          placeholder="Search ticket code, raiser, room, or problem…"
+          className="w-full pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded border transition focus:outline-none focus:ring-1"
+          style={{
+            borderColor: "rgba(31,27,22,0.2)",
+            color: "var(--color-ink)",
+          }}
         />
       </div>
 
@@ -144,7 +112,11 @@ function FilterBar({
         id="admin-tag-filter"
         value={tagFilter}
         onChange={(e) => onTagChange(e.target.value as TicketTag | "All")}
-        className="px-3 py-2 text-sm rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+        className="px-3 py-1.5 text-xs sm:text-sm rounded border bg-white transition focus:outline-none focus:ring-1"
+        style={{
+          borderColor: "rgba(31,27,22,0.2)",
+          color: "var(--color-ink)",
+        }}
       >
         <option value="All">All Categories</option>
         {TAG_OPTIONS.map((t) => (
@@ -161,7 +133,11 @@ function FilterBar({
         onChange={(e) =>
           onStatusChange(e.target.value as TicketStatus | "All")
         }
-        className="px-3 py-2 text-sm rounded-xl border border-slate-200 bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
+        className="px-3 py-1.5 text-xs sm:text-sm rounded border bg-white transition focus:outline-none focus:ring-1"
+        style={{
+          borderColor: "rgba(31,27,22,0.2)",
+          color: "var(--color-ink)",
+        }}
       >
         <option value="All">All Statuses</option>
         {STATUS_OPTIONS.map((s) => (
@@ -172,10 +148,14 @@ function FilterBar({
       </select>
 
       {/* Count badge */}
-      <span className="ml-auto text-xs text-slate-500 whitespace-nowrap">
-        Showing{" "}
-        <strong className="text-slate-700">{filtered}</strong> of{" "}
-        <strong className="text-slate-700">{total}</strong>
+      <span
+        className="ml-auto text-xs shrink-0"
+        style={{
+          fontFamily: "var(--font-ibm-plex-mono), monospace",
+          color: "var(--color-ink-500)",
+        }}
+      >
+        Showing <strong>{filtered}</strong> of <strong>{total}</strong>
       </span>
     </div>
   );
@@ -191,37 +171,39 @@ function StatusDropdown({
   ticketId: string;
   currentStatus: TicketStatus;
   onOptimisticChange: (id: string, status: TicketStatus) => void;
-}) {
+  }) {
   const [isPending, startTransition] = useTransition();
   const [saveError, setSaveError] = useState<string | null>(null);
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const newStatus = e.target.value as TicketStatus;
     setSaveError(null);
-    // Optimistic update
     onOptimisticChange(ticketId, newStatus);
 
     startTransition(async () => {
       const result = await updateTicketStatus(ticketId, newStatus);
       if (!result.success) {
         setSaveError(result.error);
-        // Revert: the parent still holds the old value because we passed the
-        // optimistic update through — on next render the input reverts.
       }
     });
   }
 
-  const meta = STATUS_META[currentStatus] ?? STATUS_META.Open;
+  const style = getStatusStyle(currentStatus);
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="relative">
+      <div className="relative inline-block">
         <select
           id={`status-select-${ticketId}`}
           value={currentStatus}
           onChange={handleChange}
           disabled={isPending}
-          className={`pr-7 pl-2 py-1 text-xs font-semibold rounded-lg border cursor-pointer appearance-none transition disabled:opacity-50 ${meta.badge}`}
+          className="pr-6 pl-2 py-1 text-xs font-semibold rounded border cursor-pointer transition disabled:opacity-50"
+          style={{
+            backgroundColor: style.bg,
+            color: style.text,
+            borderColor: style.border,
+          }}
         >
           {STATUS_OPTIONS.map((s) => (
             <option key={s} value={s}>
@@ -229,30 +211,11 @@ function StatusDropdown({
             </option>
           ))}
         </select>
-        {isPending && (
-          <svg
-            className="absolute right-1.5 top-1/2 -translate-y-1/2 w-3 h-3 animate-spin text-current"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            />
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-            />
-          </svg>
-        )}
       </div>
       {saveError && (
-        <p className="text-xs text-red-500">{saveError}</p>
+        <p className="text-[11px]" style={{ color: "var(--color-accent-urgent)" }}>
+          {saveError}
+        </p>
       )}
     </div>
   );
@@ -273,7 +236,7 @@ function AdminNotesField({
   const [saveError, setSaveError] = useState<string | null>(null);
 
   const handleSave = useCallback(() => {
-    if (value === (initialNotes ?? "")) return; // nothing changed
+    if (value === (initialNotes ?? "")) return;
     setSaveError(null);
     setSaved(false);
 
@@ -289,7 +252,7 @@ function AdminNotesField({
   }, [ticketId, value, initialNotes]);
 
   return (
-    <div className="flex flex-col gap-1 min-w-[200px]">
+    <div className="flex flex-col gap-1 min-w-[180px]">
       <textarea
         id={`admin-notes-${ticketId}`}
         rows={2}
@@ -300,22 +263,28 @@ function AdminNotesField({
           setSaveError(null);
         }}
         onBlur={handleSave}
-        placeholder="Add HMC note…"
+        placeholder="Add resolution or update notes…"
         maxLength={1000}
-        className="w-full text-xs rounded-lg border border-slate-200 px-2.5 py-1.5 resize-none focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-transparent transition"
+        className="w-full text-xs rounded border px-2 py-1 resize-none transition focus:outline-none focus:ring-1"
+        style={{
+          borderColor: "rgba(31,27,22,0.18)",
+          backgroundColor: "#fff",
+          color: "var(--color-ink)",
+        }}
       />
-      <div className="flex items-center justify-between gap-2">
+      <div className="flex items-center justify-between gap-2 text-[11px]">
         {saveError && (
-          <p className="text-xs text-red-500 flex-1">{saveError}</p>
+          <p className="flex-1" style={{ color: "var(--color-accent-urgent)" }}>{saveError}</p>
         )}
         {saved && (
-          <p className="text-xs text-green-600 flex-1">✓ Saved</p>
+          <p className="flex-1 font-medium" style={{ color: "var(--color-accent-secondary)" }}>Saved</p>
         )}
         <button
           type="button"
           onClick={handleSave}
           disabled={isPending || value === (initialNotes ?? "")}
-          className="ml-auto text-xs font-semibold text-blue-700 hover:text-blue-900 disabled:opacity-40 transition whitespace-nowrap"
+          className="ml-auto font-medium hover:underline disabled:opacity-40 transition cursor-pointer"
+          style={{ color: "var(--color-accent-primary-600)" }}
         >
           {isPending ? "Saving…" : "Save"}
         </button>
@@ -335,80 +304,131 @@ function TicketTable({
 }) {
   if (tickets.length === 0) {
     return (
-      <div className="text-center py-16 bg-white rounded-2xl border border-slate-200">
-        <p className="text-slate-400 text-sm">No tickets match your filters.</p>
+      <div
+        className="text-center py-16 rounded border"
+        style={{
+          backgroundColor: "#fff",
+          borderColor: "rgba(31,27,22,0.12)",
+        }}
+      >
+        <p className="text-sm" style={{ color: "var(--color-ink-400)" }}>
+          No tickets match your filters.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-x-auto">
-      <table className="min-w-full text-sm">
+    <div
+      className="rounded border shadow-xs overflow-x-auto"
+      style={{
+        backgroundColor: "#fff",
+        borderColor: "rgba(31,27,22,0.12)",
+      }}
+    >
+      <table className="min-w-full text-xs sm:text-sm">
         <thead>
-          <tr className="border-b border-slate-100 bg-slate-50">
+          <tr
+            className="border-b"
+            style={{
+              backgroundColor: "rgba(31,27,22,0.03)",
+              borderColor: "rgba(31,27,22,0.1)",
+            }}
+          >
             {[
               "Ticket",
-              "Raised By",
+              "Raised by",
               "Room",
+              "Phone",
               "Category",
               "Description",
               "Status",
-              "HMC Notes",
-              "Date",
+              "HMC notes",
+              "Logged",
             ].map((h) => (
               <th
                 key={h}
-                className="px-4 py-3 text-left text-xs font-bold text-slate-500 uppercase tracking-wider whitespace-nowrap"
+                className="px-3.5 py-2.5 text-left text-xs font-semibold whitespace-nowrap"
+                style={{ color: "var(--color-ink-500)" }}
               >
                 {h}
               </th>
             ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
+        <tbody className="divide-y" style={{ borderColor: "rgba(31,27,22,0.06)" }}>
           {tickets.map((ticket) => {
             const tag = TAG_META[ticket.tag] ?? TAG_META.Others;
             return (
               <tr
                 key={ticket.id}
-                className="hover:bg-slate-50/60 transition-colors align-top"
+                className="hover:bg-black/[0.015] transition-colors align-top"
               >
                 {/* Ticket code */}
-                <td className="px-4 py-3 font-mono font-bold text-slate-800 whitespace-nowrap">
+                <td
+                  className="px-3.5 py-3 font-bold whitespace-nowrap"
+                  style={{
+                    fontFamily: "var(--font-ibm-plex-mono), monospace",
+                    color: "var(--color-ink)",
+                  }}
+                >
                   {ticket.ticket_code}
                 </td>
 
                 {/* Raised by */}
-                <td className="px-4 py-3 text-slate-700 whitespace-nowrap">
+                <td className="px-3.5 py-3 whitespace-nowrap" style={{ color: "var(--color-ink)" }}>
                   {ticket.is_anonymous ? (
-                    <span className="italic text-slate-400">Anonymous</span>
+                    <span className="italic text-xs" style={{ color: "var(--color-ink-400)" }}>
+                      Anonymous
+                    </span>
                   ) : (
-                    ticket.raiser_name ?? (
-                      <span className="text-slate-400">—</span>
-                    )
+                    ticket.raiser_name ?? <span style={{ color: "var(--color-ink-400)" }}>—</span>
                   )}
                 </td>
 
                 {/* Room */}
-                <td className="px-4 py-3 text-slate-700 whitespace-nowrap">
-                  {ticket.room_no}
+                <td
+                  className="px-3.5 py-3 font-semibold whitespace-nowrap"
+                  style={{
+                    fontFamily: "var(--font-ibm-plex-mono), monospace",
+                    color: "var(--color-ink)",
+                  }}
+                >
+                  {ticket.room_no || "—"}
                 </td>
 
-                {/* Category badge */}
-                <td className="px-4 py-3">
-                  <span
-                    className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold ${tag.bg} ${tag.text}`}
-                  >
-                    {tag.emoji} {ticket.tag}
+                {/* Phone */}
+                <td
+                  className="px-3.5 py-3 whitespace-nowrap text-xs"
+                  style={{
+                    fontFamily: "var(--font-ibm-plex-mono), monospace",
+                    color: "var(--color-ink)",
+                  }}
+                >
+                  {ticket.phone_no ? (
+                    <a
+                      href={`tel:${ticket.phone_no.replace(/[\s\-().]/g, "")}`}
+                      className="hover:underline font-semibold"
+                      style={{ color: "var(--color-accent-primary-600)" }}
+                    >
+                      {ticket.phone_no}
+                    </a>
+                  ) : (
+                    <span style={{ color: "var(--color-ink-400)" }}>—</span>
+                  )}
+                </td>
+
+                {/* Category */}
+                <td className="px-3.5 py-3 whitespace-nowrap">
+                  <span className="inline-flex items-center gap-1 text-xs font-medium">
+                    <span>{tag.emoji}</span>
+                    <span>{tag.label}</span>
                   </span>
                 </td>
 
-                {/* Description — truncated */}
-                <td className="px-4 py-3 text-slate-600 max-w-xs">
-                  <p
-                    className="line-clamp-2 text-xs leading-relaxed"
-                    title={ticket.description}
-                  >
+                {/* Description */}
+                <td className="px-3.5 py-3 max-w-xs" style={{ color: "var(--color-ink-500)" }}>
+                  <p className="line-clamp-2 text-xs leading-relaxed" title={ticket.description}>
                     {ticket.description}
                   </p>
                   {ticket.photo_url && (
@@ -416,7 +436,8 @@ function TicketTable({
                       href={ticket.photo_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs text-blue-600 hover:underline mt-0.5 inline-block"
+                      className="text-xs hover:underline mt-0.5 inline-block"
+                      style={{ color: "var(--color-accent-primary-600)" }}
                     >
                       View photo ↗
                     </a>
@@ -424,7 +445,7 @@ function TicketTable({
                 </td>
 
                 {/* Status dropdown */}
-                <td className="px-4 py-3">
+                <td className="px-3.5 py-3">
                   <StatusDropdown
                     ticketId={ticket.id}
                     currentStatus={ticket.status}
@@ -433,7 +454,7 @@ function TicketTable({
                 </td>
 
                 {/* Admin notes */}
-                <td className="px-4 py-3">
+                <td className="px-3.5 py-3">
                   <AdminNotesField
                     ticketId={ticket.id}
                     initialNotes={ticket.admin_notes}
@@ -441,7 +462,13 @@ function TicketTable({
                 </td>
 
                 {/* Date */}
-                <td className="px-4 py-3 text-xs text-slate-400 whitespace-nowrap">
+                <td
+                  className="px-3.5 py-3 text-xs whitespace-nowrap"
+                  style={{
+                    fontFamily: "var(--font-ibm-plex-mono), monospace",
+                    color: "var(--color-ink-400)",
+                  }}
+                >
                   {formatDate(ticket.created_at)}
                 </td>
               </tr>
@@ -453,55 +480,37 @@ function TicketTable({
   );
 }
 
-// ─── Main Dashboard Component ──────────────────────────────────────────────────
+// ─── Main Admin Dashboard Component ───────────────────────────────────────────
 
-export default function AdminDashboard({
-  tickets: initialTickets,
-}: {
-  tickets: Ticket[];
-}) {
-  // Local copy for optimistic status updates
-  const [tickets, setTickets] = useState<Ticket[]>(initialTickets);
-
+export default function AdminDashboard({ tickets }: { tickets: Ticket[] }) {
+  const [ticketList, setTicketList] = useState<Ticket[]>(tickets);
   const [tagFilter, setTagFilter] = useState<TicketTag | "All">("All");
   const [statusFilter, setStatusFilter] = useState<TicketStatus | "All">("All");
   const [searchQuery, setSearchQuery] = useState("");
 
-  // Optimistic status handler: update local state immediately without waiting
-  // for the server round-trip (the StatusDropdown's own useTransition handles
-  // the background save and any error revert)
-  const handleStatusChange = useCallback(
-    (id: string, status: TicketStatus) => {
-      setTickets((prev) =>
-        prev.map((t) => (t.id === id ? { ...t, status } : t))
-      );
-    },
-    []
-  );
+  const handleStatusChange = useCallback((id: string, newStatus: TicketStatus) => {
+    setTicketList((prev) =>
+      prev.map((t) => (t.id === id ? { ...t, status: newStatus } : t))
+    );
+  }, []);
 
-  // Compute filtered list
-  const filtered = tickets.filter((t) => {
+  const filtered = ticketList.filter((t) => {
     if (tagFilter !== "All" && t.tag !== tagFilter) return false;
     if (statusFilter !== "All" && t.status !== statusFilter) return false;
-    if (searchQuery) {
+    if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase();
-      const haystack = [
-        t.ticket_code,
-        t.raiser_name ?? "",
-        t.room_no,
-        t.description,
-        t.tag,
-        t.status,
-      ]
-        .join(" ")
-        .toLowerCase();
-      if (!haystack.includes(q)) return false;
+      const matchCode = t.ticket_code.toLowerCase().includes(q);
+      const matchRaiser = (t.raiser_name ?? "").toLowerCase().includes(q);
+      const matchRoom = (t.room_no ?? "").toLowerCase().includes(q);
+      const matchPhone = (t.phone_no ?? "").toLowerCase().includes(q);
+      const matchDesc = (t.description ?? "").toLowerCase().includes(q);
+      if (!matchCode && !matchRaiser && !matchRoom && !matchPhone && !matchDesc) return false;
     }
     return true;
   });
 
   return (
-    <>
+    <div>
       <FilterBar
         tagFilter={tagFilter}
         statusFilter={statusFilter}
@@ -509,10 +518,14 @@ export default function AdminDashboard({
         onTagChange={setTagFilter}
         onStatusChange={setStatusFilter}
         onSearchChange={setSearchQuery}
-        total={tickets.length}
+        total={ticketList.length}
         filtered={filtered.length}
       />
-      <TicketTable tickets={filtered} onStatusChange={handleStatusChange} />
-    </>
+
+      <TicketTable
+        tickets={filtered}
+        onStatusChange={handleStatusChange}
+      />
+    </div>
   );
 }

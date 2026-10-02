@@ -11,43 +11,54 @@ export default function LanGuidePage() {
   const pdfUrl = "/guides/lan-guide.pdf";
 
   return (
-    <main className="min-h-screen bg-slate-50">
-      {/* Header */}
-      <div className="bg-white border-b border-slate-200 px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        <div className="max-w-5xl mx-auto">
-          <div className="inline-flex items-center gap-2 bg-blue-100 text-blue-800 text-xs font-bold px-3 py-1 rounded-full mb-3">
-            🌐 IT &amp; Networking Guide
-          </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            LAN Complaint Guide
+    <main
+      className="min-h-screen py-10 sm:py-14 px-4 sm:px-6 lg:px-8"
+      style={{ backgroundColor: "var(--color-paper)" }}
+    >
+      <div className="max-w-5xl mx-auto">
+        {/* Header — clean, no pill badges */}
+        <div className="mb-8">
+          <h1
+            className="text-3xl sm:text-5xl font-bold tracking-tight"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            LAN Complaint &amp; Troubleshooting Guide
           </h1>
-          <p className="mt-2 text-slate-600 text-base max-w-2xl">
-            Complete troubleshooting steps and escalation process for SV Bhavan hostel LAN connections.
+          <p className="mt-2 text-base leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
+            Standard operating procedures, port testing steps, and official escalation pathways for
+            room network connections.
           </p>
         </div>
-      </div>
 
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-10">
-        {/* Helper Note Above Embed */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-amber-50 border border-amber-200 rounded-xl p-3.5 sm:px-4 mb-4 text-xs sm:text-sm text-amber-900">
-          <div className="flex items-center gap-2">
-            <span>ℹ️</span>
-            <span>If the guide doesn&apos;t load below, use the download link.</span>
-          </div>
-          <div className="flex items-center gap-2 shrink-0">
+        {/* Notice strip */}
+        <div
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded border p-3.5 sm:px-4 mb-5 text-xs sm:text-sm"
+          style={{
+            backgroundColor: "rgba(184,134,11,0.06)",
+            borderColor: "rgba(184,134,11,0.25)",
+            color: "var(--color-ink)",
+          }}
+        >
+          <span>If the embedded PDF document does not render in your browser, use the direct links.</span>
+          <div className="flex items-center gap-3 shrink-0">
             <a
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+              className="underline font-semibold hover:text-amber-800"
+              style={{ color: "var(--color-accent-primary-600)" }}
             >
               Open in new tab ↗
             </a>
-            <span className="text-amber-300">|</span>
+            <span style={{ color: "rgba(31,27,22,0.2)" }}>|</span>
             <a
               href={pdfUrl}
               download="SVB-LAN-Complaint-Guide.pdf"
-              className="inline-flex items-center gap-1 font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+              className="underline font-semibold hover:text-amber-800"
+              style={{ color: "var(--color-accent-primary-600)" }}
             >
               Download PDF ↓
             </a>
@@ -55,73 +66,100 @@ export default function LanGuidePage() {
         </div>
 
         {/* Embedded PDF */}
-        <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-sm">
+        <div
+          className="rounded border overflow-hidden shadow-xs"
+          style={{
+            backgroundColor: "#fff",
+            borderColor: "rgba(31,27,22,0.12)",
+          }}
+        >
           <iframe
             src={pdfUrl}
             title="LAN Complaint Guide PDF"
-            className="w-full min-h-[80vh] h-[85vh] border-0"
+            className="w-full min-h-[75vh] h-[80vh] border-0"
           >
-            <p className="p-6 text-center text-slate-600">
+            <p className="p-6 text-center text-sm" style={{ color: "var(--color-ink-500)" }}>
               Your browser does not support embedded PDFs. Please{" "}
               <a
                 href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 underline font-semibold"
+                className="underline font-semibold"
+                style={{ color: "var(--color-accent-primary-600)" }}
               >
-                click here to download or open the PDF
+                open the PDF in a new tab
               </a>
               .
             </p>
           </iframe>
         </div>
 
-        {/* Fallback & Action Links Below Embed */}
-        <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white rounded-xl border border-slate-200 shadow-xs">
+        {/* Document action bar */}
+        <div
+          className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4 p-4 rounded border"
+          style={{
+            backgroundColor: "#fff",
+            borderColor: "rgba(31,27,22,0.1)",
+          }}
+        >
           <div className="flex items-center gap-3">
-            <span className="text-2xl">📄</span>
+            <span className="text-xl">📄</span>
             <div>
-              <p className="text-sm font-bold text-slate-900">SVB LAN Complaint Guide</p>
-              <p className="text-xs text-slate-500">Official PDF reference document</p>
+              <p className="text-sm font-semibold" style={{ color: "var(--color-ink)" }}>
+                SVB LAN Troubleshooting Guide
+              </p>
+              <p className="text-xs" style={{ color: "var(--color-ink-400)" }}>
+                Official SVNIT CCC network reference
+              </p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-2.5 w-full sm:w-auto">
             <a
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 font-semibold text-xs sm:text-sm transition-colors shadow-xs"
+              className="flex-1 sm:flex-none text-center px-4 py-2 rounded border text-xs font-semibold transition-colors"
+              style={{
+                borderColor: "rgba(31,27,22,0.2)",
+                backgroundColor: "#fff",
+                color: "var(--color-ink)",
+              }}
             >
-              Open PDF in new tab ↗
+              Open new tab ↗
             </a>
             <a
               href={pdfUrl}
               download="SVB-LAN-Complaint-Guide.pdf"
-              className="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-blue-700 hover:bg-blue-800 text-white font-semibold text-xs sm:text-sm transition-colors shadow-xs flex items-center justify-center gap-1.5"
+              className="flex-1 sm:flex-none text-center px-4 py-2 rounded text-xs font-semibold transition-colors"
+              style={{
+                backgroundColor: "var(--color-ink)",
+                color: "var(--color-paper)",
+              }}
             >
-              <span>Download PDF</span>
-              <span>↓</span>
+              Download PDF ↓
             </a>
           </div>
         </div>
 
-        {/* Navigation & Help CTAs */}
-        <div className="mt-10 pt-6 border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+        {/* Footer CTAs */}
+        <div className="mt-10 pt-6 border-t flex flex-col sm:flex-row items-center justify-between gap-4" style={{ borderColor: "rgba(31,27,22,0.1)" }}>
           <Link
             href="/"
-            className="text-sm font-semibold text-blue-700 hover:text-blue-900 hover:underline"
+            className="text-sm font-medium hover:underline inline-flex items-center gap-1.5"
+            style={{ color: "var(--color-ink-600)" }}
           >
             ← Back to Home
           </Link>
 
-          <div className="flex items-center gap-4 text-sm">
-            <span className="text-slate-500">Still facing LAN issues?</span>
+          <div className="flex items-center gap-3 text-sm">
+            <span style={{ color: "var(--color-ink-400)" }}>Still experiencing connection issues?</span>
             <Link
               href="/raise-ticket"
-              className="font-bold text-yellow-600 hover:text-yellow-700 hover:underline"
+              className="font-semibold underline"
+              style={{ color: "var(--color-accent-primary-600)" }}
             >
-              Raise a LAN Ticket &rarr;
+              Raise a LAN ticket →
             </Link>
           </div>
         </div>

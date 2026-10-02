@@ -10,121 +10,130 @@ function formatDate(iso: string): string {
   });
 }
 
-// ─── Google Form embed (per-event detail view) ────────────────────────────────
-
 function EventCard({ event }: { event: SanityEvent }) {
   const [open, setOpen] = useState(false);
-
   const isPast = event.date ? new Date(event.date) < new Date() : false;
 
   return (
-    <article className="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+    <article
+      className="rounded border overflow-hidden p-5 sm:p-6"
+      style={{
+        backgroundColor: "#fff",
+        borderColor: "rgba(31,27,22,0.12)",
+      }}
+    >
       {/* Header */}
-      <div className="px-5 py-5 border-b border-slate-100">
-        <div className="flex items-start justify-between gap-3">
-          <div className="min-w-0">
-            <div className="flex items-center gap-2 flex-wrap mb-1">
-              {isPast ? (
-                <span className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">
-                  Past event
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800">
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse" />
-                  Upcoming
-                </span>
-              )}
-            </div>
-            <h2 className="text-lg font-extrabold text-slate-900 leading-snug">
-              {event.title}
-            </h2>
-            {event.date && (
-              <time
-                dateTime={event.date}
-                className="text-xs text-slate-500 font-medium mt-1 block"
-              >
-                📅 {formatDate(event.date)}
-              </time>
-            )}
-          </div>
+      <div className="pb-4 border-b" style={{ borderColor: "rgba(31,27,22,0.07)" }}>
+        <div className="flex items-center gap-2 flex-wrap mb-1.5">
+          {isPast ? (
+            <span
+              className="text-xs px-2 py-0.5 rounded-sm font-medium"
+              style={{
+                backgroundColor: "rgba(31,27,22,0.06)",
+                color: "var(--color-ink-400)",
+              }}
+            >
+              Past event
+            </span>
+          ) : (
+            <span
+              className="text-xs px-2 py-0.5 rounded-sm font-semibold"
+              style={{
+                backgroundColor: "rgba(47,79,62,0.1)",
+                color: "var(--color-accent-secondary)",
+              }}
+            >
+              Upcoming
+            </span>
+          )}
         </div>
+        <h2
+          className="text-lg sm:text-xl font-bold"
+          style={{
+            color: "var(--color-ink)",
+            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          }}
+        >
+          {event.title}
+        </h2>
+        {event.date && (
+          <time
+            dateTime={event.date}
+            className="text-xs block mt-1"
+            style={{
+              fontFamily: "var(--font-ibm-plex-mono), monospace",
+              color: "var(--color-ink-400)",
+            }}
+          >
+            {formatDate(event.date)}
+          </time>
+        )}
 
         {event.description && (
-          <p className="mt-3 text-sm text-slate-600 leading-relaxed">
+          <p className="mt-2 text-sm leading-relaxed" style={{ color: "var(--color-ink-500)" }}>
             {event.description}
           </p>
         )}
       </div>
 
-      {/* Registration / form section */}
-      <div className="px-5 py-4">
+      {/* Registration */}
+      <div className="pt-4">
         {event.googleFormUrl ? (
           <div className="space-y-3">
-            <div className="flex items-center gap-3 flex-wrap">
+            <div className="flex items-center gap-2.5 flex-wrap">
               <button
                 id={`event-register-${event._id}`}
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-700 hover:bg-blue-800 text-white rounded-xl font-semibold text-sm transition-colors shadow-xs"
+                className="px-4 py-2 rounded text-xs font-semibold transition-colors cursor-pointer"
+                style={{
+                  backgroundColor: "var(--color-accent-primary)",
+                  color: "var(--color-ink)",
+                  fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                }}
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-                {open ? "Hide Form" : "Register / Open Form"}
+                {open ? "Hide Form" : "Register / View Form"}
               </button>
 
               <a
                 href={event.googleFormUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2.5 bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 rounded-xl font-semibold text-sm transition-colors shadow-xs"
+                className="px-4 py-2 rounded border text-xs font-medium transition-colors"
+                style={{
+                  borderColor: "rgba(31,27,22,0.2)",
+                  backgroundColor: "#fff",
+                  color: "var(--color-ink)",
+                }}
               >
-                <span>Open form in new tab</span>
-                <span>↗</span>
+                Open in new tab ↗
               </a>
             </div>
 
-            {/* Inline Google Form iframe — rendered when open */}
             {open && (
               <div className="mt-4 space-y-2">
-                <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-inner bg-slate-50">
+                <div
+                  className="rounded overflow-hidden border"
+                  style={{
+                    borderColor: "rgba(31,27,22,0.15)",
+                    backgroundColor: "rgba(31,27,22,0.02)",
+                  }}
+                >
                   <iframe
                     src={event.googleFormUrl}
                     title={`Registration form for ${event.title}`}
                     className="w-full"
-                    style={{ height: "680px", border: "none" }}
+                    style={{ height: "650px", border: "none" }}
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-popups-to-escape-sandbox"
                   />
                 </div>
-                <p className="text-xs text-slate-500">
-                  Form not loading?{" "}
-                  <a
-                    href={event.googleFormUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-blue-700 underline font-medium hover:text-blue-900"
-                  >
-                    Click here to open the form in a new tab
-                  </a>
-                  .
-                </p>
               </div>
             )}
           </div>
         ) : (
-          <p className="text-sm text-slate-400 italic">
-            No registration form linked yet.
+          <p className="text-xs italic" style={{ color: "var(--color-ink-400)" }}>
+            Registration details will be posted soon.
           </p>
         )}
       </div>
@@ -133,21 +142,23 @@ function EventCard({ event }: { event: SanityEvent }) {
 }
 
 export default function EventsList({ events }: { events: SanityEvent[] }) {
-  const upcoming = events.filter(
-    (e) => !e.date || new Date(e.date) >= new Date()
-  );
+  const upcoming = events.filter((e) => !e.date || new Date(e.date) >= new Date());
   const past = events.filter((e) => e.date && new Date(e.date) < new Date());
 
   return (
-    <div className="space-y-10">
-      {/* Upcoming */}
+    <div className="space-y-8">
       {upcoming.length > 0 && (
         <section>
-          <h2 className="text-lg font-bold text-slate-700 mb-4 flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-            Upcoming Events
+          <h2
+            className="text-base font-bold mb-3"
+            style={{
+              color: "var(--color-ink)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            Upcoming Activities
           </h2>
-          <div className="space-y-5">
+          <div className="space-y-4">
             {upcoming.map((e) => (
               <EventCard key={e._id} event={e} />
             ))}
@@ -155,13 +166,18 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
         </section>
       )}
 
-      {/* Past */}
       {past.length > 0 && (
         <section>
-          <h2 className="text-lg font-bold text-slate-500 mb-4">
-            Past Events
+          <h2
+            className="text-sm font-semibold mb-3"
+            style={{
+              color: "var(--color-ink-400)",
+              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            }}
+          >
+            Past Activities
           </h2>
-          <div className="space-y-5 opacity-75">
+          <div className="space-y-4 opacity-75">
             {past.map((e) => (
               <EventCard key={e._id} event={e} />
             ))}
@@ -170,11 +186,12 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
       )}
 
       {upcoming.length === 0 && past.length === 0 && (
-        <div className="text-center py-24">
-          <p className="text-5xl mb-4">🗓️</p>
-          <p className="text-slate-500 text-base">No events yet.</p>
-          <p className="text-slate-400 text-sm mt-1">
-            HMC members can add events from Sanity Studio.
+        <div
+          className="text-center py-16 rounded border"
+          style={{ backgroundColor: "#fff", borderColor: "rgba(31,27,22,0.12)" }}
+        >
+          <p className="text-sm" style={{ color: "var(--color-ink-500)" }}>
+            No events scheduled right now. Check back soon!
           </p>
         </div>
       )}
