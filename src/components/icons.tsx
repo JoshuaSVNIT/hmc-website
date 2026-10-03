@@ -197,64 +197,10 @@ export function ArrowRightIcon(p: IconProps) {
   );
 }
 
-export function PlayIcon(p: IconProps) {
-  return (
-    <svg {...base(p)}>
-      <circle cx="12" cy="12" r="9" />
-      <path d="m10 8 6 4-6 4V8Z" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
 export function ShieldIcon(p: IconProps) {
   return (
     <svg {...base(p)}>
       <path d="M12 3 4.5 6.5v5.2C4.5 16.8 8 20.2 12 21c4-0.8 7.5-4.2 7.5-9.3V6.5L12 3Z" />
-    </svg>
-  );
-}
-
-export function SunIcon(p: IconProps) {
-  return (
-    <svg {...base(p)}>
-      <circle cx="12" cy="12" r="4" />
-      <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-    </svg>
-  );
-}
-
-export function MoonIcon(p: IconProps) {
-  return (
-    <svg {...base(p)}>
-      <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4 7 7 0 0 0 20 14.5Z" />
-    </svg>
-  );
-}
-
-export function InstagramIcon(p: IconProps) {
-  return (
-    <svg {...base(p)}>
-      <rect x="3" y="3" width="18" height="18" rx="5" />
-      <circle cx="12" cy="12" r="4" />
-      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none" />
-    </svg>
-  );
-}
-
-export function LinkedInIcon(p: IconProps) {
-  return (
-    <svg {...base(p)}>
-      <rect x="3" y="3" width="18" height="18" rx="2" />
-      <path d="M8 11v6M8 8v.01M12 17v-4a2 2 0 1 1 4 0v4" />
-    </svg>
-  );
-}
-
-export function YouTubeIcon(p: IconProps) {
-  return (
-    <svg {...base(p)}>
-      <rect x="2" y="5" width="20" height="14" rx="4" />
-      <path d="m10 9 5 3-5 3V9Z" fill="currentColor" stroke="none" />
     </svg>
   );
 }
@@ -310,3 +256,31 @@ export function CloseIcon(p: IconProps) {
     </svg>
   );
 }
+
+export function PrinterIcon(p: IconProps) {
+  return (
+    <svg {...base(p)}>
+      <path d="M6 9V2h12v7" />
+      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+      <path d="M6 14h12v8H6z" />
+    </svg>
+  );
+}
+
+export function VideoIcon(p: IconProps) {
+  return (
+    <svg {...base(p)}>
+      <path d="m22 8-6 4 6 4V8Z" />
+      <rect width="14" height="12" x="2" y="6" rx="2" ry="2" />
+    </svg>
+  );
+}
+
+export function ReformsIcon(p: IconProps) {
+  return (
+    <svg {...base(p)}>
+      <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+    </svg>
+  );
+}
+

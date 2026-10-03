@@ -3,6 +3,32 @@
 import { useState, useEffect, useCallback } from "react";
 import type { SanityGalleryItem } from "@/lib/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
+import { ImageIcon, VideoIcon } from "@/components/icons";
+
+export function getYouTubeEmbedUrl(url: string): string | null {
+  if (!url) return null;
+  try {
+    const trimmed = url.trim();
+    const shortMatch = trimmed.match(/youtu\.be\/([a-zA-Z0-9_-]{11})/);
+    if (shortMatch && shortMatch[1]) {
+      return `https://www.youtube-nocookie.com/embed/${shortMatch[1]}`;
+    }
+    const longMatch = trimmed.match(/(?:youtube\.com\/(?:watch\?.*v=|embed\/|shorts\/))([a-zA-Z0-9_-]{11})/);
+    if (longMatch && longMatch[1]) {
+      return `https://www.youtube-nocookie.com/embed/${longMatch[1]}`;
+    }
+    const parsed = new URL(trimmed);
+    const vParam = parsed.searchParams.get("v");
+    if (vParam && vParam.length === 11) {
+      return `https://www.youtube-nocookie.com/embed/${vParam}`;
+    }
+  } catch {
+    if (/^[a-zA-Z0-9_-]{11}$/.test(url.trim())) {
+      return `https://www.youtube-nocookie.com/embed/${url.trim()}`;
+    }
+  }
+  return null;
+}
 
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString("en-IN", {
@@ -68,26 +94,29 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
       <div className="space-y-8">
         {items.map((item) => {
           const itemImages = item.images ?? [];
+          const itemVideos = (item.videos ?? []).filter((v) => Boolean(v?.videoUrl?.trim()));
           const count = itemImages.length;
+          const videoCount = itemVideos.length;
 
           return (
             <article
               key={item._id}
-              className="rounded-xl border border-slate-200/90 bg-white overflow-hidden p-5 sm:p-6 shadow-xs hover:border-slate-300 transition-colors"
+              id={item._id}
+              className="scroll-mt-24 rounded-2xl border border-slate-200/90 bg-white overflow-hidden p-5 sm:p-7 shadow-xs hover:border-slate-300 transition-colors"
             >
               {/* Header */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-100">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-slate-100">
                 <div>
-                  <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <div className="flex items-center gap-2 flex-wrap mb-1.5">
                     {item.eventName && (
-                      <span className="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
+                      <span className="text-xs sm:text-sm font-bold px-3 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200">
                         {item.eventName}
                       </span>
                     )}
                     {item.date && (
                       <time
                         dateTime={item.date}
-                        className="text-xs text-slate-500 font-medium"
+                        className="text-xs sm:text-sm text-slate-500 font-medium"
                         style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
                       >
                         {formatDate(item.date)}
@@ -96,7 +125,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                   </div>
                   {item.title && (
                     <h2
-                      className="text-lg sm:text-xl font-bold text-slate-900"
+                      className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight"
                       style={{
                         fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                       }}
@@ -107,81 +136,152 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                 </div>
 
                 <div
-                  className="text-xs font-bold text-slate-500 shrink-0"
+                  className="flex items-center gap-2 text-xs sm:text-sm font-bold text-slate-500 shrink-0"
                   style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
                 >
-                  {count} {count === 1 ? "photo" : "photos"}
+                  {count > 0 && <span>{count} {count === 1 ? "photo" : "photos"}</span>}
+                  {count > 0 && videoCount > 0 && <span className="text-slate-300">·</span>}
+                  {videoCount > 0 && <span>{videoCount} {videoCount === 1 ? "video" : "videos"}</span>}
                 </div>
               </div>
 
-              {/* Photos Grid */}
-              {count === 0 ? (
-                <div className="aspect-[3/1] rounded-lg bg-slate-100 flex items-center justify-center text-xs text-slate-400">
-                  No images uploaded for this item.
-                </div>
-              ) : count === 1 ? (
-                <div
-                  onClick={() => setActiveLightbox({ item, photoIndex: 0 })}
-                  className="aspect-[16/9] sm:aspect-[21/9] max-h-96 rounded-lg overflow-hidden cursor-pointer relative group bg-slate-100"
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={urlFor(itemImages[0]).width(1200).height(600).fit("crop").auto("format").url()}
-                    alt={item.title ?? "Gallery photo"}
-                    className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/80 text-white text-xs font-bold px-3 py-1.5 rounded shadow">
-                      View full size
-                    </span>
+              {/* ── SECTION 1: PHOTOS ── */}
+              <div>
+                {videoCount > 0 && (
+                  <div className="flex items-center gap-2 mb-3.5 text-slate-700">
+                    <ImageIcon size={18} className="text-slate-500" />
+                    <h3 className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">
+                      Photos ({count})
+                    </h3>
                   </div>
-                </div>
-              ) : count === 2 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {itemImages.map((img, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => setActiveLightbox({ item, photoIndex: idx })}
-                      className="aspect-[4/3] rounded-lg overflow-hidden cursor-pointer relative group bg-slate-100"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={urlFor(img).width(800).height(600).fit("crop").auto("format").url()}
-                        alt={`${item.title ?? "Gallery photo"} - ${idx + 1}`}
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/80 text-white text-xs font-bold px-2.5 py-1 rounded shadow">
-                          Expand
-                        </span>
-                      </div>
+                )}
+
+                {count === 0 ? (
+                  <div className="aspect-[3/1] rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center text-sm text-slate-400">
+                    No photos uploaded for this album.
+                  </div>
+                ) : count === 1 ? (
+                  <div
+                    onClick={() => setActiveLightbox({ item, photoIndex: 0 })}
+                    className="aspect-[16/9] sm:aspect-[21/9] max-h-96 rounded-xl overflow-hidden cursor-pointer relative group bg-slate-100"
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={urlFor(itemImages[0]).width(1200).height(600).fit("crop").auto("format").url()}
+                      alt={item.title ?? "Gallery photo"}
+                      className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                      <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/80 text-white text-xs font-bold px-3 py-1.5 rounded shadow">
+                        View full size
+                      </span>
                     </div>
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                  {itemImages.map((img, idx) => (
-                    <div
-                      key={idx}
-                      onClick={() => setActiveLightbox({ item, photoIndex: idx })}
-                      className="aspect-[4/3] rounded-lg overflow-hidden cursor-pointer relative group bg-slate-100"
-                    >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={urlFor(img).width(600).height(450).fit("crop").auto("format").url()}
-                        alt={`${item.title ?? "Gallery photo"} - ${idx + 1}`}
-                        className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
-                        loading="lazy"
-                      />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
-                        <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/80 text-white text-xs font-bold px-2 py-0.5 rounded shadow">
-                          View
-                        </span>
+                  </div>
+                ) : count === 2 ? (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    {itemImages.map((img, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => setActiveLightbox({ item, photoIndex: idx })}
+                        className="aspect-[4/3] rounded-xl overflow-hidden cursor-pointer relative group bg-slate-100"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={urlFor(img).width(800).height(600).fit("crop").auto("format").url()}
+                          alt={`${item.title ?? "Gallery photo"} - ${idx + 1}`}
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/80 text-white text-xs font-bold px-2.5 py-1 rounded shadow">
+                            Expand
+                          </span>
+                        </div>
                       </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3.5">
+                    {itemImages.map((img, idx) => (
+                      <div
+                        key={idx}
+                        onClick={() => setActiveLightbox({ item, photoIndex: idx })}
+                        className="aspect-[4/3] rounded-xl overflow-hidden cursor-pointer relative group bg-slate-100"
+                      >
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={urlFor(img).width(600).height(450).fit("crop").auto("format").url()}
+                          alt={`${item.title ?? "Gallery photo"} - ${idx + 1}`}
+                          className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-colors flex items-center justify-center">
+                          <span className="opacity-0 group-hover:opacity-100 transition-opacity bg-slate-950/80 text-white text-xs font-bold px-2 py-0.5 rounded shadow">
+                            View
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* ── SECTION 2: VIDEOS ── */}
+              {videoCount > 0 && (
+                <div className="mt-8 pt-6 border-t border-slate-100">
+                  <div className="flex items-center gap-2 mb-4 text-slate-900">
+                    <div className="p-1 rounded-md bg-red-100/70 text-red-600">
+                      <VideoIcon size={16} />
                     </div>
-                  ))}
+                    <div>
+                      <h3 className="text-base font-bold tracking-tight text-slate-800">
+                        Event Videos ({videoCount})
+                      </h3>
+                    </div>
+                  </div>
+
+                  <div className={`grid gap-4 ${videoCount === 1 ? "grid-cols-1 max-w-3xl" : "grid-cols-1 md:grid-cols-2"}`}>
+                    {itemVideos.map((vid, vIdx) => {
+                      const embedUrl = getYouTubeEmbedUrl(vid.videoUrl);
+                      if (!embedUrl) {
+                        return (
+                          <div
+                            key={vid._key || vIdx}
+                            className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between gap-3"
+                          >
+                            <span className="text-sm font-semibold text-slate-700 truncate">
+                              Video {vIdx + 1}
+                            </span>
+                            <a
+                              href={vid.videoUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-xs sm:text-sm font-bold text-accent-primary hover:underline shrink-0"
+                            >
+                              Watch on YouTube →
+                            </a>
+                          </div>
+                        );
+                      }
+
+                      return (
+                        <div
+                          key={vid._key || vIdx}
+                          className="relative aspect-video w-full rounded-xl overflow-hidden bg-black border border-slate-200 shadow-xs"
+                        >
+                          <iframe
+                            src={embedUrl}
+                            title={`${item.title ?? "Event"} - Video ${vIdx + 1}`}
+                            className="absolute inset-0 w-full h-full border-0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                            loading="lazy"
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
                 </div>
               )}
             </article>

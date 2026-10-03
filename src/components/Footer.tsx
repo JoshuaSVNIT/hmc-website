@@ -1,4 +1,6 @@
 import Link from "next/link";
+import BrandMark from "@/components/BrandMark";
+import { InstallAppButton } from "@/components/InstallPrompt";
 
 export default function Footer() {
   const showLeaderboard = process.env.NEXT_PUBLIC_SHOW_LEADERBOARD === "true";
@@ -18,37 +20,13 @@ export default function Footer() {
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B1424] via-[#0B1424]/92 to-[#0B1424]/75" />
         </div>
 
-        <div className="relative px-6 sm:px-8 lg:px-10 py-10 lg:py-12">
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            <div>
-              <h2 className="font-display text-3xl sm:text-4xl font-semibold text-gold-soft tracking-tight">
-                A Better Hostel Life Together
-              </h2>
-              <p className="mt-2 text-sm text-white/55">
-                Discipline. Friendship. Growth. Always.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 lg:gap-8">
-              {[
-                { title: "Community Events", desc: "& Activities" },
-                { title: "Student", desc: "Representation" },
-                { title: "Continuous", desc: "Improvement" },
-                { title: "Your Feedback", desc: "Matters" },
-              ].map((item) => (
-                <div key={item.title} className="flex items-start gap-2.5">
-                  <span className="mt-0.5 w-8 h-8 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center shrink-0">
-                    <span className="w-2 h-2 rounded-full bg-gold" />
-                  </span>
-                  <div>
-                    <div className="text-xs font-semibold text-white/90 leading-snug">
-                      {item.title}
-                    </div>
-                    <div className="text-[11px] text-white/45">{item.desc}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="relative px-6 sm:px-8 lg:px-10 py-8 lg:py-10">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+            <BrandMark />
+            <p className="max-w-md text-sm text-white/55 leading-relaxed">
+              Hostel Management Committee, Swami Vivekanand Bhavan, SVNIT Surat.
+              Raise and track complaints, find contacts and read notices.
+            </p>
           </div>
         </div>
       </div>
@@ -56,7 +34,7 @@ export default function Footer() {
       {/* Compact link row */}
       <div className="bg-[#070e1a] border-t border-white/6 px-6 sm:px-8 lg:px-10 py-5">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-white/40">
-          <div className="flex flex-wrap gap-x-4 gap-y-2">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
             <Link href="/raise-ticket" className="hover:text-gold transition-colors">
               Raise Ticket
             </Link>
@@ -88,6 +66,8 @@ export default function Footer() {
             <Link href="/admin" className="hover:text-gold transition-colors">
               Admin
             </Link>
+            <span className="text-white/20">|</span>
+            <InstallAppButton className="hover:text-gold transition-colors text-white/50" />
           </div>
           <p>© {new Date().getFullYear()} SV Bhavan HMC · SVNIT Surat</p>
         </div>

@@ -151,12 +151,23 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
 
           {ticket.photo_url && (
             <Row label="Attached Photo">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={ticket.photo_url}
-                alt="Ticket attachment"
-                className="h-36 rounded-lg border border-slate-200 object-cover shadow-2xs"
-              />
+              <a
+                href={ticket.photo_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex flex-col gap-1.5"
+                title="Click to view full photo"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={ticket.photo_url}
+                  alt="Ticket attachment"
+                  className="max-h-48 rounded-xl border border-slate-200 object-cover shadow-xs group-hover:opacity-90 group-hover:shadow-md transition-all"
+                />
+                <span className="text-xs text-blue-700 font-semibold group-hover:underline inline-flex items-center gap-1">
+                  View full photo ↗
+                </span>
+              </a>
             </Row>
           )}
 

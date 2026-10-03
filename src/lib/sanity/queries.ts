@@ -40,6 +40,13 @@ const HOMEPAGE_CONTACTS_QUERY = `
   }
 `;
 
+const HMC_MEMBERS_QUERY = `
+  *[_type == "contact" && (category == "HMC Member" || lower(category) in ["hmc member", "hmc", "hmc members"] || lower(category) match "*hmc*")] | order(order asc) {
+    _id, category, label, title, phone, order, icon,
+    photo { asset, hotspot, crop }
+  }
+`;
+
 export async function getAllContacts(): Promise<SanityContact[]> {
   try {
     return await client.fetch<SanityContact[]>(ALL_CONTACTS_QUERY, {}, { next: { revalidate: 60 } });
@@ -54,6 +61,15 @@ export async function getHomepageContacts(): Promise<SanityContact[]> {
     return await client.fetch<SanityContact[]>(HOMEPAGE_CONTACTS_QUERY, {}, { next: { revalidate: 60 } });
   } catch (err) {
     console.error("Error fetching homepage contacts:", err);
+    return [];
+  }
+}
+
+export async function getHMCMembers(): Promise<SanityContact[]> {
+  try {
+    return await client.fetch<SanityContact[]>(HMC_MEMBERS_QUERY, {}, { next: { revalidate: 60 } });
+  } catch (err) {
+    console.error("Error fetching HMC members:", err);
     return [];
   }
 }
@@ -103,19 +119,26 @@ export async function getLatestNotices(): Promise<SanityNotice[]> {
 
 // ─── GalleryItem (§5) ─────────────────────────────────────────────────────────
 
+export interface SanityGalleryVideo {
+  _key?: string;
+  _type?: string;
+  videoUrl: string;
+}
+
 export interface SanityGalleryItem {
   _id: string;
   title: string | null;
   // Sanity image references array — passed to urlFor() from @/sanity/lib/image
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   images: any[] | null;
+  videos?: SanityGalleryVideo[] | null;
   eventName: string | null;
   date: string | null; // ISO date string (date type in schema)
 }
 
 const ALL_GALLERY_QUERY = `
   *[_type == "galleryItem"] | order(date desc) {
-    _id, title, images, eventName, date
+    _id, title, images, videos, eventName, date
   }
 `;
 
@@ -133,14 +156,18 @@ export async function getAllGalleryItems(): Promise<SanityGalleryItem[]> {
 export interface SanityEvent {
   _id: string;
   title: string;
-  description: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  description: any[] | string | null;
   date: string | null; // ISO datetime string
   googleFormUrl: string | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  image?: any | null;
+  icon?: string | null;
 }
 
 const ALL_EVENTS_QUERY = `
   *[_type == "event"] | order(date asc) {
-    _id, title, description, date, googleFormUrl
+    _id, title, description, date, googleFormUrl, image, icon
   }
 `;
 
@@ -196,6 +223,25 @@ export interface SanityMessMenu {
   dinner?: string | null;
 }
 
+const ALL_MESS_MENUS_QUERY = `
+  *[_type == "messMenu"] {
+    _id, day, breakfast, lunch, dinner
+  }
+`;
+
+export async function getAllMessMenus(): Promise<SanityMessMenu[]> {
+  try {
+    return await client.fetch<SanityMessMenu[]>(
+      ALL_MESS_MENUS_QUERY,
+      {},
+      REVALIDATE_5MIN
+    );
+  } catch (err) {
+    console.error("Error fetching all mess menus:", err);
+    return [];
+  }
+}
+
 const TODAY_MESS_MENU_QUERY = `
   *[_type == "messMenu" && lower(day) == lower($day)][0] {
     _id, day, breakfast, lunch, dinner
@@ -214,5 +260,93 @@ export async function getTodayMessMenu(dayName: string): Promise<SanityMessMenu 
     return null;
   }
 }
+
+// ─── CommonRoom (§7) ─────────────────────────────────────────────────────────
+
+export interface SanityCommonRoom {
+  _id: string;
+  wing: string;
+  floor: number;
+  label: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  image?: any | null;
+  icon?: string | null;
+  contactName?: string | null;
+  contactPhone?: string | null;
+}
+
+const ALL_COMMON_ROOMS_QUERY = `
+  *[_type == "commonRoom"] | order(floor asc, wing asc) {
+    _id, wing, floor, label, image, icon, contactName, contactPhone
+  }
+`;
+
+export async function getAllCommonRooms(): Promise<SanityCommonRoom[]> {
+  try {
+    return await client.fetch<SanityCommonRoom[]>(
+      ALL_COMMON_ROOMS_QUERY,
+      {},
+      { next: { revalidate: 0 } }
+    );
+  } catch (err) {
+    console.error("Error fetching common rooms:", err);
+    return [];
+  }
+}
+
+// ─── Reform ──────────────────────────────────────────────────────────────────
+
+export interface SanityReformGalleryRef {
+  _id: string;
+  title: string | null;
+  eventName: string | null;
+}
+
+export interface SanityReform {
+  _id: string;
+  title: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  body: any[] | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  coverPhoto?: any | null;
+  icon?: string | null;
+  galleryLink?: SanityReformGalleryRef | null;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  photos?: any[] | null;
+  date: string;
+  sortOrder: number;
+}
+
+const ALL_REFORMS_QUERY = `
+  *[_type == "reform"] | order(sortOrder asc, date desc) {
+    _id,
+    title,
+    body,
+    coverPhoto,
+    icon,
+    galleryLink->{
+      _id,
+      title,
+      eventName
+    },
+    photos,
+    date,
+    sortOrder
+  }
+`;
+
+export async function getAllReforms(): Promise<SanityReform[]> {
+  try {
+    return await client.fetch<SanityReform[]>(
+      ALL_REFORMS_QUERY,
+      {},
+      { next: { revalidate: 60 } }
+    );
+  } catch (err) {
+    console.error("Error fetching reforms:", err);
+    return [];
+  }
+}
+
 
 

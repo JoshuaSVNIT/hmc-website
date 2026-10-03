@@ -11,7 +11,12 @@ export default defineType({
             title: 'Images',
             type: 'array',
             of: [{ type: 'image', options: { hotspot: true } }],
-            validation: (Rule) => Rule.required().min(1),
+        }),
+        defineField({
+            name: 'videos',
+            title: 'Videos',
+            type: 'array',
+            of: [{ type: 'galleryVideo' }],
         }),
         defineField({ name: 'eventName', title: 'Event Name', type: 'string' }),
         defineField({ name: 'date', title: 'Date', type: 'date' }),

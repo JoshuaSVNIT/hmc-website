@@ -7,7 +7,12 @@ import { cookies } from "next/headers";
  * bypass RLS, use createAdminClient() — never expose SUPABASE_SECRET_KEY client-side.
  */
 export async function createClient() {
-  const cookieStore = await cookies();
+  let cookieStore: any = null;
+  try {
+    cookieStore = await cookies();
+  } catch {
+    // Called outside request scope (e.g. testing or CLI)
+  }
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -15,12 +20,12 @@ export async function createClient() {
     {
       cookies: {
         getAll() {
-          return cookieStore.getAll();
+          return cookieStore?.getAll() ?? [];
         },
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieStore?.set(name, value, options)
             );
           } catch {
             // setAll called from a Server Component — cookies are read-only,
@@ -38,7 +43,12 @@ export async function createClient() {
  * NEVER import this in any client component or expose to the browser.
  */
 export async function createAdminClient() {
-  const cookieStore = await cookies();
+  let cookieStore: any = null;
+  try {
+    cookieStore = await cookies();
+  } catch {
+    // Called outside request scope
+  }
 
   return createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -46,12 +56,12 @@ export async function createAdminClient() {
     {
       cookies: {
         getAll() {
-          return cookieStore.getAll();
+          return cookieStore?.getAll() ?? [];
         },
         setAll(cookiesToSet) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
+              cookieStore?.set(name, value, options)
             );
           } catch {
             // intentionally blank — see above

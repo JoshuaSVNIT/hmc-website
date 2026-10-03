@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ─── Design System Tokens ─────────────────────────────────────────────────── */
-/* Display serif (headings) + body sans + mono (data) + script (taglines)        */
+/* Display serif (headings) + body sans + mono (data)                          */
 
 @theme {
   /* Brand palette — deep hostel navy + warm gold */
@@ -65,7 +65,6 @@
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-body: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
-  --font-script: var(--font-great-vibes), "Great Vibes", cursive;
 
   --shadow-card: 0 4px 24px rgba(11, 20, 36, 0.06);
   --shadow-card-hover: 0 8px 32px rgba(11, 20, 36, 0.1);
@@ -100,7 +99,6 @@ h1, h2, h3, h4, h5, h6 {
 .font-display { font-family: var(--font-display); }
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
-.font-script  { font-family: var(--font-script); }
 
 /* Soft card elevation */
 .card-surface {
@@ -186,37 +184,10 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-/* Dark theme (shell toggle) */
-[data-theme="dark"] {
-  --color-paper: #0F1729;
-  --color-surface: #162033;
-  --bg-base: #0F1729;
-  --fg-base: #E8EDF5;
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
-}
-
-[data-theme="dark"] .card-surface {
-  border-color: rgba(255, 255, 255, 0.06);
-}
-
-/* Theme toggle active states (driven by data-theme on <html>) */
-:root .theme-sun,
-[data-theme="light"] .theme-sun {
-  background: var(--color-gold);
-  color: var(--color-ink);
-}
-[data-theme="dark"] .theme-sun {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-}
-:root .theme-moon,
-[data-theme="light"] .theme-moon {
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-}
-[data-theme="dark"] .theme-moon {
-  background: var(--color-gold);
-  color: var(--color-ink);
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
 }
 
 @media print {

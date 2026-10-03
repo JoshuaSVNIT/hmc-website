@@ -100,22 +100,22 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
     >
       {/* Header */}
       <div
-        className={`px-5 py-3.5 flex items-start justify-between gap-3 border-b ${
+        className={`px-5 py-4 flex items-start justify-between gap-3 border-b ${
           notice.pinned
             ? "bg-gradient-to-r from-blue-50/80 to-blue-50/30 border-blue-200/80"
             : "bg-slate-50/70 border-slate-100"
         }`}
       >
-        <div className="flex items-center gap-2 min-w-0">
+        <div className="flex items-center gap-2.5 min-w-0">
           {notice.pinned && (
             <span
-              className="text-xs px-2.5 py-0.5 rounded-full font-bold shrink-0 bg-blue-100 text-blue-950 border border-blue-300"
+              className="text-xs sm:text-sm px-3 py-0.5 rounded-full font-bold shrink-0 bg-blue-100 text-blue-950 border border-blue-300"
             >
               📌 Pinned
             </span>
           )}
           <h2
-            className="text-base sm:text-lg font-bold leading-snug truncate text-slate-900"
+            className="text-lg sm:text-xl font-bold leading-snug truncate text-slate-900"
             style={{
               fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
@@ -125,7 +125,7 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
         </div>
         <time
           dateTime={notice.date}
-          className="shrink-0 text-xs mt-0.5 whitespace-nowrap text-slate-500 font-medium"
+          className="shrink-0 text-xs sm:text-sm mt-0.5 whitespace-nowrap text-slate-500 font-medium"
           style={{
             fontFamily: "var(--font-ibm-plex-mono), monospace",
           }}
@@ -136,11 +136,11 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
 
       {/* Body */}
       {notice.body && notice.body.length > 0 ? (
-        <div className="p-5">
+        <div className="p-5 sm:p-6 text-sm sm:text-base leading-relaxed">
           <PortableText value={notice.body} components={ptComponents} />
         </div>
       ) : (
-        <p className="p-5 text-xs italic text-slate-400">
+        <p className="p-5 text-sm italic text-slate-400">
           No body content.
         </p>
       )}

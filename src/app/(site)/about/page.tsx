@@ -1,77 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { PortableText, type PortableTextComponents } from "@portabletext/react";
-import { getAllTeamMembers, type SanityTeamMember } from "@/lib/sanity/queries";
+import { getHMCMembers, type SanityContact } from "@/lib/sanity/queries";
+import ContactAvatar from "@/components/ContactAvatar";
 import { urlFor } from "@/sanity/lib/image";
 
 export const metadata: Metadata = {
   title: "About Us — Swami Vivekanand Bhavan HMC",
   description:
-    "Learn about the Hostel Management Committee (HMC) team, wardens, and secretaries serving SV Bhavan at SVNIT Surat.",
-};
-
-const ptComponents: PortableTextComponents = {
-  marks: {
-    strong: ({ children }) => (
-      <strong className="font-bold text-slate-900">
-        {children}
-      </strong>
-    ),
-    em: ({ children }) => <em className="italic">{children}</em>,
-    underline: ({ children }) => <u className="underline">{children}</u>,
-    link: ({ value, children }) => (
-      <a
-        href={value?.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline font-bold text-blue-700 hover:text-blue-800"
-      >
-        {children}
-      </a>
-    ),
-  },
-  block: {
-    normal: ({ children }) => (
-      <p className="text-sm leading-relaxed mb-2 text-slate-600">
-        {children}
-      </p>
-    ),
-    h3: ({ children }) => (
-      <h3
-        className="text-base font-bold mt-3 mb-1 text-slate-900"
-        style={{
-          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
-        }}
-      >
-        {children}
-      </h3>
-    ),
-    blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-blue-500 pl-3 italic my-2 text-sm text-slate-600 bg-blue-50/50 py-1 rounded-r">
-        {children}
-      </blockquote>
-    ),
-  },
-  list: {
-    bullet: ({ children }) => (
-      <ul className="list-disc list-inside space-y-1 text-sm mb-2 text-slate-600">
-        {children}
-      </ul>
-    ),
-    number: ({ children }) => (
-      <ol className="list-decimal list-inside space-y-1 text-sm mb-2 text-slate-600">
-        {children}
-      </ol>
-    ),
-  },
-  listItem: {
-    bullet: ({ children }) => <li>{children}</li>,
-    number: ({ children }) => <li>{children}</li>,
-  },
+    "Learn about the Hostel Management Committee (HMC) representatives, secretaries, and wardens serving Swami Vivekanand Bhavan at SVNIT Surat.",
 };
 
 export default async function AboutPage() {
-  const members = await getAllTeamMembers();
+  const members: SanityContact[] = await getHMCMembers();
 
   return (
     <main
@@ -132,43 +72,52 @@ export default async function AboutPage() {
           </div>
         </div>
 
-        {/* Team Section */}
-        <div className="mb-6">
-          <h2
-            className="text-xl sm:text-2xl font-bold mb-1 text-slate-900"
-            style={{
-              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
-            }}
-          >
-            Committee Members
-          </h2>
-          <p className="text-sm text-slate-500">
-            Current serving members of the SV Bhavan Hostel Management Committee.
-          </p>
+        {/* Committee Members Section */}
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+          <div>
+            <h2
+              className="text-xl sm:text-2xl font-bold mb-1 text-slate-900"
+              style={{
+                fontFamily: "var(--font-cormorant), system-ui, sans-serif",
+              }}
+            >
+              Committee Members
+            </h2>
+            <p className="text-sm text-slate-500">
+              Current serving student representatives of the SV Bhavan Hostel Management Committee.
+            </p>
+          </div>
+          {members.length > 0 && (
+            <span className="self-start sm:self-auto text-xs px-2.5 py-0.5 rounded-full font-mono font-bold bg-blue-50 text-blue-800 border border-blue-200/80">
+              {members.length} {members.length === 1 ? "representative" : "representatives"}
+            </span>
+          )}
         </div>
 
         {members.length === 0 ? (
           <div className="rounded-xl border border-slate-200 bg-white p-8 text-center shadow-xs">
             <p className="text-sm font-semibold text-slate-600">
-              No team members listed yet. Profiles added in Sanity Studio will
+              No committee members listed yet. Contacts added in Sanity Studio under category &ldquo;HMC Member&rdquo; will
               appear here.
             </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {members.map((member) => {
-              const photoUrl = member.photo?.asset
+              const photoUrl = member.photo?.asset?._ref
                 ? urlFor(member.photo).width(300).height(300).fit("crop").auto("format").url()
                 : null;
-              const initials = member.name
-                ? member.name
-                    .split(" ")
-                    .filter(Boolean)
-                    .map((n) => n[0])
-                    .slice(0, 2)
-                    .join("")
-                    .toUpperCase()
-                : "HM";
+
+              // Parse name and role if formatted like "Name (Role)" in label
+              const parenMatch = member.label.match(/^(.*?)\s*\((.*?)\)$/);
+              const displayName = parenMatch ? parenMatch[1].trim() : member.label;
+              const displayRole = parenMatch
+                ? parenMatch[2].trim()
+                : member.title || "HMC Member";
+              const secondaryTitle = parenMatch && member.title ? member.title : null;
+
+              const cleanPhone = member.phone.replace(/[\s\-().]/g, "");
+              const telHref = `tel:${cleanPhone}`;
 
               return (
                 <article
@@ -178,55 +127,69 @@ export default async function AboutPage() {
                   <div>
                     {/* Header with Photo/Avatar and Role/Name */}
                     <div className="flex items-start gap-3.5 mb-4">
-                      {photoUrl ? (
-                        <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 shadow-xs bg-slate-100">
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img
-                            src={photoUrl}
-                            alt={member.name}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                      ) : (
-                        <div
-                          className="w-14 h-14 rounded-xl shrink-0 border border-blue-200/80 bg-blue-50 text-blue-900 flex items-center justify-center font-bold text-base shadow-xs"
-                          style={{
-                            fontFamily: "var(--font-cormorant), system-ui, sans-serif",
-                          }}
-                        >
-                          {initials}
-                        </div>
-                      )}
+                      <ContactAvatar
+                        photoUrl={photoUrl}
+                        icon={member.icon}
+                        defaultEmoji="🏛️"
+                        sizeClass="w-14 h-14"
+                        fallbackBgClass="bg-blue-50 text-blue-900 border border-blue-200/80 text-xl font-bold"
+                        alt={displayName}
+                      />
 
                       <div className="min-w-0 flex-1">
-                        {/* Position badge */}
-                        <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold mb-1 bg-blue-50 text-blue-800 border border-blue-200/80">
-                          {member.position}
+                        {/* Position badge(s) */}
+                        <div className="flex flex-wrap items-center gap-1.5 mb-1.5">
+                          <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-50 text-blue-800 border border-blue-200/80">
+                            {displayRole}
+                          </span>
+                          {secondaryTitle && (
+                            <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+                              {secondaryTitle}
+                            </span>
+                          )}
                         </div>
 
                         {/* Name */}
                         <h3
-                          className="text-base font-bold tracking-tight text-slate-900 truncate"
+                          className="text-lg font-bold tracking-tight text-slate-900 truncate"
                           style={{
                             fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                           }}
-                          title={member.name}
+                          title={displayName}
                         >
-                          {member.name}
+                          {displayName}
                         </h3>
                       </div>
                     </div>
 
-                    {/* Bio (Portable Text) */}
-                    {member.bio && member.bio.length > 0 ? (
-                      <div className="mt-2 text-sm text-slate-600">
-                        <PortableText value={member.bio} components={ptComponents} />
-                      </div>
-                    ) : (
-                      <p className="text-xs italic text-slate-400">
-                        Hostel Management Committee representative.
-                      </p>
-                    )}
+                    {/* Phone Contact Details */}
+                    <div className="mt-2 flex items-center justify-between pt-3 border-t border-slate-100">
+                      <a
+                        href={telHref}
+                        className="text-sm sm:text-base font-mono font-bold text-blue-700 hover:text-blue-900 hover:underline inline-flex items-center gap-1.5"
+                      >
+                        <svg
+                          className="w-4 h-4 text-blue-600 shrink-0"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                          />
+                        </svg>
+                        <span>{member.phone}</span>
+                      </a>
+                      <a
+                        href={telHref}
+                        className="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold transition-all bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200/80 inline-flex items-center gap-1 shadow-2xs hover:shadow-xs"
+                      >
+                        Call
+                      </a>
+                    </div>
                   </div>
 
                   <div className="mt-4 pt-3 border-t border-slate-100 text-xs flex items-center justify-between text-slate-500">
@@ -235,7 +198,7 @@ export default async function AboutPage() {
                       href="/contacts"
                       className="hover:underline font-bold text-blue-600 hover:text-blue-800"
                     >
-                      Contact →
+                      Directory →
                     </Link>
                   </div>
                 </article>

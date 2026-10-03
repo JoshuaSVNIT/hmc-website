@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useTransition, useCallback } from "react";
+import { useState, useTransition, useCallback, useMemo } from "react";
 import type { Ticket, TicketTag, TicketStatus } from "@/types";
 import { updateTicketStatus, updateAdminNotes } from "./actions";
+import { PrinterIcon } from "@/components/icons";
 
 // ─── Constants ────────────────────────────────────────────────────────────────
 
@@ -129,16 +130,28 @@ function FilterBar({
         ))}
       </select>
 
-      {/* Count badge */}
-      <span
-        className="ml-auto text-xs shrink-0 text-slate-500"
-        style={{
-          fontFamily: "var(--font-ibm-plex-mono), monospace",
-        }}
-      >
-        Showing <strong className="text-slate-900">{filtered}</strong> of{" "}
-        <strong className="text-slate-900">{total}</strong>
-      </span>
+      {/* Count badge & Print Action */}
+      <div className="ml-auto flex items-center gap-3 shrink-0">
+        <span
+          className="text-xs text-slate-500"
+          style={{
+            fontFamily: "var(--font-ibm-plex-mono), monospace",
+          }}
+        >
+          Showing <strong className="text-slate-900">{filtered}</strong> of{" "}
+          <strong className="text-slate-900">{total}</strong>
+        </span>
+
+        <button
+          type="button"
+          onClick={() => window.print()}
+          className="px-3 py-1.5 rounded-lg border border-slate-300 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-2xs hover:shadow-xs inline-flex items-center gap-1.5 cursor-pointer"
+          title="Print the filtered list of tickets"
+        >
+          <PrinterIcon size={14} />
+          <span>Print Filtered Tickets</span>
+        </button>
+      </div>
     </div>
   );
 }
@@ -460,23 +473,99 @@ export default function AdminDashboard({ tickets }: { tickets: Ticket[] }) {
     return true;
   });
 
+  const filterDescription = useMemo(() => {
+    const parts: string[] = [];
+    if (tagFilter !== "All") parts.push(`Category: ${tagFilter}`);
+    if (statusFilter !== "All") parts.push(`Status: ${statusFilter}`);
+    if (searchQuery.trim()) parts.push(`Search: "${searchQuery.trim()}"`);
+    return parts.length > 0 ? parts.join(", ") : "All Tickets";
+  }, [tagFilter, statusFilter, searchQuery]);
+
+  const currentDate = useMemo(() => {
+    return new Date().toLocaleDateString("en-IN", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    });
+  }, []);
+
   return (
     <div>
-      <FilterBar
-        tagFilter={tagFilter}
-        statusFilter={statusFilter}
-        searchQuery={searchQuery}
-        onTagChange={setTagFilter}
-        onStatusChange={setStatusFilter}
-        onSearchChange={setSearchQuery}
-        total={ticketList.length}
-        filtered={filtered.length}
-      />
+      {/* ── Screen-only Interactive Dashboard ── */}
+      <div className="print:hidden">
+        <FilterBar
+          tagFilter={tagFilter}
+          statusFilter={statusFilter}
+          searchQuery={searchQuery}
+          onTagChange={setTagFilter}
+          onStatusChange={setStatusFilter}
+          onSearchChange={setSearchQuery}
+          total={ticketList.length}
+          filtered={filtered.length}
+        />
 
-      <TicketTable
-        tickets={filtered}
-        onStatusChange={handleStatusChange}
-      />
+        <TicketTable
+          tickets={filtered}
+          onStatusChange={handleStatusChange}
+        />
+      </div>
+
+      {/* ── Clean Print-Only Table View (§2 Admin Print Specification) ── */}
+      <div className="hidden print:block font-sans text-black">
+        <div className="mb-4 pb-2 border-b-2 border-black flex items-baseline justify-between">
+          <div>
+            <h1 className="text-xl font-bold">
+              HMC Tickets — {filterDescription} — printed {currentDate}
+            </h1>
+            <p className="text-xs text-gray-700 mt-1">
+              Swami Vivekanand Bhavan · Showing {filtered.length} of {ticketList.length} tickets
+            </p>
+          </div>
+        </div>
+
+        {filtered.length === 0 ? (
+          <p className="py-6 text-sm italic text-gray-600">
+            No tickets match the selected filters.
+          </p>
+        ) : (
+          <table className="w-full text-left text-xs border-collapse border border-gray-400">
+            <thead>
+              <tr className="bg-gray-100 border-b border-gray-400 text-black">
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Ticket Code</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Category</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Room</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Status</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Logged</th>
+                <th className="py-2 px-2.5 font-bold">HMC Notes</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-300">
+              {filtered.map((t) => (
+                <tr key={t.id} className="border-b border-gray-300">
+                  <td className="py-2 px-2.5 font-mono font-bold border-r border-gray-300 whitespace-nowrap">
+                    {t.ticket_code}
+                  </td>
+                  <td className="py-2 px-2.5 border-r border-gray-300 whitespace-nowrap">
+                    {t.tag}
+                  </td>
+                  <td className="py-2 px-2.5 font-mono border-r border-gray-300 whitespace-nowrap">
+                    {t.room_no || "—"}
+                  </td>
+                  <td className="py-2 px-2.5 font-bold border-r border-gray-300 whitespace-nowrap">
+                    {t.status}
+                  </td>
+                  <td className="py-2 px-2.5 font-mono text-[11px] border-r border-gray-300 whitespace-nowrap">
+                    {formatDate(t.created_at)}
+                  </td>
+                  <td className="py-2 px-2.5 text-xs text-gray-800">
+                    {t.admin_notes || "—"}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+      </div>
     </div>
   );
 }

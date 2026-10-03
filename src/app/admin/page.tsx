@@ -46,6 +46,19 @@ export default async function AdminPage() {
     console.error("Admin tickets fetch error:", error.message);
   }
 
+  // Generate signed URLs for all tickets with photo attachments in private bucket
+  const signedTickets = await Promise.all(
+    ((tickets as Ticket[]) ?? []).map(async (t) => {
+      if (!t.photo_url) return t;
+      const { getTicketPhotoSignedUrl } = await import("@/lib/supabase/photos");
+      const signedUrl = await getTicketPhotoSignedUrl(t.photo_url, 7200);
+      return {
+        ...t,
+        photo_url: signedUrl ?? t.photo_url,
+      };
+    })
+  );
+
   return (
     <main
       className="min-h-screen"
@@ -61,15 +74,8 @@ export default async function AdminPage() {
         }}
       >
         <div className="flex items-center gap-3">
-          <div
-            className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 shadow-xs"
-            style={{
-              backgroundColor: "var(--color-accent-primary)",
-              color: "#ffffff",
-              fontFamily: "var(--font-ibm-plex-mono), monospace",
-            }}
-          >
-            HMC
+          <div className="w-8 h-8 rounded-lg overflow-hidden bg-white/95 border border-white/20 p-0.5 flex items-center justify-center shrink-0 shadow-xs">
+            <img src="/HMC_logo.svg" alt="HMC Logo" className="w-full h-full object-contain" />
           </div>
           <div>
             <h1
@@ -134,7 +140,7 @@ export default async function AdminPage() {
             <strong>Failed to load tickets:</strong> {error.message}
           </div>
         ) : (
-          <AdminDashboard tickets={(tickets as Ticket[]) ?? []} />
+          <AdminDashboard tickets={signedTickets} />
         )}
       </div>
     </main>

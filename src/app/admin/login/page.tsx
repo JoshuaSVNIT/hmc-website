@@ -36,15 +36,8 @@ export default function AdminLoginPage() {
       <div className="relative z-10 w-full max-w-sm">
         {/* Branding */}
         <div className="text-center mb-8">
-          <div
-            className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 font-bold text-base shadow-md shadow-blue-600/20"
-            style={{
-              backgroundColor: "var(--color-accent-primary)",
-              color: "#ffffff",
-              fontFamily: "var(--font-ibm-plex-mono), monospace",
-            }}
-          >
-            SV
+          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 bg-white/95 border border-white/20 p-1 shadow-md shadow-blue-600/20">
+            <img src="/HMC_logo.svg" alt="HMC Logo" className="w-full h-full object-contain" />
           </div>
           <h1
             className="text-2xl font-bold tracking-tight text-white"

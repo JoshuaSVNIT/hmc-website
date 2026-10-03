@@ -112,12 +112,12 @@ export default async function ContactsPage() {
                     >
                       {cfg.title}
                     </h2>
-                    <p className="text-xs sm:text-sm mt-0.5 text-slate-500">
+                    <p className="text-sm mt-0.5 text-slate-500">
                       {cfg.description}
                     </p>
                   </div>
                   <span
-                    className="self-start sm:self-auto text-xs px-2.5 py-0.5 rounded-full font-mono font-bold"
+                    className="self-start sm:self-auto text-xs sm:text-sm px-3 py-0.5 rounded-full font-mono font-bold"
                     style={{
                       backgroundColor: cfg.badgeBg,
                       color: cfg.badgeText,
@@ -129,7 +129,7 @@ export default async function ContactsPage() {
 
                 {/* Directory Table / List */}
                 {list.length === 0 ? (
-                  <p className="text-xs italic text-slate-400 py-3">
+                  <p className="text-sm italic text-slate-400 py-3">
                     No contacts configured in this category yet.
                   </p>
                 ) : (
@@ -145,24 +145,24 @@ export default async function ContactsPage() {
                       return (
                         <div
                           key={contact._id}
-                          className="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 sm:p-4 gap-3 transition-colors hover:bg-slate-50/80"
+                          className="flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:p-5 gap-3.5 transition-colors hover:bg-slate-50/80"
                         >
                           {/* Name & Title */}
-                          <div className="flex items-center gap-3 min-w-0">
+                          <div className="flex items-center gap-3.5 min-w-0">
                             <ContactAvatar
                               photoUrl={photoUrl}
                               icon={contact.icon}
                               defaultEmoji={isUrgent ? "🚨" : category === "Supervisor" ? "👷" : "🏛️"}
-                              sizeClass="w-9 h-9"
+                              sizeClass="w-10 h-10"
                               fallbackBgClass={isUrgent ? "bg-rose-100 text-rose-700" : category === "Supervisor" ? "bg-blue-100 text-blue-800" : "bg-emerald-100 text-emerald-800"}
                               alt={contact.label}
                             />
                             <div className="min-w-0">
-                              <div className="text-sm font-bold text-slate-900 truncate">
+                              <div className="text-base font-bold text-slate-900 truncate">
                                 {contact.label}
                               </div>
                               {contact.title && (
-                                <div className={`text-xs font-semibold ${cfg.phoneColor}`}>
+                                <div className={`text-sm font-semibold mt-0.5 ${cfg.phoneColor}`}>
                                   {contact.title}
                                 </div>
                               )}
@@ -182,7 +182,7 @@ export default async function ContactsPage() {
                             </a>
                             <a
                               href={telHref}
-                              className={`px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all shadow-xs hover:brightness-105 inline-flex items-center gap-1.5 ${cfg.btnCls}`}
+                              className={`px-4 py-2 rounded-lg text-xs sm:text-sm font-bold transition-all shadow-xs hover:brightness-105 inline-flex items-center gap-1.5 ${cfg.btnCls}`}
                             >
                               <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />

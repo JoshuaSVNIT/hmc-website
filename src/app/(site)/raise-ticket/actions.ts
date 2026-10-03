@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import type { TicketTag } from "@/types";
 
 /** Allowed file types for ticket photo uploads (§4 storage constraints) */
@@ -19,12 +19,13 @@ export type SubmitTicketResult =
 
 /**
  * Server Action: validate, optionally upload photo, then insert ticket row.
- * No authentication required — public INSERT per RLS rules in §4.
+ * Uses createAdminClient (service role) to upload to private "ticket-photos" bucket
+ * and insert ticket rows reliably without RLS blocking.
  */
 export async function submitTicket(
   formData: FormData
 ): Promise<SubmitTicketResult> {
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   // --- Extract fields ---
   const isAnonymous = formData.get("is_anonymous") === "true";
@@ -74,14 +75,23 @@ export async function submitTicket(
       });
 
     if (uploadError) {
-      // Non-fatal — continue without photo rather than blocking the ticket
-      console.error("Photo upload error:", uploadError.message);
-    } else if (uploadData?.path) {
-      const { data: urlData } = supabase.storage
-        .from("ticket-photos")
-        .getPublicUrl(uploadData.path);
-      photoUrl = urlData?.publicUrl ?? null;
+      console.error("[raise-ticket] Photo upload error:", uploadError);
+      return {
+        success: false,
+        error: `Photo upload failed: ${uploadError.message}. Please try again or submit without a photo.`,
+      };
     }
+
+    if (!uploadData?.path) {
+      console.error("[raise-ticket] Photo upload returned no storage path");
+      return {
+        success: false,
+        error: "Photo upload failed: missing storage path. Please try again or submit without a photo.",
+      };
+    }
+
+    // Private bucket — store the storage path only (e.g. "179104...-abc.png"), signed URLs are generated server-side upon retrieval
+    photoUrl = uploadData.path;
   }
 
   // --- Generate unique ticket code (retry on collision) ---

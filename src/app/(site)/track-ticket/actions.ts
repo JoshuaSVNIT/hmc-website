@@ -1,6 +1,6 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server";
 import type { Ticket } from "@/types";
 
 export type LookupResult =
@@ -9,7 +9,7 @@ export type LookupResult =
 
 /**
  * Server Action: look up a single ticket by exact ticket_code.
- * RLS is currently disabled — using a direct table select.
+ * Uses createAdminClient to safely query the ticket by code and sign photo attachments.
  * NOTE: console.log / console.error here print to the Next.js SERVER
  * terminal (the terminal running `next dev`), not the browser console.
  */
@@ -30,7 +30,7 @@ export async function lookupTicket(code: string): Promise<LookupResult> {
     };
   }
 
-  const supabase = await createClient();
+  const supabase = await createAdminClient();
 
   // Direct table select — works while RLS is disabled.
   const { data, error } = await supabase
@@ -57,5 +57,17 @@ export async function lookupTicket(code: string): Promise<LookupResult> {
     };
   }
 
-  return { found: true, ticket: data as Ticket };
+  // Generate short-lived signed URL for private bucket photo attachment
+  let photoSignedUrl: string | null = null;
+  if (data.photo_url) {
+    const { getTicketPhotoSignedUrl } = await import("@/lib/supabase/photos");
+    photoSignedUrl = await getTicketPhotoSignedUrl(data.photo_url, 3600);
+  }
+
+  const ticketWithPhoto: Ticket = {
+    ...(data as Ticket),
+    photo_url: photoSignedUrl ?? data.photo_url,
+  };
+
+  return { found: true, ticket: ticketWithPhoto };
 }
