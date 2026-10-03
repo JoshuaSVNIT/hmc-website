@@ -28,7 +28,7 @@ export default async function GalleryPage() {
           <h1
             className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Hostel Photo Gallery

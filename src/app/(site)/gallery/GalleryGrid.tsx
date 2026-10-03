@@ -98,7 +98,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                     <h2
                       className="text-lg sm:text-xl font-bold text-slate-900"
                       style={{
-                        fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                        fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                       }}
                     >
                       {item.title}

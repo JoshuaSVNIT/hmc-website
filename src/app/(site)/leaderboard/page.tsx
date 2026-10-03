@@ -6,7 +6,7 @@ export default function LeaderboardPage() {
     >
       <h1
         className="text-3xl font-bold tracking-tight mb-2"
-        style={{ fontFamily: "var(--font-space-grotesk), system-ui, sans-serif" }}
+        style={{ fontFamily: "var(--font-cormorant), system-ui, sans-serif" }}
       >
         Gaming Leaderboard
       </h1>

@@ -78,7 +78,27 @@ const ALL_NOTICES_QUERY = `
 `;
 
 export async function getAllNotices(): Promise<SanityNotice[]> {
-  return client.fetch<SanityNotice[]>(ALL_NOTICES_QUERY, {}, REVALIDATE_5MIN);
+  try {
+    return await client.fetch<SanityNotice[]>(ALL_NOTICES_QUERY, {}, REVALIDATE_5MIN);
+  } catch (err) {
+    console.error("Error fetching notices:", err);
+    return [];
+  }
+}
+
+const LATEST_NOTICES_QUERY = `
+  *[_type == "notice"] | order(pinned desc, date desc) [0...4] {
+    _id, title, body, date, pinned
+  }
+`;
+
+export async function getLatestNotices(): Promise<SanityNotice[]> {
+  try {
+    return await client.fetch<SanityNotice[]>(LATEST_NOTICES_QUERY, {}, REVALIDATE_5MIN);
+  } catch (err) {
+    console.error("Error fetching latest notices:", err);
+    return [];
+  }
 }
 
 // ─── GalleryItem (§5) ─────────────────────────────────────────────────────────
@@ -100,7 +120,12 @@ const ALL_GALLERY_QUERY = `
 `;
 
 export async function getAllGalleryItems(): Promise<SanityGalleryItem[]> {
-  return client.fetch<SanityGalleryItem[]>(ALL_GALLERY_QUERY, {}, REVALIDATE_5MIN);
+  try {
+    return await client.fetch<SanityGalleryItem[]>(ALL_GALLERY_QUERY, {}, REVALIDATE_5MIN);
+  } catch (err) {
+    console.error("Error fetching gallery items:", err);
+    return [];
+  }
 }
 
 // ─── Event (§5) ───────────────────────────────────────────────────────────────
@@ -120,7 +145,12 @@ const ALL_EVENTS_QUERY = `
 `;
 
 export async function getAllEvents(): Promise<SanityEvent[]> {
-  return client.fetch<SanityEvent[]>(ALL_EVENTS_QUERY, {}, REVALIDATE_5MIN);
+  try {
+    return await client.fetch<SanityEvent[]>(ALL_EVENTS_QUERY, {}, REVALIDATE_5MIN);
+  } catch (err) {
+    console.error("Error fetching events:", err);
+    return [];
+  }
 }
 
 // ─── TeamMember ──────────────────────────────────────────────────────────────

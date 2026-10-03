@@ -24,7 +24,7 @@ export default function RaiseTicketPage() {
           <h1
             className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Raise a Complaint Ticket

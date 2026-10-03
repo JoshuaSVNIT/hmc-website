@@ -40,7 +40,7 @@ const ptComponents: PortableTextComponents = {
       <h3
         className="text-base font-bold mt-3 mb-1 text-slate-900"
         style={{
-          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
         }}
       >
         {children}
@@ -88,7 +88,7 @@ export default async function AboutPage() {
           <h1
             className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             About the HMC
@@ -107,7 +107,7 @@ export default async function AboutPage() {
               <h2
                 className="text-lg font-bold text-slate-900"
                 style={{
-                  fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                  fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                 }}
               >
                 Resident Representation &amp; Governance
@@ -124,7 +124,7 @@ export default async function AboutPage() {
               style={{
                 backgroundColor: "var(--color-accent-primary)",
                 color: "#ffffff",
-                fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                fontFamily: "var(--font-cormorant), system-ui, sans-serif",
               }}
             >
               Raise a Request →
@@ -137,7 +137,7 @@ export default async function AboutPage() {
           <h2
             className="text-xl sm:text-2xl font-bold mb-1 text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Committee Members
@@ -191,7 +191,7 @@ export default async function AboutPage() {
                         <div
                           className="w-14 h-14 rounded-xl shrink-0 border border-blue-200/80 bg-blue-50 text-blue-900 flex items-center justify-center font-bold text-base shadow-xs"
                           style={{
-                            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                            fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                           }}
                         >
                           {initials}
@@ -208,7 +208,7 @@ export default async function AboutPage() {
                         <h3
                           className="text-base font-bold tracking-tight text-slate-900 truncate"
                           style={{
-                            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                            fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                           }}
                           title={member.name}
                         >

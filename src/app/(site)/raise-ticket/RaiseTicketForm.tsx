@@ -78,7 +78,7 @@ function SuccessView({
       <h2
         className="text-2xl font-bold tracking-tight text-slate-900 print:text-black"
         style={{
-          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
         }}
       >
         Ticket Submitted Successfully
@@ -144,7 +144,7 @@ function SuccessView({
           style={{
             backgroundColor: "var(--color-accent-primary)",
             color: "#ffffff",
-            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            fontFamily: "var(--font-cormorant), system-ui, sans-serif",
           }}
         >
           Track status →
@@ -466,7 +466,7 @@ export default function RaiseTicketForm() {
         style={{
           backgroundColor: "var(--color-accent-primary)",
           color: "#ffffff",
-          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
         }}
       >
         {isPending ? (

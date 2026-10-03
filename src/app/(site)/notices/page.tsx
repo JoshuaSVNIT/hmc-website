@@ -39,7 +39,7 @@ const ptComponents: PortableTextComponents = {
       <h2
         className="text-lg font-bold mt-4 mb-1 text-slate-900"
         style={{
-          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
         }}
       >
         {children}
@@ -49,7 +49,7 @@ const ptComponents: PortableTextComponents = {
       <h3
         className="text-base font-bold mt-3 mb-1 text-slate-900"
         style={{
-          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
         }}
       >
         {children}
@@ -117,7 +117,7 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
           <h2
             className="text-base sm:text-lg font-bold leading-snug truncate text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             {notice.title}
@@ -168,7 +168,7 @@ export default async function NoticesPage() {
           <h1
             className="text-3xl sm:text-5xl font-bold tracking-tight text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Notices &amp; Circulars

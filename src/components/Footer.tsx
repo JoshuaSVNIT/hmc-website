@@ -1,185 +1,95 @@
 import Link from "next/link";
 
 export default function Footer() {
-  const showLeaderboard =
-    process.env.NEXT_PUBLIC_SHOW_LEADERBOARD !== "false" &&
-    process.env.NEXT_PUBLIC_SHOW_LEADERBOARD === "true";
-
-  const showEvents =
-    process.env.NEXT_PUBLIC_SHOW_EVENTS !== "false" &&
-    process.env.NEXT_PUBLIC_SHOW_EVENTS === "true";
+  const showLeaderboard = process.env.NEXT_PUBLIC_SHOW_LEADERBOARD === "true";
+  const showEvents = process.env.NEXT_PUBLIC_SHOW_EVENTS === "true";
 
   return (
-    <footer
-      className="no-print border-t mt-auto text-slate-400"
-      style={{
-        backgroundColor: "var(--color-ink)",
-        borderColor: "rgba(255,255,255,0.08)",
-      }}
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {/* Col 1: About */}
-          <div className="space-y-3">
-            <div className="flex items-center gap-2.5">
-              <div
-                className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 shadow-xs"
-                style={{
-                  backgroundColor: "var(--color-accent-primary)",
-                  color: "#ffffff",
-                  fontFamily: "var(--font-ibm-plex-mono), monospace",
-                }}
-              >
-                SV
-              </div>
-              <span
-                className="font-bold text-base text-white tracking-tight"
-                style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
-              >
-                SV Bhavan HMC
-              </span>
-            </div>
-            <p className="text-xs sm:text-sm leading-relaxed text-slate-400">
-              Swami Vivekanand Bhavan Hostel Management Committee, SVNIT Surat.
-              Dedicated to prompt complaint resolution and transparent
-              communication with hostel residents.
-            </p>
-            <p className="text-xs text-slate-500">
-              SVNIT Surat, Gujarat — 395007
-            </p>
-          </div>
-
-          {/* Col 2: Complaint Services */}
-          <div>
-            <h3
-              className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3"
-              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
-            >
-              Complaint Services
-            </h3>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              {[
-                { href: "/raise-ticket", label: "Raise a Ticket" },
-                { href: "/track-ticket", label: "Track Ticket Status" },
-                { href: "/guides/lan", label: "LAN Troubleshooting Guide" },
-                { href: "/guides/electrical", label: "Electrical Complaint Guide" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    className="text-slate-300 hover:text-blue-300 transition-colors"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Col 3: Hostel Life */}
-          <div>
-            <h3
-              className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3"
-              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
-            >
-              Hostel Life
-            </h3>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              <li>
-                <Link
-                  href="/notices"
-                  className="text-slate-300 hover:text-blue-300 transition-colors"
-                >
-                  Important Notices
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/gallery"
-                  className="text-slate-300 hover:text-blue-300 transition-colors"
-                >
-                  Event Photo Gallery
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/about"
-                  className="text-slate-300 hover:text-blue-300 transition-colors"
-                >
-                  About the HMC Team
-                </Link>
-              </li>
-              {showEvents && (
-                <li>
-                  <Link
-                    href="/events"
-                    className="text-slate-300 hover:text-blue-300 transition-colors"
-                  >
-                    Upcoming Events
-                  </Link>
-                </li>
-              )}
-              {showLeaderboard && (
-                <li>
-                  <Link
-                    href="/leaderboard"
-                    className="text-slate-300 hover:text-blue-300 transition-colors"
-                  >
-                    Gaming Leaderboard
-                  </Link>
-                </li>
-              )}
-              <li>
-                <Link
-                  href="/contacts"
-                  className="text-rose-400 hover:text-rose-300 font-semibold transition-colors flex items-center gap-1.5"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse" />
-                  Emergency Contacts
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          {/* Col 4: HMC Administration */}
-          <div>
-            <h3
-              className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3"
-              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
-            >
-              HMC Administration
-            </h3>
-            <p className="text-xs text-slate-400 mb-3 leading-relaxed">
-              Restricted portal for authorized committee members and wardens.
-            </p>
-            <ul className="space-y-2 text-xs sm:text-sm">
-              <li>
-                <Link
-                  href="/admin"
-                  className="text-slate-300 hover:text-blue-300 transition-colors"
-                >
-                  Admin Dashboard
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/admin/login"
-                  className="text-slate-300 hover:text-blue-300 transition-colors"
-                >
-                  Member Login
-                </Link>
-              </li>
-            </ul>
-          </div>
+    <footer className="no-print mt-auto">
+      {/* Brand banner */}
+      <div className="relative overflow-hidden bg-[#0B1424] text-white">
+        <div className="absolute inset-0 opacity-30 pointer-events-none" aria-hidden>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/hero-bg.jpg"
+            alt=""
+            className="w-full h-full object-cover blur-sm scale-105"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1424] via-[#0B1424]/92 to-[#0B1424]/75" />
         </div>
 
-        {/* Bottom bar */}
-        <div
-          className="mt-8 pt-6 border-t flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-3"
-          style={{ borderColor: "rgba(255,255,255,0.06)" }}
-        >
-          <p>© {new Date().getFullYear()} Swami Vivekanand Bhavan HMC. All rights reserved.</p>
-          <p>Technical Secretary Portal — SVNIT Surat</p>
+        <div className="relative px-6 sm:px-8 lg:px-10 py-10 lg:py-12">
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div>
+              <h2 className="font-display text-3xl sm:text-4xl font-semibold text-gold-soft tracking-tight">
+                A Better Hostel Life Together
+              </h2>
+              <p className="mt-2 text-sm text-white/55">
+                Discipline. Friendship. Growth. Always.
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-5 lg:gap-8">
+              {[
+                { title: "Community Events", desc: "& Activities" },
+                { title: "Student", desc: "Representation" },
+                { title: "Continuous", desc: "Improvement" },
+                { title: "Your Feedback", desc: "Matters" },
+              ].map((item) => (
+                <div key={item.title} className="flex items-start gap-2.5">
+                  <span className="mt-0.5 w-8 h-8 rounded-full bg-gold/15 border border-gold/30 flex items-center justify-center shrink-0">
+                    <span className="w-2 h-2 rounded-full bg-gold" />
+                  </span>
+                  <div>
+                    <div className="text-xs font-semibold text-white/90 leading-snug">
+                      {item.title}
+                    </div>
+                    <div className="text-[11px] text-white/45">{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Compact link row */}
+      <div className="bg-[#070e1a] border-t border-white/6 px-6 sm:px-8 lg:px-10 py-5">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-white/40">
+          <div className="flex flex-wrap gap-x-4 gap-y-2">
+            <Link href="/raise-ticket" className="hover:text-gold transition-colors">
+              Raise Ticket
+            </Link>
+            <Link href="/track-ticket" className="hover:text-gold transition-colors">
+              Track Ticket
+            </Link>
+            <Link href="/contacts" className="hover:text-gold transition-colors">
+              Contacts
+            </Link>
+            <Link href="/notices" className="hover:text-gold transition-colors">
+              Notices
+            </Link>
+            <Link href="/gallery" className="hover:text-gold transition-colors">
+              Gallery
+            </Link>
+            <Link href="/about" className="hover:text-gold transition-colors">
+              About
+            </Link>
+            {showEvents && (
+              <Link href="/events" className="hover:text-gold transition-colors">
+                Events
+              </Link>
+            )}
+            {showLeaderboard && (
+              <Link href="/leaderboard" className="hover:text-gold transition-colors">
+                Leaderboard
+              </Link>
+            )}
+            <Link href="/admin" className="hover:text-gold transition-colors">
+              Admin
+            </Link>
+          </div>
+          <p>© {new Date().getFullYear()} SV Bhavan HMC · SVNIT Surat</p>
         </div>
       </div>
     </footer>

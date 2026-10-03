@@ -49,7 +49,7 @@ export default function AdminLoginPage() {
           <h1
             className="text-2xl font-bold tracking-tight text-white"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             HMC Committee Login
@@ -132,7 +132,7 @@ export default function AdminLoginPage() {
               style={{
                 backgroundColor: "var(--color-accent-primary)",
                 color: "#ffffff",
-                fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                fontFamily: "var(--font-cormorant), system-ui, sans-serif",
               }}
             >
               {isPending ? "Authenticating…" : "Sign In"}

@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
+import {
+  Cormorant_Garamond,
+  Plus_Jakarta_Sans,
+  IBM_Plex_Mono,
+  Great_Vibes,
+} from "next/font/google";
 import "./globals.css";
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
+const cormorant = Cormorant_Garamond({
+  variable: "--font-cormorant",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -21,6 +25,13 @@ const ibmPlexMono = IBM_Plex_Mono({
   variable: "--font-ibm-plex-mono",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const greatVibes = Great_Vibes({
+  variable: "--font-great-vibes",
+  subsets: ["latin"],
+  weight: ["400"],
   display: "swap",
 });
 
@@ -38,19 +49,17 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${spaceGrotesk.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${plusJakarta.variable} ${ibmPlexMono.variable} ${greatVibes.variable} h-full antialiased`}
     >
       <body
-        className="min-h-full flex flex-col selection:bg-accent-primary/20 selection:text-ink"
+        className="min-h-full flex flex-col selection:bg-gold/30 selection:text-ink"
         style={{
-          fontFamily: "var(--font-ibm-plex-sans), system-ui, sans-serif",
+          fontFamily: "var(--font-plus-jakarta), system-ui, sans-serif",
           backgroundColor: "var(--color-paper)",
           color: "var(--color-ink)",
         }}
       >
-        <Navbar />
-        <div className="flex-1 flex flex-col">{children}</div>
-        <Footer />
+        {children}
       </body>
     </html>
   );

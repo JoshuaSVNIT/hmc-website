@@ -1,18 +1,19 @@
 @import "tailwindcss";
 
 /* ─── Design System Tokens ─────────────────────────────────────────────────── */
-/* Space Grotesk (headings) + IBM Plex Sans (body) + IBM Plex Mono (data values) */
-/* Loaded via Google Fonts in layout.tsx                                        */
+/* Display serif (headings) + body sans + mono (data) + script (taglines)        */
 
 @theme {
-  /* Brand palette - Deep Academic Navy & Vibrant Cobalt Blue */
-  --color-ink:              #0A1128;
-  --color-paper:            #F8FAFC;
-  --color-accent-primary:   #2563EB;
+  /* Brand palette — deep hostel navy + warm gold */
+  --color-ink:              #0B1424;
+  --color-paper:            #EEF2F7;
+  --color-surface:          #FFFFFF;
+  --color-gold:             #E8B84B;
+  --color-gold-soft:        #F5D78A;
+  --color-accent-primary:   #3B6FD9;
   --color-accent-urgent:    #EF4444;
   --color-accent-secondary: #10B981;
 
-  /* Tonal variants for accent-primary (vibrant academic cobalt / sapphire blue) */
   --color-accent-primary-50:  #eff6ff;
   --color-accent-primary-100: #dbeafe;
   --color-accent-primary-200: #bfdbfe;
@@ -24,7 +25,6 @@
   --color-accent-primary-800: #1e40af;
   --color-accent-primary-900: #1e3a8a;
 
-  /* Tonal variants for accent-urgent (vibrant crimson red) */
   --color-accent-urgent-50:  #fef2f2;
   --color-accent-urgent-100: #fee2e2;
   --color-accent-urgent-200: #fecaca;
@@ -34,7 +34,6 @@
   --color-accent-urgent-600: #dc2626;
   --color-accent-urgent-700: #b91c1c;
 
-  /* Tonal variants for accent-secondary (vibrant emerald green) */
   --color-accent-secondary-50:  #ecfdf5;
   --color-accent-secondary-100: #d1fae5;
   --color-accent-secondary-200: #a7f3d0;
@@ -44,7 +43,6 @@
   --color-accent-secondary-600: #059669;
   --color-accent-secondary-700: #047857;
 
-  /* Ink / Academic Deep Navy & Midnight Slate tones */
   --color-ink-50:  #f8fafc;
   --color-ink-100: #f1f5f9;
   --color-ink-200: #e2e8f0;
@@ -55,19 +53,31 @@
   --color-ink-700: #334155;
   --color-ink-800: #1e293b;
   --color-ink-900: #0f172a;
-  --color-ink-950: #0a1128;
+  --color-ink-950: #0B1424;
+
+  --color-gold-50:  #fdf8e8;
+  --color-gold-100: #f9edc4;
+  --color-gold-200: #f5d78a;
+  --color-gold-300: #E8B84B;
+  --color-gold-400: #d4a017;
+  --color-gold-500: #b8860b;
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-body: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --font-script: var(--font-great-vibes), "Great Vibes", cursive;
+
+  --shadow-card: 0 4px 24px rgba(11, 20, 36, 0.06);
+  --shadow-card-hover: 0 8px 32px rgba(11, 20, 36, 0.1);
+  --radius-card: 1rem;
+  --sidebar-width: 17.5rem;
 }
 
-/* ─── CSS Custom Properties ────────────────────────────────────────────────── */
 :root {
   --bg-base:      var(--color-paper);
   --fg-base:      var(--color-ink);
-  --font-heading: var(--font-space-grotesk), "Space Grotesk", system-ui, sans-serif;
-  --font-body:    var(--font-ibm-plex-sans), "IBM Plex Sans", system-ui, sans-serif;
-  --font-mono:    var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
+  --font-heading: var(--font-display);
 }
-
-/* ─── Base Styles ───────────────────────────────────────────────────────────── */
 
 html {
   scroll-behavior: smooth;
@@ -86,20 +96,71 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-heading);
 }
 
-/* ─── Utility classes for the design system ─────────────────────────────────── */
 .font-heading { font-family: var(--font-heading); }
+.font-display { font-family: var(--font-display); }
 .font-body    { font-family: var(--font-body); }
 .font-mono    { font-family: var(--font-mono); }
+.font-script  { font-family: var(--font-script); }
 
-/* ─── Mess menu attention glow ──────────────────────────────────────────────── */
+/* Soft card elevation */
+.card-surface {
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  border: 1px solid rgba(11, 20, 36, 0.04);
+}
+
+/* Sidebar layout helpers */
+.site-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.site-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  margin-left: 0;
+}
+
+@media (min-width: 1024px) {
+  .site-main {
+    margin-left: var(--sidebar-width);
+  }
+}
+
+/* Hero entrance */
+@keyframes hero-fade-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-hero-fade {
+  animation: hero-fade-up 0.7s ease-out both;
+}
+
+.animate-hero-fade-delay-1 { animation-delay: 0.12s; }
+.animate-hero-fade-delay-2 { animation-delay: 0.24s; }
+.animate-hero-fade-delay-3 { animation-delay: 0.36s; }
+
+@keyframes float-soft {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+.animate-float-soft {
+  animation: float-soft 4s ease-in-out infinite;
+}
+
 @keyframes mess-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
-    border-color: rgba(37, 99, 235, 0.25);
+    box-shadow: 0 0 0 0 rgba(232, 184, 75, 0);
+    border-color: rgba(232, 184, 75, 0.25);
   }
   50% {
-    box-shadow: 0 0 20px 4px rgba(37, 99, 235, 0.2);
-    border-color: #2563EB;
+    box-shadow: 0 0 20px 4px rgba(232, 184, 75, 0.18);
+    border-color: #E8B84B;
   }
 }
 
@@ -107,33 +168,71 @@ h1, h2, h3, h4, h5, h6 {
   animation: mess-glow 3s ease-in-out infinite;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .animate-mess-glow {
-    animation: none;
-  }
-}
-
-/* ─── Emergency pulse ───────────────────────────────────────────────────────── */
 @keyframes emergency-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
   50%       { opacity: 0.4; transform: scale(0.92); }
 }
+
 .animate-emergency-pulse {
   animation: emergency-pulse 1.6s ease-in-out infinite;
 }
 
-/* ─── Print utility ─────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-mess-glow,
+  .animate-float-soft,
+  .animate-hero-fade,
+  .animate-emergency-pulse {
+    animation: none !important;
+  }
+}
+
+/* Dark theme (shell toggle) */
+[data-theme="dark"] {
+  --color-paper: #0F1729;
+  --color-surface: #162033;
+  --bg-base: #0F1729;
+  --fg-base: #E8EDF5;
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+[data-theme="dark"] .card-surface {
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+/* Theme toggle active states (driven by data-theme on <html>) */
+:root .theme-sun,
+[data-theme="light"] .theme-sun {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+[data-theme="dark"] .theme-sun {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+}
+:root .theme-moon,
+[data-theme="light"] .theme-moon {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.5);
+}
+[data-theme="dark"] .theme-moon {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
 @media print {
   .no-print,
   nav,
   footer,
+  aside,
   button,
   .print-hide {
     display: none !important;
   }
+  .site-main {
+    margin-left: 0 !important;
+  }
   body {
     background: #ffffff !important;
     color: #000000 !important;
-    font-family: serif !important;
   }
 }

@@ -38,7 +38,7 @@ function EventCard({ event }: { event: SanityEvent }) {
         <h2
           className="text-lg sm:text-xl font-bold text-slate-900"
           style={{
-            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+            fontFamily: "var(--font-cormorant), system-ui, sans-serif",
           }}
         >
           {event.title}
@@ -75,7 +75,7 @@ function EventCard({ event }: { event: SanityEvent }) {
                 style={{
                   backgroundColor: "var(--color-accent-primary)",
                   color: "#ffffff",
-                  fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                  fontFamily: "var(--font-cormorant), system-ui, sans-serif",
                 }}
               >
                 {open ? "Hide Form" : "Register / View Form"}
@@ -129,7 +129,7 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
           <h2
             className="text-base font-bold mb-3 text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Upcoming Activities
@@ -147,7 +147,7 @@ export default function EventsList({ events }: { events: SanityEvent[] }) {
           <h2
             className="text-sm font-semibold mb-3 text-slate-500"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Past Activities

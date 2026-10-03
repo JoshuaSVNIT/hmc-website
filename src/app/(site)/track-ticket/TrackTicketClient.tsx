@@ -317,7 +317,7 @@ function SearchBar({
         style={{
           backgroundColor: "var(--color-accent-primary)",
           color: "#ffffff",
-          fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+          fontFamily: "var(--font-cormorant), system-ui, sans-serif",
         }}
       >
         {isPending ? (

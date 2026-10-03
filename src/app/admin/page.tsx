@@ -74,7 +74,7 @@ export default async function AdminPage() {
           <div>
             <h1
               className="text-base font-bold leading-tight text-white tracking-tight"
-              style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
+              style={{ fontFamily: "var(--font-cormorant), system-ui" }}
             >
               HMC Administrative Portal
             </h1>
@@ -110,7 +110,7 @@ export default async function AdminPage() {
           <h2
             className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900"
             style={{
-              fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+              fontFamily: "var(--font-cormorant), system-ui, sans-serif",
             }}
           >
             Complaint Tickets
