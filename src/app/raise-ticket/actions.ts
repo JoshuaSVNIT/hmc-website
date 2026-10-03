@@ -119,7 +119,37 @@ export async function submitTicket(
   };
   console.log("[raise-ticket] Inserting payload:", JSON.stringify(payload));
 
-  const { error: insertError } = await supabase.from("tickets").insert(payload);
+  let { error: insertError } = await supabase.from("tickets").insert(payload);
+
+  // Resilient fallback: if the Supabase database does not have the `phone_no` column yet,
+  // retry without `phone_no` and append phone to the description so tickets never fail to submit.
+  if (
+    insertError &&
+    (insertError.message?.includes("phone_no") ||
+      insertError.code === "PGRST204" ||
+      insertError.code === "42703")
+  ) {
+    console.warn(
+      "[raise-ticket] `phone_no` column not found in tickets table. Retrying insert without phone_no column..."
+    );
+    const fallbackPayload: Record<string, unknown> = {
+      ticket_code: ticketCode,
+      raiser_name: isAnonymous ? null : raiserName,
+      room_no: isAnonymous ? "" : roomNo,
+      tag,
+      description:
+        !isAnonymous && phoneNo
+          ? `${description}\n\n[Contact Phone: ${phoneNo}]`
+          : description,
+      photo_url: photoUrl,
+      is_anonymous: isAnonymous,
+      status: "Open",
+    };
+    const { error: fallbackError } = await supabase
+      .from("tickets")
+      .insert(fallbackPayload);
+    insertError = fallbackError;
+  }
 
   if (insertError) {
     // Log full error object — .message alone often omits the Postgres error

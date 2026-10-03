@@ -140,8 +140,8 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
 
           {ticket.admin_notes && (
             <Row label="HMC Committee Note">
-              <div className="p-3.5 rounded-lg border border-amber-300/80 bg-gradient-to-r from-amber-50/80 to-amber-50/40 text-sm text-slate-900 shadow-2xs">
-                <div className="font-bold text-xs mb-1 text-amber-950 flex items-center gap-1.5">
+              <div className="p-3.5 rounded-lg border border-blue-200/90 bg-gradient-to-r from-blue-50/80 to-blue-50/40 text-sm text-slate-900 shadow-2xs">
+                <div className="font-bold text-xs mb-1 text-blue-950 flex items-center gap-1.5">
                   <span>💬</span> Update from Supervisor / Committee:
                 </div>
                 <p className="leading-relaxed whitespace-pre-wrap text-slate-800">{ticket.admin_notes}</p>
@@ -260,7 +260,7 @@ function RecentTickets({
             id={`recent-ticket-${code}`}
             type="button"
             onClick={() => onSelect(code)}
-            className="px-2.5 py-1 bg-slate-50 hover:bg-amber-50 border border-slate-300 hover:border-amber-400 rounded-lg text-xs font-bold transition-colors cursor-pointer text-slate-800"
+            className="px-2.5 py-1 bg-slate-50 hover:bg-blue-50 border border-slate-300 hover:border-blue-400 rounded-lg text-xs font-bold transition-colors cursor-pointer text-slate-800"
             style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
           >
             {code}
@@ -306,17 +306,17 @@ function SearchBar({
         aria-label="Ticket code"
         spellCheck={false}
         autoComplete="off"
-        className="flex-1 min-w-0 rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm uppercase tracking-wider text-slate-900 placeholder:text-slate-400 placeholder:normal-case placeholder:tracking-normal transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+        className="flex-1 min-w-0 rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm uppercase tracking-wider text-slate-900 placeholder:text-slate-400 placeholder:normal-case placeholder:tracking-normal transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
         style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
       />
       <button
         id="search-ticket-btn"
         type="submit"
         disabled={isPending || !value.trim()}
-        className="px-6 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-6 py-2.5 rounded-lg font-bold text-sm transition-all flex items-center gap-1.5 shrink-0 cursor-pointer shadow-md shadow-blue-600/20 hover:shadow-blue-600/30 hover:brightness-105 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
         style={{
           backgroundColor: "var(--color-accent-primary)",
-          color: "#0B0F17",
+          color: "#ffffff",
           fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
         }}
       >

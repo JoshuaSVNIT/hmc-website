@@ -28,11 +28,11 @@ function getCategoryConfig(category: ContactCategory) {
       return {
         title: "Hostel Supervisors & Caretakers",
         description: "Facility maintenance, block supervisors, and night assistance.",
-        badgeBg: "#fef3c7",
-        badgeText: "#92400e",
-        borderColor: "border-amber-200/90 border-l-4 border-l-amber-500",
-        btnCls: "bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold shadow-xs shadow-amber-500/20",
-        phoneColor: "text-amber-800",
+        badgeBg: "#dbeafe",
+        badgeText: "#1e40af",
+        borderColor: "border-blue-200/90 border-l-4 border-l-blue-600",
+        btnCls: "bg-blue-600 hover:bg-blue-700 text-white font-bold shadow-xs shadow-blue-600/20",
+        phoneColor: "text-blue-800",
       };
     case "HMC Member":
       return {
@@ -73,8 +73,8 @@ export default async function ContactsPage() {
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             SV Bhavan Helplines
           </div>
           <h1
@@ -154,7 +154,7 @@ export default async function ContactsPage() {
                               icon={contact.icon}
                               defaultEmoji={isUrgent ? "🚨" : category === "Supervisor" ? "👷" : "🏛️"}
                               sizeClass="w-9 h-9"
-                              fallbackBgClass={isUrgent ? "bg-rose-100 text-rose-700" : category === "Supervisor" ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800"}
+                              fallbackBgClass={isUrgent ? "bg-rose-100 text-rose-700" : category === "Supervisor" ? "bg-blue-100 text-blue-800" : "bg-emerald-100 text-emerald-800"}
                               alt={contact.label}
                             />
                             <div className="min-w-0">

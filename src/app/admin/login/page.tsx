@@ -22,14 +22,14 @@ export default function AdminLoginPage() {
   return (
     <main
       className="min-h-screen flex items-center justify-center px-4 py-12 relative overflow-hidden"
-      style={{ backgroundColor: "#0B0F17" }}
+      style={{ backgroundColor: "var(--color-ink)" }}
     >
-      {/* Ambient gold glow behind login card */}
+      {/* Ambient sapphire blue glow behind login card */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at 50% 40%, rgba(245, 158, 11, 0.08) 0%, transparent 60%)",
+            "radial-gradient(circle at 50% 40%, rgba(37, 99, 235, 0.12) 0%, transparent 60%)",
         }}
       />
 
@@ -37,10 +37,10 @@ export default function AdminLoginPage() {
         {/* Branding */}
         <div className="text-center mb-8">
           <div
-            className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 font-bold text-base shadow-md shadow-amber-500/20"
+            className="inline-flex items-center justify-center w-12 h-12 rounded-xl mb-3 font-bold text-base shadow-md shadow-blue-600/20"
             style={{
               backgroundColor: "var(--color-accent-primary)",
-              color: "#0B0F17",
+              color: "#ffffff",
               fontFamily: "var(--font-ibm-plex-mono), monospace",
             }}
           >
@@ -91,7 +91,7 @@ export default function AdminLoginPage() {
                 autoComplete="email"
                 required
                 placeholder="member@svbhavan.in"
-                className="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                className="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20"
                 style={{
                   borderColor: "rgba(255,255,255,0.18)",
                   backgroundColor: "rgba(0,0,0,0.4)",
@@ -115,7 +115,7 @@ export default function AdminLoginPage() {
                 autoComplete="current-password"
                 required
                 placeholder="••••••••"
-                className="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/20"
+                className="w-full rounded-lg border px-3 py-2 text-sm transition focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20"
                 style={{
                   borderColor: "rgba(255,255,255,0.18)",
                   backgroundColor: "rgba(0,0,0,0.4)",
@@ -128,10 +128,10 @@ export default function AdminLoginPage() {
               id="admin-login-btn"
               type="submit"
               disabled={isPending}
-              className="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all mt-2 cursor-pointer disabled:opacity-50 shadow-md shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105 active:scale-[0.99]"
+              className="w-full py-2.5 px-4 rounded-lg text-xs font-bold transition-all mt-2 cursor-pointer disabled:opacity-50 shadow-md shadow-blue-600/20 hover:shadow-blue-600/30 hover:brightness-105 active:scale-[0.99]"
               style={{
                 backgroundColor: "var(--color-accent-primary)",
-                color: "#0B0F17",
+                color: "#ffffff",
                 fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
               }}
             >
@@ -146,7 +146,7 @@ export default function AdminLoginPage() {
           </p>
           <Link
             href="/"
-            className="text-xs underline block text-slate-400 hover:text-amber-400 transition-colors"
+            className="text-xs underline block text-slate-400 hover:text-blue-400 transition-colors"
           >
             ← Back to Public Portal
           </Link>

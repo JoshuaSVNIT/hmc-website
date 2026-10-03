@@ -17,8 +17,8 @@ export default function RaiseTicketPage() {
       <div className="max-w-2xl mx-auto">
         {/* Page header */}
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Resident Support Portal
           </div>
           <h1
@@ -43,19 +43,19 @@ export default function RaiseTicketPage() {
         </div>
 
         {/* Advisory box */}
-        <div className="mt-6 rounded-xl border border-amber-300/80 bg-gradient-to-r from-amber-50/80 to-amber-50/40 p-4 text-sm text-slate-800 shadow-2xs">
-          <span className="font-bold text-amber-900">Note:</span> Before submitting LAN or
+        <div className="mt-6 rounded-xl border border-blue-200/90 bg-gradient-to-r from-blue-50/80 to-blue-50/40 p-4 text-sm text-slate-800 shadow-2xs">
+          <span className="font-bold text-blue-900">Note:</span> Before submitting LAN or
           electrical complaints, consider reviewing the{" "}
           <Link
             href="/guides/lan"
-            className="underline font-bold text-amber-800 hover:text-amber-950"
+            className="underline font-bold text-blue-700 hover:text-blue-900"
           >
             LAN Guide
           </Link>{" "}
           or{" "}
           <Link
             href="/guides/electrical"
-            className="underline font-bold text-amber-800 hover:text-amber-950"
+            className="underline font-bold text-blue-700 hover:text-blue-900"
           >
             Electrical Guide
           </Link>{" "}

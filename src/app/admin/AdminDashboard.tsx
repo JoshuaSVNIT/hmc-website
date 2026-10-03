@@ -93,7 +93,7 @@ function FilterBar({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           placeholder="Search ticket code, raiser, room, or problem…"
-          className="w-full pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full pl-3 pr-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
         />
       </div>
 
@@ -102,7 +102,7 @@ function FilterBar({
         id="admin-tag-filter"
         value={tagFilter}
         onChange={(e) => onTagChange(e.target.value as TicketTag | "All")}
-        className="px-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-800 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+        className="px-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-800 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
       >
         <option value="All">All Categories</option>
         {TAG_OPTIONS.map((t) => (
@@ -119,7 +119,7 @@ function FilterBar({
         onChange={(e) =>
           onStatusChange(e.target.value as TicketStatus | "All")
         }
-        className="px-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-800 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+        className="px-3 py-1.5 text-xs sm:text-sm rounded-lg border border-slate-300 bg-white text-slate-800 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
       >
         <option value="All">All Statuses</option>
         {STATUS_OPTIONS.map((s) => (
@@ -247,7 +247,7 @@ function AdminNotesField({
         onBlur={handleSave}
         placeholder="Add resolution or update notes…"
         maxLength={1000}
-        className="w-full text-xs rounded-lg border border-slate-300 bg-white px-2 py-1 text-slate-800 resize-none transition focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20"
+        className="w-full text-xs rounded-lg border border-slate-300 bg-white px-2 py-1 text-slate-800 resize-none transition focus:outline-none focus:border-blue-600 focus:ring-1 focus:ring-blue-600/20"
       />
       <div className="flex items-center justify-between gap-2 text-[11px]">
         {saveError && (
@@ -260,7 +260,7 @@ function AdminNotesField({
           type="button"
           onClick={handleSave}
           disabled={isPending || value === (initialNotes ?? "")}
-          className="ml-auto font-bold text-amber-700 hover:text-amber-900 disabled:opacity-40 transition cursor-pointer"
+          className="ml-auto font-bold text-blue-700 hover:text-blue-900 disabled:opacity-40 transition cursor-pointer"
         >
           {isPending ? "Saving…" : "Save"}
         </button>
@@ -319,7 +319,7 @@ function TicketTable({
             return (
               <tr
                 key={ticket.id}
-                className="hover:bg-amber-50/20 transition-colors align-top"
+                className="hover:bg-slate-50/80 transition-colors align-top"
               >
                 {/* Ticket code */}
                 <td
@@ -362,7 +362,7 @@ function TicketTable({
                   {ticket.phone_no ? (
                     <a
                       href={`tel:${ticket.phone_no.replace(/[\s\-().]/g, "")}`}
-                      className="hover:underline text-amber-700 font-bold"
+                      className="hover:underline text-blue-700 font-bold"
                     >
                       {ticket.phone_no}
                     </a>
@@ -389,7 +389,7 @@ function TicketTable({
                       href={ticket.photo_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-xs hover:underline mt-0.5 inline-block font-bold text-amber-700"
+                      className="text-xs hover:underline mt-0.5 inline-block font-bold text-blue-700"
                     >
                       View photo ↗
                     </a>

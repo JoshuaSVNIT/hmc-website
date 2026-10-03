@@ -131,11 +131,15 @@ export interface SanityTeamMember {
   position: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   bio: any[] | null;
+  // Sanity image reference or null
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  photo?: any | null;
 }
 
 const ALL_TEAM_MEMBERS_QUERY = `
   *[_type == "teamMember"] | order(position asc, name asc) {
-    _id, name, position, bio
+    _id, name, position, bio,
+    photo { asset, hotspot, crop }
   }
 `;
 
@@ -149,6 +153,35 @@ export async function getAllTeamMembers(): Promise<SanityTeamMember[]> {
   } catch (err) {
     console.error("Error fetching team members:", err);
     return [];
+  }
+}
+
+// ─── MessMenu ────────────────────────────────────────────────────────────────
+
+export interface SanityMessMenu {
+  _id: string;
+  day: string;
+  breakfast?: string | null;
+  lunch?: string | null;
+  dinner?: string | null;
+}
+
+const TODAY_MESS_MENU_QUERY = `
+  *[_type == "messMenu" && lower(day) == lower($day)][0] {
+    _id, day, breakfast, lunch, dinner
+  }
+`;
+
+export async function getTodayMessMenu(dayName: string): Promise<SanityMessMenu | null> {
+  try {
+    return await client.fetch<SanityMessMenu | null>(
+      TODAY_MESS_MENU_QUERY,
+      { day: dayName },
+      { next: { revalidate: 300 } }
+    );
+  } catch (err) {
+    console.error("Error fetching today's mess menu:", err);
+    return null;
   }
 }
 

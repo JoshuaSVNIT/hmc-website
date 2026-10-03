@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PortableText, type PortableTextComponents } from "@portabletext/react";
 import { getAllTeamMembers, type SanityTeamMember } from "@/lib/sanity/queries";
+import { urlFor } from "@/sanity/lib/image";
 
 export const metadata: Metadata = {
   title: "About Us — Swami Vivekanand Bhavan HMC",
@@ -23,7 +24,7 @@ const ptComponents: PortableTextComponents = {
         href={value?.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="underline font-bold text-amber-700 hover:text-amber-800"
+        className="underline font-bold text-blue-700 hover:text-blue-800"
       >
         {children}
       </a>
@@ -46,7 +47,7 @@ const ptComponents: PortableTextComponents = {
       </h3>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-amber-400 pl-3 italic my-2 text-sm text-slate-600 bg-amber-50/50 py-1 rounded-r">
+      <blockquote className="border-l-4 border-blue-500 pl-3 italic my-2 text-sm text-slate-600 bg-blue-50/50 py-1 rounded-r">
         {children}
       </blockquote>
     ),
@@ -80,8 +81,8 @@ export default async function AboutPage() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="max-w-2xl mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Council &amp; Leadership
           </div>
           <h1
@@ -119,10 +120,10 @@ export default async function AboutPage() {
             </div>
             <Link
               href="/raise-ticket"
-              className="shrink-0 px-4 py-2.5 rounded-lg text-xs font-bold transition-all shadow-md shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105"
+              className="shrink-0 px-4 py-2.5 rounded-lg text-xs font-bold transition-all shadow-md shadow-blue-600/20 hover:shadow-blue-600/30 hover:brightness-105"
               style={{
                 backgroundColor: "var(--color-accent-primary)",
-                color: "#0B0F17",
+                color: "#ffffff",
                 fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
               }}
             >
@@ -155,50 +156,91 @@ export default async function AboutPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {members.map((member) => (
-              <article
-                key={member._id}
-                className="rounded-xl border border-slate-200/90 bg-white p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-amber-400 shadow-xs"
-              >
-                <div>
-                  {/* Position badge */}
-                  <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold mb-3 bg-emerald-50 text-emerald-800 border border-emerald-200">
-                    {member.position}
+            {members.map((member) => {
+              const photoUrl = member.photo?.asset
+                ? urlFor(member.photo).width(300).height(300).fit("crop").auto("format").url()
+                : null;
+              const initials = member.name
+                ? member.name
+                    .split(" ")
+                    .filter(Boolean)
+                    .map((n) => n[0])
+                    .slice(0, 2)
+                    .join("")
+                    .toUpperCase()
+                : "HM";
+
+              return (
+                <article
+                  key={member._id}
+                  className="rounded-xl border border-slate-200/90 bg-white p-5 flex flex-col justify-between transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:border-blue-400 shadow-xs"
+                >
+                  <div>
+                    {/* Header with Photo/Avatar and Role/Name */}
+                    <div className="flex items-start gap-3.5 mb-4">
+                      {photoUrl ? (
+                        <div className="relative w-14 h-14 rounded-xl overflow-hidden shrink-0 border border-slate-200 shadow-xs bg-slate-100">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={photoUrl}
+                            alt={member.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                      ) : (
+                        <div
+                          className="w-14 h-14 rounded-xl shrink-0 border border-blue-200/80 bg-blue-50 text-blue-900 flex items-center justify-center font-bold text-base shadow-xs"
+                          style={{
+                            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                          }}
+                        >
+                          {initials}
+                        </div>
+                      )}
+
+                      <div className="min-w-0 flex-1">
+                        {/* Position badge */}
+                        <div className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold mb-1 bg-blue-50 text-blue-800 border border-blue-200/80">
+                          {member.position}
+                        </div>
+
+                        {/* Name */}
+                        <h3
+                          className="text-base font-bold tracking-tight text-slate-900 truncate"
+                          style={{
+                            fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
+                          }}
+                          title={member.name}
+                        >
+                          {member.name}
+                        </h3>
+                      </div>
+                    </div>
+
+                    {/* Bio (Portable Text) */}
+                    {member.bio && member.bio.length > 0 ? (
+                      <div className="mt-2 text-sm text-slate-600">
+                        <PortableText value={member.bio} components={ptComponents} />
+                      </div>
+                    ) : (
+                      <p className="text-xs italic text-slate-400">
+                        Hostel Management Committee representative.
+                      </p>
+                    )}
                   </div>
 
-                  {/* Name */}
-                  <h3
-                    className="text-lg font-bold tracking-tight mb-2 text-slate-900"
-                    style={{
-                      fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
-                    }}
-                  >
-                    {member.name}
-                  </h3>
-
-                  {/* Bio (Portable Text) */}
-                  {member.bio && member.bio.length > 0 ? (
-                    <div className="mt-2 text-sm">
-                      <PortableText value={member.bio} components={ptComponents} />
-                    </div>
-                  ) : (
-                    <p className="text-xs italic text-slate-400">
-                      Hostel Management Committee representative.
-                    </p>
-                  )}
-                </div>
-
-                <div className="mt-4 pt-3 border-t border-slate-100 text-xs flex items-center justify-between text-slate-500">
-                  <span>SV Bhavan, SVNIT</span>
-                  <Link
-                    href="/contacts"
-                    className="hover:underline font-bold text-emerald-700"
-                  >
-                    Contact →
-                  </Link>
-                </div>
-              </article>
-            ))}
+                  <div className="mt-4 pt-3 border-t border-slate-100 text-xs flex items-center justify-between text-slate-500">
+                    <span>SV Bhavan, SVNIT</span>
+                    <Link
+                      href="/contacts"
+                      className="hover:underline font-bold text-blue-600 hover:text-blue-800"
+                    >
+                      Contact →
+                    </Link>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         )}
 

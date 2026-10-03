@@ -5,22 +5,24 @@
 /* Loaded via Google Fonts in layout.tsx                                        */
 
 @theme {
-  /* Brand palette - Alive, Vibrant & High-Contrast */
-  --color-ink:              #0B0F17;
+  /* Brand palette - Deep Academic Navy & Vibrant Cobalt Blue */
+  --color-ink:              #0A1128;
   --color-paper:            #F8FAFC;
-  --color-accent-primary:   #F59E0B;
+  --color-accent-primary:   #2563EB;
   --color-accent-urgent:    #EF4444;
   --color-accent-secondary: #10B981;
 
-  /* Tonal variants for accent-primary (radiant energetic gold / amber) */
-  --color-accent-primary-50:  #fffbeb;
-  --color-accent-primary-100: #fef3c7;
-  --color-accent-primary-200: #fde68a;
-  --color-accent-primary-300: #fcd34d;
-  --color-accent-primary-400: #fbbf24;
-  --color-accent-primary-500: #F59E0B;
-  --color-accent-primary-600: #d97706;
-  --color-accent-primary-700: #b45309;
+  /* Tonal variants for accent-primary (vibrant academic cobalt / sapphire blue) */
+  --color-accent-primary-50:  #eff6ff;
+  --color-accent-primary-100: #dbeafe;
+  --color-accent-primary-200: #bfdbfe;
+  --color-accent-primary-300: #93c5fd;
+  --color-accent-primary-400: #60a5fa;
+  --color-accent-primary-500: #3b82f6;
+  --color-accent-primary-600: #2563eb;
+  --color-accent-primary-700: #1d4ed8;
+  --color-accent-primary-800: #1e40af;
+  --color-accent-primary-900: #1e3a8a;
 
   /* Tonal variants for accent-urgent (vibrant crimson red) */
   --color-accent-urgent-50:  #fef2f2;
@@ -42,7 +44,7 @@
   --color-accent-secondary-600: #059669;
   --color-accent-secondary-700: #047857;
 
-  /* Ink / Modern deep midnight slate tones */
+  /* Ink / Academic Deep Navy & Midnight Slate tones */
   --color-ink-50:  #f8fafc;
   --color-ink-100: #f1f5f9;
   --color-ink-200: #e2e8f0;
@@ -53,7 +55,7 @@
   --color-ink-700: #334155;
   --color-ink-800: #1e293b;
   --color-ink-900: #0f172a;
-  --color-ink-950: #0b0f17;
+  --color-ink-950: #0a1128;
 }
 
 /* ─── CSS Custom Properties ────────────────────────────────────────────────── */
@@ -92,12 +94,12 @@ h1, h2, h3, h4, h5, h6 {
 /* ─── Mess menu attention glow ──────────────────────────────────────────────── */
 @keyframes mess-glow {
   0%, 100% {
-    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
-    border-color: rgba(245, 158, 11, 0.25);
+    box-shadow: 0 0 0 0 rgba(37, 99, 235, 0);
+    border-color: rgba(37, 99, 235, 0.25);
   }
   50% {
-    box-shadow: 0 0 20px 4px rgba(245, 158, 11, 0.2);
-    border-color: #F59E0B;
+    box-shadow: 0 0 20px 4px rgba(37, 99, 235, 0.2);
+    border-color: #2563EB;
   }
 }
 

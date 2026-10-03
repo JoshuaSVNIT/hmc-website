@@ -18,8 +18,8 @@ export default function ElectricalGuidePage() {
       <div className="max-w-5xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Safety Protocols
           </div>
           <h1
@@ -37,22 +37,22 @@ export default function ElectricalGuidePage() {
         </div>
 
         {/* Notice strip */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50/80 p-3.5 sm:px-4 mb-5 text-xs sm:text-sm text-slate-900 shadow-2xs">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-xl border border-blue-200/90 bg-blue-50/70 p-3.5 sm:px-4 mb-5 text-xs sm:text-sm text-slate-900 shadow-2xs">
           <span>If the embedded PDF document does not render in your browser, use the direct links.</span>
           <div className="flex items-center gap-3 shrink-0">
             <a
               href={pdfUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="underline font-bold text-amber-800 hover:text-amber-950"
+              className="underline font-bold text-blue-700 hover:text-blue-900"
             >
               Open in new tab ↗
             </a>
-            <span className="text-amber-300">|</span>
+            <span className="text-blue-300">|</span>
             <a
               href={pdfUrl}
               download="SVB-Electrical-Complaint-Guide.pdf"
-              className="underline font-bold text-amber-800 hover:text-amber-950"
+              className="underline font-bold text-blue-700 hover:text-blue-900"
             >
               Download PDF ↓
             </a>
@@ -72,7 +72,7 @@ export default function ElectricalGuidePage() {
                 href={pdfUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="underline font-bold text-amber-700"
+                className="underline font-bold text-blue-700"
               >
                 open the PDF in a new tab
               </a>
@@ -107,7 +107,7 @@ export default function ElectricalGuidePage() {
             <a
               href={pdfUrl}
               download="SVB-Electrical-Complaint-Guide.pdf"
-              className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-xs bg-slate-950 hover:bg-slate-900 text-amber-400"
+              className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg text-xs font-bold transition-all shadow-xs bg-slate-900 hover:bg-slate-800 text-blue-300 hover:text-white"
             >
               Download PDF ↓
             </a>
@@ -127,7 +127,7 @@ export default function ElectricalGuidePage() {
             <span className="text-slate-500">Urgent electrical hazard or issue?</span>
             <Link
               href="/raise-ticket"
-              className="font-bold underline text-amber-700 hover:text-amber-800"
+              className="font-bold underline text-blue-700 hover:text-blue-800"
             >
               Raise an electrical ticket →
             </Link>

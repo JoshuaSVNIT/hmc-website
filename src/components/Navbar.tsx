@@ -48,13 +48,13 @@ export default function Navbar() {
           {/* Logo / Brand */}
           <Link
             href="/"
-            className="flex items-center gap-3 py-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-400 rounded"
+            className="flex items-center gap-3 py-2 group focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-400 rounded"
           >
             <div
               className="w-9 h-9 rounded flex items-center justify-center font-bold text-sm shrink-0 transition-transform group-hover:scale-105 shadow-sm"
               style={{
                 backgroundColor: "var(--color-accent-primary)",
-                color: "var(--color-ink)",
+                color: "#ffffff",
                 fontFamily: "var(--font-ibm-plex-mono), monospace",
               }}
             >
@@ -62,7 +62,7 @@ export default function Navbar() {
             </div>
             <div className="flex flex-col leading-none">
               <span
-                className="font-bold text-base tracking-tight text-white group-hover:text-amber-300 transition-colors"
+                className="font-bold text-base tracking-tight text-white group-hover:text-blue-300 transition-colors"
                 style={{
                   fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
                 }}
@@ -88,7 +88,7 @@ export default function Navbar() {
                     className="ml-1 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all duration-150 shadow-xs hover:shadow-md hover:brightness-105"
                     style={{
                       backgroundColor: "var(--color-accent-primary)",
-                      color: "#0B0F17",
+                      color: "#ffffff",
                       fontFamily: "var(--font-space-grotesk), system-ui",
                     }}
                   >
@@ -125,8 +125,8 @@ export default function Navbar() {
                   href={link.href}
                   className="px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors duration-150"
                   style={{
-                    color: active ? "#F59E0B" : "rgba(255,255,255,0.75)",
-                    backgroundColor: active ? "rgba(245,158,11,0.1)" : "transparent",
+                    color: active ? "#60A5FA" : "rgba(255,255,255,0.75)",
+                    backgroundColor: active ? "rgba(37,99,235,0.12)" : "transparent",
                     fontWeight: active ? 700 : 500,
                   }}
                 >
@@ -141,10 +141,10 @@ export default function Navbar() {
               className="ml-2 px-2.5 py-1 rounded-lg text-xs font-semibold transition-colors duration-150 border"
               style={{
                 borderColor: isActive("/admin")
-                  ? "rgba(245,158,11,0.6)"
+                  ? "rgba(37,99,235,0.6)"
                   : "rgba(255,255,255,0.18)",
-                color: isActive("/admin") ? "#F59E0B" : "rgba(255,255,255,0.6)",
-                backgroundColor: isActive("/admin") ? "rgba(245,158,11,0.1)" : "transparent",
+                color: isActive("/admin") ? "#60A5FA" : "rgba(255,255,255,0.6)",
+                backgroundColor: isActive("/admin") ? "rgba(37,99,235,0.12)" : "transparent",
               }}
             >
               Admin
@@ -182,7 +182,7 @@ export default function Navbar() {
           className="lg:hidden border-t px-3 pt-2 pb-4 space-y-1 shadow-lg"
           id="mobile-menu"
           style={{
-            backgroundColor: "#0B0F17",
+            backgroundColor: "var(--color-ink)",
             borderColor: "rgba(255,255,255,0.08)",
           }}
         >
@@ -198,14 +198,14 @@ export default function Navbar() {
                   backgroundColor: link.highlight
                     ? "var(--color-accent-primary)"
                     : active
-                    ? "rgba(245,158,11,0.12)"
+                    ? "rgba(37,99,235,0.15)"
                     : "transparent",
                   color: link.highlight
-                    ? "#0B0F17"
+                    ? "#ffffff"
                     : link.urgent
                     ? "#fca5a5"
                     : active
-                    ? "#F59E0B"
+                    ? "#60A5FA"
                     : "rgba(255,255,255,0.75)",
                   fontFamily: link.highlight
                     ? "var(--font-space-grotesk), system-ui"

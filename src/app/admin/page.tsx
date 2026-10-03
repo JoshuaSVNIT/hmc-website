@@ -20,12 +20,27 @@ export default async function AdminPage() {
     redirect("/admin/login");
   }
 
-  const { data: tickets, error } = await supabase
+  let { data: tickets, error } = await supabase
     .from("tickets")
     .select(
       "id, ticket_code, raiser_name, room_no, phone_no, tag, description, photo_url, status, admin_notes, is_anonymous, created_at, updated_at"
     )
     .order("created_at", { ascending: false });
+
+  // Resilient fallback: if the Supabase database does not have the `phone_no` column yet
+  if (
+    error &&
+    (error.message?.includes("phone_no") || error.code === "42703")
+  ) {
+    const fallback = await supabase
+      .from("tickets")
+      .select(
+        "id, ticket_code, raiser_name, room_no, tag, description, photo_url, status, admin_notes, is_anonymous, created_at, updated_at"
+      )
+      .order("created_at", { ascending: false });
+    tickets = fallback.data as unknown as typeof tickets;
+    error = fallback.error;
+  }
 
   if (error) {
     console.error("Admin tickets fetch error:", error.message);
@@ -40,7 +55,7 @@ export default async function AdminPage() {
       <header
         className="px-6 py-4 flex items-center justify-between border-b print:hidden shadow-sm"
         style={{
-          backgroundColor: "#0B0F17",
+          backgroundColor: "var(--color-ink)",
           borderColor: "rgba(255,255,255,0.08)",
           color: "#ffffff",
         }}
@@ -50,7 +65,7 @@ export default async function AdminPage() {
             className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-xs shrink-0 shadow-xs"
             style={{
               backgroundColor: "var(--color-accent-primary)",
-              color: "#0B0F17",
+              color: "#ffffff",
               fontFamily: "var(--font-ibm-plex-mono), monospace",
             }}
           >

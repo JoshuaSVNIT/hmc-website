@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getHomepageContacts, type SanityContact } from "@/lib/sanity/queries";
+import { getHomepageContacts, getTodayMessMenu, type SanityContact, type SanityMessMenu } from "@/lib/sanity/queries";
 import ContactAvatar from "@/components/ContactAvatar";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -25,6 +25,15 @@ export default async function HomePage() {
     console.error("Failed to load homepage contacts:", err);
   }
 
+  const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+  const currentDay = daysOfWeek[new Date().getDay()];
+  let todayMenu: SanityMessMenu | null = null;
+  try {
+    todayMenu = await getTodayMessMenu(currentDay);
+  } catch (err) {
+    console.error("Failed to load today's mess menu:", err);
+  }
+
   const bannerContacts = homepageContacts.filter(
     (c) =>
       !c.category?.toLowerCase().includes("hmc") &&
@@ -48,12 +57,12 @@ export default async function HomePage() {
             alt="SV Bhavan Hostel Campus"
             className="w-full h-full object-cover object-center opacity-25"
           />
-          {/* Ambient radial gold radiance + dark obsidian gradient for rich depth */}
+          {/* Ambient radial sapphire blue radiance + dark midnight navy gradient for rich depth */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "radial-gradient(ellipse 65% 55% at 85% 20%, rgba(245, 158, 11, 0.16) 0%, transparent 70%), linear-gradient(to right, rgba(11,15,23,0.98) 0%, rgba(11,15,23,0.88) 55%, rgba(11,15,23,0.68) 100%)",
+                "radial-gradient(ellipse 65% 55% at 85% 20%, rgba(37, 99, 235, 0.22) 0%, transparent 70%), linear-gradient(to right, rgba(10,17,40,0.98) 0%, rgba(10,17,40,0.88) 55%, rgba(10,17,40,0.68) 100%)",
             }}
           />
         </div>
@@ -61,8 +70,8 @@ export default async function HomePage() {
         <div className="relative z-10 max-w-5xl mx-auto">
           <div className="max-w-2xl">
             {/* Eyebrow badge */}
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-400/10 text-amber-300 border border-amber-400/25 mb-5 shadow-xs backdrop-blur-xs">
-              <span className="w-2 h-2 rounded-full bg-amber-400 animate-pulse" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/15 text-blue-200 border border-blue-400/30 mb-5 shadow-xs backdrop-blur-xs">
+              <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse" />
               Swami Vivekanand Bhavan Resident Portal
             </div>
 
@@ -86,10 +95,10 @@ export default async function HomePage() {
             <div className="mt-8 flex flex-col sm:flex-row gap-3">
               <Link
                 href="/raise-ticket"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded font-bold text-sm transition-all duration-150 shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105 active:scale-[0.99]"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded font-bold text-sm transition-all duration-150 shadow-lg shadow-blue-600/25 hover:shadow-blue-600/35 hover:brightness-105 active:scale-[0.99]"
                 style={{
                   backgroundColor: "var(--color-accent-primary)",
-                  color: "#0B0F17",
+                  color: "#ffffff",
                   fontFamily: "var(--font-space-grotesk), system-ui",
                 }}
               >
@@ -100,7 +109,7 @@ export default async function HomePage() {
               </Link>
               <Link
                 href="/track-ticket"
-                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded font-semibold text-sm transition-all duration-150 border border-white/20 text-white hover:bg-white/10 hover:border-amber-400/50"
+                className="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded font-semibold text-sm transition-all duration-150 border border-white/20 text-white hover:bg-white/10 hover:border-blue-400/50"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4 text-slate-300" viewBox="0 0 20 20" fill="currentColor">
                   <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
@@ -109,7 +118,7 @@ export default async function HomePage() {
               </Link>
               <a
                 href="#mess-menu"
-                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded text-sm transition-all border border-amber-400/25 bg-amber-400/5 text-amber-300 hover:bg-amber-400/15 hover:border-amber-400/50 sm:ml-auto"
+                className="inline-flex items-center justify-center gap-2 px-4 py-3.5 rounded text-sm transition-all border border-blue-400/30 bg-blue-500/10 text-blue-200 hover:bg-blue-500/20 hover:border-blue-400/50 sm:ml-auto"
               >
                 🍽️ Today&apos;s Mess Menu ↓
               </a>
@@ -118,8 +127,8 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Sleek amber divider between Hero and Content */}
-      <div className="h-0.5 w-full bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 opacity-80" />
+      {/* Sleek academic cobalt divider between Hero and Content */}
+      <div className="h-0.5 w-full bg-gradient-to-r from-blue-700 via-blue-500 to-indigo-600 opacity-90" />
 
       {/* ── 2. EMERGENCY & SUPERVISORS — compact scannable directory ── */}
       <section
@@ -182,12 +191,12 @@ export default async function HomePage() {
                         icon={contact.icon}
                         defaultEmoji={isEmergency ? "🚨" : "👷"}
                         sizeClass="w-8 h-8"
-                        fallbackBgClass={isEmergency ? "bg-rose-100 text-rose-700" : "bg-amber-100 text-amber-800"}
+                        fallbackBgClass={isEmergency ? "bg-rose-100 text-rose-700" : "bg-blue-100 text-blue-800"}
                         alt={contact.label}
                       />
                       <div className="min-w-0">
                         {contact.title && (
-                          <div className="text-[11px] font-semibold text-emerald-700">
+                          <div className="text-[11px] font-semibold text-blue-700">
                             {contact.title}
                           </div>
                         )}
@@ -208,13 +217,13 @@ export default async function HomePage() {
                     >
                       <span
                         className={`font-bold text-sm tracking-wide ${
-                          isEmergency ? "text-rose-700 group-hover:text-rose-900" : "text-slate-700 group-hover:text-slate-900"
+                          isEmergency ? "text-rose-700 group-hover:text-rose-900" : "text-slate-700 group-hover:text-blue-700"
                         }`}
                         style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
                       >
                         {contact.phone}
                       </span>
-                      <span className="opacity-0 group-hover:opacity-100 text-rose-600 transition-opacity">
+                      <span className="opacity-0 group-hover:opacity-100 text-blue-600 transition-opacity">
                         <PhoneIcon />
                       </span>
                     </div>
@@ -250,9 +259,9 @@ export default async function HomePage() {
               title: "Raise a Ticket",
               desc: "LAN, electrical, plumbing & room complaints.",
               cta: "Submit complaint",
-              iconBg: "bg-amber-100/90 text-amber-800 border border-amber-200/80",
-              accentCls: "text-amber-700 group-hover:text-amber-800",
-              hoverBorder: "hover:border-amber-400 hover:shadow-lg hover:shadow-amber-500/10",
+              iconBg: "bg-blue-100/90 text-blue-800 border border-blue-200/80",
+              accentCls: "text-blue-700 group-hover:text-blue-800",
+              hoverBorder: "hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/10",
             },
             {
               href: "/track-ticket",
@@ -318,7 +327,7 @@ export default async function HomePage() {
 
         {/* Guides highlight strip */}
         <div
-          className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-xl border border-amber-300/80 bg-gradient-to-r from-amber-50/70 via-amber-50/30 to-white shadow-xs"
+          className="mt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-xl border border-blue-200/90 bg-gradient-to-r from-blue-50/70 via-blue-50/30 to-white shadow-xs"
         >
           <div>
             <h4
@@ -342,7 +351,7 @@ export default async function HomePage() {
             </Link>
             <Link
               href="/guides/electrical"
-              className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-xs bg-slate-950 text-amber-400 hover:bg-slate-900"
+              className="flex-1 sm:flex-none text-center px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all shadow-xs bg-slate-900 text-blue-300 hover:bg-slate-800 hover:text-white"
             >
               Electrical Guide
             </Link>
@@ -357,11 +366,11 @@ export default async function HomePage() {
         aria-label="Today's Mess Menu"
       >
         <div
-          className="rounded-xl border border-amber-300/90 animate-mess-glow bg-gradient-to-b from-amber-50/50 via-amber-50/20 to-white p-6 sm:p-8 shadow-xs"
+          className="rounded-xl border border-blue-200/90 animate-mess-glow bg-gradient-to-b from-blue-50/50 via-white to-white p-6 sm:p-8 shadow-xs"
         >
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-3">
-              <span className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-amber-100 text-amber-900 border border-amber-200">🍽️</span>
+              <span className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl bg-blue-100 text-blue-900 border border-blue-200">🍽️</span>
               <div>
                 <h2
                   className="text-xl font-bold text-slate-900"
@@ -371,31 +380,50 @@ export default async function HomePage() {
                 >
                   Today&apos;s Mess Menu
                 </h2>
-                <p className="text-xs text-amber-800 font-semibold mt-0.5">
-                  Dynamic Sanity CMS integration — Coming in Phase 8
+                <p className="text-xs text-slate-500 font-medium mt-0.5">
+                  Swami Vivekanand Bhavan Central Dining Hall
                 </p>
               </div>
             </div>
             <span
-              className="text-xs px-3 py-1 rounded-full font-bold bg-amber-100 text-amber-900 border border-amber-200/80"
+              className="text-xs px-3 py-1 rounded-full font-bold bg-blue-100 text-blue-800 border border-blue-200/80"
+              style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
             >
-              Live sync ready
+              Today: {currentDay}
             </span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {[
-              { meal: "Breakfast", icon: "☀️", time: "7:30 – 9:30 AM" },
-              { meal: "Lunch", icon: "🍱", time: "12:30 – 2:30 PM" },
-              { meal: "Dinner", icon: "🌙", time: "7:30 – 9:30 PM" },
-            ].map(({ meal, icon, time }) => (
+              {
+                meal: "Breakfast",
+                icon: "☀️",
+                time: "7:30 – 9:30 AM",
+                pillCls: "bg-blue-100 text-blue-800",
+                menuText: todayMenu?.breakfast,
+              },
+              {
+                meal: "Lunch",
+                icon: "🍱",
+                time: "12:30 – 2:30 PM",
+                pillCls: "bg-indigo-100 text-indigo-800",
+                menuText: todayMenu?.lunch,
+              },
+              {
+                meal: "Dinner",
+                icon: "🌙",
+                time: "7:30 – 9:30 PM",
+                pillCls: "bg-cyan-100 text-cyan-800",
+                menuText: todayMenu?.dinner,
+              },
+            ].map(({ meal, icon, time, pillCls, menuText }) => (
               <div
                 key={meal}
-                className="rounded-lg border border-amber-200/90 bg-white p-4 shadow-xs hover:border-amber-400 hover:shadow-sm transition-all"
+                className="rounded-lg border border-slate-200 bg-white p-4 shadow-xs hover:border-blue-400 hover:shadow-sm transition-all"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span
-                    className="text-xs font-bold text-amber-900 flex items-center gap-1.5"
+                    className="text-xs font-bold text-slate-900 flex items-center gap-1.5"
                     style={{
                       fontFamily: "var(--font-space-grotesk), system-ui",
                     }}
@@ -403,7 +431,7 @@ export default async function HomePage() {
                     <span>{icon}</span> {meal}
                   </span>
                   <span
-                    className="text-xs font-semibold text-slate-600 bg-slate-100 px-2 py-0.5 rounded"
+                    className={`text-xs font-semibold px-2 py-0.5 rounded ${pillCls}`}
                     style={{
                       fontFamily: "var(--font-ibm-plex-mono), monospace",
                     }}
@@ -411,9 +439,15 @@ export default async function HomePage() {
                     {time}
                   </span>
                 </div>
-                <p className="text-xs italic text-slate-400">
-                  Menu details will appear here from Sanity CMS.
-                </p>
+                {menuText ? (
+                  <p className="text-xs text-slate-700 whitespace-pre-line leading-relaxed font-medium">
+                    {menuText}
+                  </p>
+                ) : (
+                  <p className="text-xs italic text-slate-400">
+                    Menu scheduled as per weekly hostel dining roster.
+                  </p>
+                )}
               </div>
             ))}
           </div>

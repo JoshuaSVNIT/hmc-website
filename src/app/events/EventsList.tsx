@@ -71,10 +71,10 @@ function EventCard({ event }: { event: SanityEvent }) {
                 id={`event-register-${event._id}`}
                 type="button"
                 onClick={() => setOpen((v) => !v)}
-                className="px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105"
+                className="px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer shadow-md shadow-blue-600/20 hover:shadow-blue-600/30 hover:brightness-105"
                 style={{
                   backgroundColor: "var(--color-accent-primary)",
-                  color: "#0B0F17",
+                  color: "#ffffff",
                   fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
                 }}
               >

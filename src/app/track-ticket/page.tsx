@@ -17,8 +17,8 @@ export default function TrackTicketPage() {
       <div className="max-w-2xl mx-auto">
         {/* Page header */}
         <div className="mb-8">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Live Resolution Status
           </div>
           <h1
@@ -51,7 +51,7 @@ export default function TrackTicketPage() {
           Need to report a new issue?{" "}
           <Link
             href="/raise-ticket"
-            className="underline font-bold text-amber-700 hover:text-amber-800"
+            className="underline font-bold text-blue-700 hover:text-blue-800"
           >
             Raise a ticket →
           </Link>

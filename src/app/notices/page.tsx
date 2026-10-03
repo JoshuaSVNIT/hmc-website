@@ -23,7 +23,7 @@ const ptComponents: PortableTextComponents = {
         href={value?.href}
         target="_blank"
         rel="noopener noreferrer"
-        className="underline font-bold text-amber-700 hover:text-amber-800"
+        className="underline font-bold text-blue-700 hover:text-blue-800"
       >
         {children}
       </a>
@@ -57,7 +57,7 @@ const ptComponents: PortableTextComponents = {
     ),
     blockquote: ({ children }) => (
       <blockquote
-        className="border-l-4 border-amber-400 pl-3 italic my-2 text-sm text-slate-600 bg-amber-50/50 py-1 rounded-r"
+        className="border-l-4 border-blue-500 pl-3 italic my-2 text-sm text-slate-700 bg-blue-50/50 py-1 rounded-r"
       >
         {children}
       </blockquote>
@@ -94,7 +94,7 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
     <article
       className={`rounded-xl border overflow-hidden transition-all bg-white shadow-xs ${
         notice.pinned
-          ? "border-amber-300/90 border-l-4 border-l-amber-500 shadow-sm"
+          ? "border-blue-300/90 border-l-4 border-l-blue-600 shadow-sm"
           : "border-slate-200/90 hover:border-slate-300"
       }`}
     >
@@ -102,14 +102,14 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
       <div
         className={`px-5 py-3.5 flex items-start justify-between gap-3 border-b ${
           notice.pinned
-            ? "bg-gradient-to-r from-amber-50/80 to-amber-50/30 border-amber-200/80"
+            ? "bg-gradient-to-r from-blue-50/80 to-blue-50/30 border-blue-200/80"
             : "bg-slate-50/70 border-slate-100"
         }`}
       >
         <div className="flex items-center gap-2 min-w-0">
           {notice.pinned && (
             <span
-              className="text-xs px-2.5 py-0.5 rounded-full font-bold shrink-0 bg-amber-100 text-amber-950 border border-amber-300"
+              className="text-xs px-2.5 py-0.5 rounded-full font-bold shrink-0 bg-blue-100 text-blue-950 border border-blue-300"
             >
               📌 Pinned
             </span>
@@ -161,8 +161,8 @@ export default async function NoticesPage() {
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-amber-500/10 text-amber-800 border border-amber-500/20 mb-3 shadow-xs">
-            <span className="w-1.5 h-1.5 rounded-full bg-amber-500" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
+            <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Official Circulars
           </div>
           <h1

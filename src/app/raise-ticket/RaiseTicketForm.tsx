@@ -95,13 +95,13 @@ function SuccessView({
         <div
           className="flex items-center justify-between px-5 py-4 rounded-xl border print:border-black print:bg-white shadow-sm"
           style={{
-            backgroundColor: "#0B0F17",
-            borderColor: "rgba(245,158,11,0.3)",
+            backgroundColor: "var(--color-ink)",
+            borderColor: "rgba(37,99,235,0.4)",
             color: "#ffffff",
           }}
         >
           <span
-            className="text-2xl font-bold tracking-widest text-amber-400"
+            className="text-2xl font-bold tracking-widest text-blue-400"
             style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
           >
             {ticketCode}
@@ -110,7 +110,7 @@ function SuccessView({
             id="copy-ticket-code-btn"
             type="button"
             onClick={handleCopy}
-            className="print:hidden px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 border border-amber-400/40 text-amber-300 hover:bg-amber-400/10 cursor-pointer"
+            className="print:hidden px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 border border-blue-400/40 text-blue-300 hover:bg-blue-400/15 cursor-pointer"
             aria-label="Copy ticket code"
           >
             {copied ? "Copied!" : "Copy"}
@@ -118,7 +118,7 @@ function SuccessView({
         </div>
         <p className="mt-2 text-xs text-left text-slate-500 print:hidden">
           Check resolution updates anytime on the{" "}
-          <Link href="/track-ticket" className="underline font-bold text-amber-700 hover:text-amber-800">
+          <Link href="/track-ticket" className="underline font-bold text-blue-700 hover:text-blue-800">
             Track Ticket
           </Link>{" "}
           page.
@@ -140,10 +140,10 @@ function SuccessView({
         </button>
         <Link
           href="/track-ticket"
-          className="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-sm hover:brightness-105"
+          className="flex-1 py-2.5 px-4 rounded-lg text-xs font-bold transition-all flex items-center justify-center gap-1.5 shadow-md shadow-blue-600/20 hover:shadow-blue-600/30 hover:brightness-105"
           style={{
             backgroundColor: "var(--color-accent-primary)",
-            color: "#0B0F17",
+            color: "#ffffff",
             fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
           }}
         >
@@ -244,7 +244,7 @@ function PhotoField({
       ) : (
         <label
           htmlFor="photo-input"
-          className="flex flex-col items-center justify-center w-full h-24 border border-dashed border-slate-300 hover:border-amber-500 rounded-xl cursor-pointer transition-colors bg-slate-50 hover:bg-amber-50/20"
+          className="flex flex-col items-center justify-center w-full h-24 border border-dashed border-slate-300 hover:border-blue-500 rounded-xl cursor-pointer transition-colors bg-slate-50 hover:bg-blue-50/20"
         >
           <svg className="w-6 h-6 mb-1 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -349,7 +349,7 @@ export default function RaiseTicketForm() {
             value="true"
             checked={isAnonymous}
             onChange={(e) => setIsAnonymous(e.target.checked)}
-            className="w-4 h-4 rounded border-slate-300 cursor-pointer accent-amber-500"
+            className="w-4 h-4 rounded border-slate-300 cursor-pointer accent-blue-600"
           />
           <span className="text-sm font-semibold text-slate-800">
             Submit anonymously
@@ -373,7 +373,7 @@ export default function RaiseTicketForm() {
           required={!isAnonymous}
           disabled={isAnonymous}
           maxLength={120}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
         />
       </div>
 
@@ -390,7 +390,7 @@ export default function RaiseTicketForm() {
           required={!isAnonymous}
           disabled={isAnonymous}
           maxLength={20}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
           style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
         />
       </div>
@@ -410,7 +410,7 @@ export default function RaiseTicketForm() {
           placeholder="e.g. 9876543210"
           disabled={isAnonymous}
           maxLength={20}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
           style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
         />
       </div>
@@ -425,7 +425,7 @@ export default function RaiseTicketForm() {
           name="tag"
           required
           defaultValue=""
-          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
         >
           <option value="" disabled>
             Select category…
@@ -450,7 +450,7 @@ export default function RaiseTicketForm() {
           required
           placeholder="Specify exact location, symptoms, when the issue began, and any relevant details."
           maxLength={2000}
-          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 resize-none transition focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20"
+          className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 resize-none transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
         />
       </div>
 
@@ -462,10 +462,10 @@ export default function RaiseTicketForm() {
         id="submit-ticket-btn"
         type="submit"
         disabled={isPending || !!photoError}
-        className="w-full py-3.5 px-4 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-amber-500/20 hover:shadow-amber-500/30 hover:brightness-105 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
+        className="w-full py-3.5 px-4 rounded-lg font-bold text-sm transition-all flex items-center justify-center gap-2 cursor-pointer shadow-lg shadow-blue-600/20 hover:shadow-blue-600/30 hover:brightness-105 active:scale-[0.99] disabled:opacity-50 disabled:cursor-not-allowed"
         style={{
           backgroundColor: "var(--color-accent-primary)",
-          color: "#0B0F17",
+          color: "#ffffff",
           fontFamily: "var(--font-space-grotesk), system-ui, sans-serif",
         }}
       >

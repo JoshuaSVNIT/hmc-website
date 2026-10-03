@@ -271,7 +271,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                   }
                   className={`w-12 h-12 rounded overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
                     idx === activeLightbox.photoIndex
-                      ? "border-amber-400 scale-105"
+                      ? "border-blue-400 scale-105"
                       : "border-transparent opacity-60 hover:opacity-100"
                   }`}
                 >

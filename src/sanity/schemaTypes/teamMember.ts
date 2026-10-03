@@ -19,6 +19,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "photo",
+      title: "Photo",
+      type: "image",
+      options: { hotspot: true },
+      description: "Profile photo of the committee member",
+    }),
+    defineField({
       name: "bio",
       title: "Bio",
       type: "array",
@@ -26,4 +33,11 @@ export default defineType({
       description: "Brief bio and responsibilities (Portable Text)",
     }),
   ],
+  preview: {
+    select: {
+      title: "name",
+      subtitle: "position",
+      media: "photo",
+    },
+  },
 });

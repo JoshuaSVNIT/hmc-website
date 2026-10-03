@@ -26,7 +26,7 @@ export default function Footer() {
                 className="w-8 h-8 rounded-lg flex items-center justify-center font-bold text-sm shrink-0 shadow-xs"
                 style={{
                   backgroundColor: "var(--color-accent-primary)",
-                  color: "#0B0F17",
+                  color: "#ffffff",
                   fontFamily: "var(--font-ibm-plex-mono), monospace",
                 }}
               >
@@ -52,7 +52,7 @@ export default function Footer() {
           {/* Col 2: Complaint Services */}
           <div>
             <h3
-              className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3"
+              className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3"
               style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               Complaint Services
@@ -67,7 +67,7 @@ export default function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-slate-300 hover:text-amber-400 transition-colors"
+                    className="text-slate-300 hover:text-blue-300 transition-colors"
                   >
                     {l.label}
                   </Link>
@@ -79,7 +79,7 @@ export default function Footer() {
           {/* Col 3: Hostel Life */}
           <div>
             <h3
-              className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3"
+              className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3"
               style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               Hostel Life
@@ -88,7 +88,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/notices"
-                  className="text-slate-300 hover:text-amber-400 transition-colors"
+                  className="text-slate-300 hover:text-blue-300 transition-colors"
                 >
                   Important Notices
                 </Link>
@@ -96,7 +96,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/gallery"
-                  className="text-slate-300 hover:text-amber-400 transition-colors"
+                  className="text-slate-300 hover:text-blue-300 transition-colors"
                 >
                   Event Photo Gallery
                 </Link>
@@ -104,7 +104,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-slate-300 hover:text-amber-400 transition-colors"
+                  className="text-slate-300 hover:text-blue-300 transition-colors"
                 >
                   About the HMC Team
                 </Link>
@@ -113,7 +113,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/events"
-                    className="text-slate-300 hover:text-amber-400 transition-colors"
+                    className="text-slate-300 hover:text-blue-300 transition-colors"
                   >
                     Upcoming Events
                   </Link>
@@ -123,7 +123,7 @@ export default function Footer() {
                 <li>
                   <Link
                     href="/leaderboard"
-                    className="text-slate-300 hover:text-amber-400 transition-colors"
+                    className="text-slate-300 hover:text-blue-300 transition-colors"
                   >
                     Gaming Leaderboard
                   </Link>
@@ -144,7 +144,7 @@ export default function Footer() {
           {/* Col 4: HMC Administration */}
           <div>
             <h3
-              className="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3"
+              className="text-xs font-bold uppercase tracking-wider text-blue-400 mb-3"
               style={{ fontFamily: "var(--font-space-grotesk), system-ui" }}
             >
               HMC Administration
@@ -156,7 +156,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/admin"
-                  className="text-slate-300 hover:text-amber-400 transition-colors"
+                  className="text-slate-300 hover:text-blue-300 transition-colors"
                 >
                   Admin Dashboard
                 </Link>
@@ -164,7 +164,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/admin/login"
-                  className="text-slate-300 hover:text-amber-400 transition-colors"
+                  className="text-slate-300 hover:text-blue-300 transition-colors"
                 >
                   Member Login
                 </Link>
