@@ -6,7 +6,7 @@ import type { Ticket, TicketTag } from "@/types";
 
 /** Allowed file types for ticket photo uploads (§4 storage constraints) */
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024; // 5 MB
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
 /** Generate a human-readable ticket code like HMC-4217 */
 function generateTicketCode(): string {
@@ -38,10 +38,11 @@ export async function submitTicket(
   const photoFile = formData.get("photo") as File | null;
 
   // --- Basic validation ---
-  // raiser_name is required only when NOT submitting anonymously (§7)
+  // raiser_name, room_no, and phone_no are required only when NOT submitting anonymously (§7)
   if (!isAnonymous && !raiserName)
     return { success: false, error: "Please enter your name." };
   if (!roomNo && !isAnonymous) return { success: false, error: "Room number is required." };
+  if (!phoneNo && !isAnonymous) return { success: false, error: "Phone number is required." };
   if (!tag || !(["Mess","Electrical","Plumbing/Water","Elevator","Cleanliness","Pests","Others"] as string[]).includes(tag))
     return { success: false, error: "Please select a valid complaint category." };
   if (!description)
@@ -59,7 +60,7 @@ export async function submitTicket(
     if (photoFile.size > MAX_FILE_SIZE_BYTES) {
       return {
         success: false,
-        error: `Photo must be under 5 MB. Your file is ${(photoFile.size / 1024 / 1024).toFixed(1)} MB.`,
+        error: `Photo must be under 10 MB. Your file is ${(photoFile.size / 1024 / 1024).toFixed(1)} MB.`,
       };
     }
 

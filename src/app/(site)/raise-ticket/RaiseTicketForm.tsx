@@ -8,7 +8,7 @@ import PrintableTicket from "@/components/PrintableTicket";
 
 const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"];
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
-const MAX_FILE_BYTES = 5 * 1024 * 1024;
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 const TAG_OPTIONS: { value: TicketTag; label: string; emoji: string }[] = [
   { value: "Mess",           label: "Mess",             emoji: "🍽️" },
@@ -200,7 +200,7 @@ function PhotoField({
     }
 
     if (file.size > MAX_FILE_BYTES) {
-      const err = `File size is ${(file.size / 1024 / 1024).toFixed(1)} MB. Maximum allowed is 5 MB.`;
+      const err = `File size is ${(file.size / 1024 / 1024).toFixed(1)} MB. Maximum allowed is 10 MB.`;
       setFileError(err);
       setPreview(null);
       onChange(err);
@@ -227,7 +227,7 @@ function PhotoField({
       <label className="block text-sm font-semibold mb-1.5 text-slate-900">
         Photo attachment{" "}
         <span className="font-normal text-xs text-slate-500">
-          (optional — max 5 MB, jpg / png / webp)
+          (optional — max 10 MB, jpg / png / webp)
         </span>
       </label>
 
@@ -260,7 +260,7 @@ function PhotoField({
             Attach a photo
           </span>
           <span className="text-[11px] text-slate-400 mt-0.5">
-            JPG, PNG, or WEBP up to 5 MB
+            JPG, PNG, or WEBP up to 10 MB
           </span>
         </label>
       )}
@@ -402,19 +402,17 @@ export default function RaiseTicketForm() {
         />
       </div>
 
-      {/* Phone Number — hidden when anonymous, optional when not anonymous */}
+      {/* Phone Number — hidden when anonymous */}
       <div className={isAnonymous ? "hidden" : undefined} aria-hidden={isAnonymous}>
         <label htmlFor="phone_no" className="block text-sm font-semibold mb-1.5 text-slate-900">
-          Phone No. (for contacting you){" "}
-          <span className="font-normal text-xs text-slate-500">
-            (optional)
-          </span>
+          Phone Number {!isAnonymous && <span className="text-rose-600">*</span>}
         </label>
         <input
           id="phone_no"
           name="phone_no"
           type="tel"
           placeholder="e.g. 9876543210"
+          required={!isAnonymous}
           disabled={isAnonymous}
           maxLength={20}
           className="w-full rounded-lg border border-slate-300 bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition focus:outline-none focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20"
