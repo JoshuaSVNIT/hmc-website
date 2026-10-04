@@ -63,7 +63,7 @@
   --color-gold-500: #b8860b;
 
   --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
-  --font-body: var(--font-plus-jakarta), "Plus Jakarta Sans", system-ui, sans-serif;
+  --font-body: var(--font-ibm-plex-sans), "IBM Plex Sans", system-ui, sans-serif;
   --font-mono: var(--font-ibm-plex-mono), "IBM Plex Mono", ui-monospace, monospace;
 
   --shadow-card: 0 4px 24px rgba(11, 20, 36, 0.06);
@@ -86,6 +86,7 @@ body {
   background-color: var(--bg-base);
   color: var(--fg-base);
   font-family: var(--font-body);
+  font-weight: 400;
   margin: 0;
   padding: 0;
   min-height: 100vh;

@@ -31,7 +31,7 @@ const ptComponents: PortableTextComponents = {
   },
   block: {
     normal: ({ children }) => (
-      <p className="leading-relaxed text-sm sm:text-base mb-2 text-slate-700">
+      <p className="leading-relaxed font-normal text-sm sm:text-base mb-2 text-slate-700">
         {children}
       </p>
     ),
@@ -125,7 +125,7 @@ function NoticeCard({ notice }: { notice: SanityNotice }) {
         </div>
         <time
           dateTime={notice.date}
-          className="shrink-0 text-xs sm:text-sm mt-0.5 whitespace-nowrap text-slate-500 font-medium"
+          className="shrink-0 text-xs sm:text-sm mt-0.5 whitespace-nowrap text-slate-500 font-normal"
           style={{
             fontFamily: "var(--font-ibm-plex-mono), monospace",
           }}
@@ -183,7 +183,7 @@ export default async function NoticesPage() {
           <div
             className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-xs"
           >
-            <p className="text-base font-semibold text-slate-600">
+            <p className="text-base font-normal text-slate-600">
               No notices published yet.
             </p>
             <p className="text-xs mt-1 text-slate-400">

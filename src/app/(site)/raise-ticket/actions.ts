@@ -8,9 +8,11 @@ import type { Ticket, TicketTag } from "@/types";
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
-/** Generate a human-readable ticket code like HMC-4217 */
+/** Generate a human-readable 6-digit ticket code like HMC-093961 (1,000,000 possible combinations) */
 function generateTicketCode(): string {
-  const num = Math.floor(1000 + Math.random() * 9000);
+  const num = Math.floor(Math.random() * 1_000_000)
+    .toString()
+    .padStart(6, "0");
   return `HMC-${num}`;
 }
 
@@ -91,7 +93,7 @@ export async function submitTicket(
       // Under current RLS the anon_select_by_code policy blocks direct SELECT
       // for anon — log it so it's visible, but don't abort (the insert will
       // still work; collision risk at 1-in-9000 is acceptable for now).
-      console.error("[raise-ticket] Collision-check SELECT error:", selectError);
+      console.error("[raise-ticket] Collision-check SELECT error:", selectError.message);
       break;
     }
     if (!existing) break;
@@ -111,7 +113,6 @@ export async function submitTicket(
     is_anonymous: isAnonymous,
     status: "Open",
   };
-  console.log("[raise-ticket] Inserting payload:", JSON.stringify(payload));
 
   let { data: inserted, error: insertError } = await supabase
     .from("tickets")
@@ -153,10 +154,7 @@ export async function submitTicket(
   }
 
   if (insertError) {
-    // Log full error object — .message alone often omits the Postgres error
-    // code, detail, and hint which are essential for debugging.
-    console.error("[raise-ticket] Insert error (full):", insertError);
-    console.error("[raise-ticket] Insert error message:", insertError.message);
+    console.error("[raise-ticket] Insert error:", insertError.message);
     return {
       success: false,
       error: "Failed to save your ticket. Please try again.",

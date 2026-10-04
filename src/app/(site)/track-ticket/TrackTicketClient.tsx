@@ -114,7 +114,7 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
         {/* Fields */}
         <dl className="divide-y divide-slate-100">
           <Row label="Category">
-            <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-slate-800">
+            <span className="inline-flex items-center gap-1.5 text-sm font-normal text-slate-800">
               <span>{tag.emoji}</span>
               <span>{tag.label}</span>
             </span>
@@ -170,7 +170,7 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
 
           <Row label="Logged At">
             <span
-              className="text-xs text-slate-500 font-medium"
+              className="text-xs text-slate-500 font-normal"
               style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
             >
               {formatDate(ticket.created_at)}
@@ -179,7 +179,7 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
 
           <Row label="Last Update">
             <span
-              className="text-xs text-slate-500 font-medium"
+              className="text-xs text-slate-500 font-normal"
               style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
             >
               {formatDate(ticket.updated_at)}
@@ -192,7 +192,7 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
                 Anonymous resident
               </span>
             ) : (
-              <span className="text-sm font-semibold text-slate-900">
+              <span className="text-sm font-normal text-slate-900">
                 {ticket.raiser_name ?? "—"}
               </span>
             )}
@@ -388,7 +388,11 @@ export default function TrackTicketClient() {
           role="alert"
           className="mt-6 rounded-xl border border-rose-300 bg-rose-50 p-4 text-sm text-rose-800"
         >
-          <p className="font-bold">Ticket not found</p>
+          <p className="font-bold">
+            {result.error.toLowerCase().includes("too many attempts")
+              ? "Rate limit exceeded"
+              : "Ticket not found"}
+          </p>
           <p className="mt-1 text-xs text-rose-700">{result.error}</p>
         </div>
       )}

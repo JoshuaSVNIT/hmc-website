@@ -29,7 +29,7 @@ const ptComponents: PortableTextComponents = {
     ),
   },
   block: {
-    normal: ({ children }) => <p className="mb-2 leading-relaxed text-slate-700 text-sm sm:text-base">{children}</p>,
+    normal: ({ children }) => <p className="mb-2 leading-relaxed font-normal text-slate-700 text-sm sm:text-base">{children}</p>,
     h3: ({ children }) => <h3 className="font-bold text-base sm:text-lg mt-3 mb-1 text-slate-900">{children}</h3>,
     h4: ({ children }) => <h4 className="font-bold text-sm sm:text-base mt-2 mb-1 text-slate-900">{children}</h4>,
   },
@@ -42,8 +42,8 @@ const ptComponents: PortableTextComponents = {
 function EventCard({ event }: { event: SanityEvent }) {
   const [open, setOpen] = useState(false);
   const isPast = event.date ? new Date(event.date) < new Date() : false;
-  const imageUrl = event.image?.asset?._ref
-    ? urlFor(event.image).width(900).height(450).fit("crop").auto("format").url()
+  const imageUrl = event.image?.asset?._ref || event.image?.asset
+    ? urlFor(event.image).width(800).auto("format").url()
     : null;
   const iconEmoji = event.icon?.trim() || null;
 

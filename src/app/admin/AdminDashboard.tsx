@@ -208,7 +208,7 @@ function StatusDropdown({
         </select>
       </div>
       {saveError && (
-        <p className="text-[11px] text-rose-600 font-medium">
+        <p className="text-[11px] text-rose-600 font-normal">
           {saveError}
         </p>
       )}
@@ -264,7 +264,7 @@ function AdminNotesField({
       />
       <div className="flex items-center justify-between gap-2 text-[11px]">
         {saveError && (
-          <p className="flex-1 text-rose-600 font-medium">{saveError}</p>
+          <p className="flex-1 text-rose-600 font-normal">{saveError}</p>
         )}
         {saved && (
           <p className="flex-1 font-bold text-emerald-700">Saved</p>
@@ -294,7 +294,7 @@ function TicketTable({
   if (tickets.length === 0) {
     return (
       <div className="text-center py-16 rounded-xl border border-slate-200 bg-white shadow-xs">
-        <p className="text-sm font-medium text-slate-500">
+        <p className="text-sm font-normal text-slate-500">
           No tickets match your filters.
         </p>
       </div>
@@ -351,7 +351,7 @@ function TicketTable({
                       Anonymous
                     </span>
                   ) : (
-                    <span className="font-medium">{ticket.raiser_name ?? "—"}</span>
+                    <span className="font-normal">{ticket.raiser_name ?? "—"}</span>
                   )}
                 </td>
 
@@ -447,7 +447,7 @@ function TicketTable({
 
                 {/* Date */}
                 <td
-                  className="px-3.5 py-3 text-xs whitespace-nowrap text-slate-500 font-medium"
+                  className="px-3.5 py-3 text-xs whitespace-nowrap text-slate-500 font-normal"
                   style={{
                     fontFamily: "var(--font-ibm-plex-mono), monospace",
                   }}

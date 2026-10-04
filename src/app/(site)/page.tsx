@@ -229,8 +229,8 @@ export default async function HomePage() {
                 {bannerContacts.map((contact) => {
                   const telHref = `tel:${contact.phone.replace(/[\s\-().]/g, "")}`;
                   const isEmergency = contact.category?.toLowerCase().includes("emergency");
-                  const photoUrl = contact.photo?.asset?._ref
-                    ? urlFor(contact.photo).width(64).height(64).fit("crop").auto("format").url()
+                  const photoUrl = contact.photo?.asset?._ref || contact.photo?.asset
+                    ? urlFor(contact.photo).width(100).auto("format").url()
                     : null;
                   return (
                     <a
@@ -252,7 +252,7 @@ export default async function HomePage() {
                         />
                         <div className="min-w-0">
                           {contact.title && (
-                            <div className="text-xs font-semibold text-blue-700 truncate">{contact.title}</div>
+                            <div className="text-xs font-normal text-blue-700 truncate">{contact.title}</div>
                           )}
                           <div className="text-base font-bold text-ink truncate">{contact.label}</div>
                         </div>
@@ -419,7 +419,7 @@ export default async function HomePage() {
                           <div className="flex items-end justify-between gap-2">
                             <div className="min-w-0">
                               {item.date && (
-                                <span className="block text-xs font-mono text-gold-soft mb-1 font-semibold">
+                                <span className="block text-xs font-mono text-gold-soft mb-1 font-normal">
                                   {formatNoticeDate(item.date)}
                                 </span>
                               )}
@@ -427,7 +427,7 @@ export default async function HomePage() {
                                 {displayTitle}
                               </h3>
                               {(photoCount > 0 || videoCount > 0) && (
-                                <p className="text-xs text-white/70 mt-1 font-medium">
+                                <p className="text-xs text-white/70 mt-1 font-normal">
                                   {photoCount > 0 && `${photoCount} ${photoCount === 1 ? "photo" : "photos"}`}
                                   {photoCount > 0 && videoCount > 0 && " · "}
                                   {videoCount > 0 && `${videoCount} ${videoCount === 1 ? "video" : "videos"}`}

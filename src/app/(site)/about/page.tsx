@@ -96,7 +96,7 @@ export default async function AboutPage() {
 
         {members.length === 0 ? (
           <div className="rounded-xl border border-slate-200 bg-white p-8 text-center shadow-xs">
-            <p className="text-sm font-semibold text-slate-600">
+            <p className="text-sm font-normal text-slate-600">
               No committee members listed yet. Contacts added in Sanity Studio under category &ldquo;HMC Member&rdquo; will
               appear here.
             </p>
@@ -104,8 +104,8 @@ export default async function AboutPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {members.map((member) => {
-              const photoUrl = member.photo?.asset?._ref
-                ? urlFor(member.photo).width(300).height(300).fit("crop").auto("format").url()
+              const photoUrl = member.photo?.asset?._ref || member.photo?.asset
+                ? urlFor(member.photo).width(100).auto("format").url()
                 : null;
 
               // Parse name and role if formatted like "Name (Role)" in label

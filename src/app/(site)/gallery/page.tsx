@@ -41,7 +41,7 @@ export default async function GalleryPage() {
 
         {items.length === 0 ? (
           <div className="rounded-xl border border-slate-200 bg-white p-12 text-center shadow-xs">
-            <p className="text-base font-semibold text-slate-600">
+            <p className="text-base font-normal text-slate-600">
               No photo albums published yet.
             </p>
             <p className="text-xs mt-1 text-slate-400">
@@ -51,7 +51,7 @@ export default async function GalleryPage() {
         ) : (
           <>
             <div
-              className="flex items-center justify-between gap-4 mb-6 text-xs text-slate-600 font-semibold"
+              className="flex items-center justify-between gap-4 mb-6 text-xs text-slate-600 font-normal"
               style={{
                 fontFamily: "var(--font-ibm-plex-mono), monospace",
               }}

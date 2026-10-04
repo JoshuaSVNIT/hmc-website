@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import {
   Cormorant_Garamond,
-  Plus_Jakarta_Sans,
+  IBM_Plex_Sans,
   IBM_Plex_Mono,
 } from "next/font/google";
 import "./globals.css";
@@ -13,8 +13,8 @@ const cormorant = Cormorant_Garamond({
   display: "swap",
 });
 
-const plusJakarta = Plus_Jakarta_Sans({
-  variable: "--font-plus-jakarta",
+const ibmPlexSans = IBM_Plex_Sans({
+  variable: "--font-ibm-plex-sans",
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   display: "swap",
@@ -45,12 +45,12 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${cormorant.variable} ${plusJakarta.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      className={`${cormorant.variable} ${ibmPlexSans.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body
         className="min-h-full flex flex-col selection:bg-gold/30 selection:text-ink"
         style={{
-          fontFamily: "var(--font-plus-jakarta), system-ui, sans-serif",
+          fontFamily: "var(--font-ibm-plex-sans), system-ui, sans-serif",
           backgroundColor: "var(--color-paper)",
           color: "var(--color-ink)",
         }}

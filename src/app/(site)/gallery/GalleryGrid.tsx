@@ -116,7 +116,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                     {item.date && (
                       <time
                         dateTime={item.date}
-                        className="text-xs sm:text-sm text-slate-500 font-medium"
+                        className="text-xs sm:text-sm text-slate-500 font-normal"
                         style={{ fontFamily: "var(--font-ibm-plex-mono), monospace" }}
                       >
                         {formatDate(item.date)}
@@ -167,7 +167,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={urlFor(itemImages[0]).width(1200).height(600).fit("crop").auto("format").url()}
+                      src={urlFor(itemImages[0]).width(400).auto("format").quality(75).url()}
                       alt={item.title ?? "Gallery photo"}
                       className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
                       loading="lazy"
@@ -188,7 +188,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={urlFor(img).width(800).height(600).fit("crop").auto("format").url()}
+                          src={urlFor(img).width(400).auto("format").quality(75).url()}
                           alt={`${item.title ?? "Gallery photo"} - ${idx + 1}`}
                           className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
                           loading="lazy"
@@ -211,7 +211,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                       >
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={urlFor(img).width(600).height(450).fit("crop").auto("format").url()}
+                          src={urlFor(img).width(400).auto("format").quality(75).url()}
                           alt={`${item.title ?? "Gallery photo"} - ${idx + 1}`}
                           className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-200"
                           loading="lazy"
@@ -250,7 +250,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
                             key={vid._key || vIdx}
                             className="p-4 rounded-xl border border-slate-200 bg-slate-50 flex items-center justify-between gap-3"
                           >
-                            <span className="text-sm font-semibold text-slate-700 truncate">
+                            <span className="text-sm font-normal text-slate-700 truncate">
                               Video {vIdx + 1}
                             </span>
                             <a
@@ -341,7 +341,7 @@ export default function GalleryGrid({ items }: { items: SanityGalleryItem[] }) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               key={activeLightbox.photoIndex}
-              src={urlFor(currentPhoto).width(1600).auto("format").url()}
+              src={urlFor(currentPhoto).width(1200).auto("format").url()}
               alt={`${activeLightbox.item.title ?? "Photo"} - ${activeLightbox.photoIndex + 1}`}
               className="max-h-[75vh] max-w-[90vw] object-contain rounded shadow-2xl"
             />

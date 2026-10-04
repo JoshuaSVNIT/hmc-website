@@ -63,9 +63,6 @@ export default function Footer() {
                 Leaderboard
               </Link>
             )}
-            <Link href="/admin" className="hover:text-gold transition-colors">
-              Admin
-            </Link>
             <span className="text-white/20">|</span>
             <InstallAppButton className="hover:text-gold transition-colors text-white/50" />
           </div>

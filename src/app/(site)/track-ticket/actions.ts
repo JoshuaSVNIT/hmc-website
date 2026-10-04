@@ -1,5 +1,6 @@
 "use server";
 
+import { headers } from "next/headers";
 import { createAdminClient } from "@/lib/supabase/server";
 import type { Ticket } from "@/types";
 
@@ -7,13 +8,63 @@ export type LookupResult =
   | { found: true; ticket: Ticket }
   | { found: false; error: string };
 
+// In-memory rate limiting map: IP -> array of attempt timestamps (ms)
+const lookupAttemptsByIp = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
+const MAX_ATTEMPTS_PER_WINDOW = 5;
+
+async function getClientIp(): Promise<string> {
+  try {
+    const headerStore = await headers();
+    const forwardedFor = headerStore.get("x-forwarded-for");
+    if (forwardedFor) {
+      return forwardedFor.split(",")[0].trim();
+    }
+    const realIp = headerStore.get("x-real-ip");
+    if (realIp) {
+      return realIp.trim();
+    }
+  } catch {
+    // Invoked outside request scope (e.g. tests or direct invocation)
+  }
+  return "127.0.0.1";
+}
+
+function isRateLimited(ip: string): boolean {
+  const now = Date.now();
+  const attempts = (lookupAttemptsByIp.get(ip) ?? []).filter(
+    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS
+  );
+
+  if (attempts.length >= MAX_ATTEMPTS_PER_WINDOW) {
+    lookupAttemptsByIp.set(ip, attempts);
+    return true;
+  }
+
+  attempts.push(now);
+  lookupAttemptsByIp.set(ip, attempts);
+  return false;
+}
+
+/** Reset rate limit records (used in tests) */
+export async function _resetRateLimits(): Promise<void> {
+  lookupAttemptsByIp.clear();
+}
+
 /**
  * Server Action: look up a single ticket by exact ticket_code.
  * Uses createAdminClient to safely query the ticket by code and sign photo attachments.
- * NOTE: console.log / console.error here print to the Next.js SERVER
- * terminal (the terminal running `next dev`), not the browser console.
  */
 export async function lookupTicket(code: string): Promise<LookupResult> {
+  const ip = await getClientIp();
+
+  if (isRateLimited(ip)) {
+    return {
+      found: false,
+      error: "Too many attempts, please try again in a minute.",
+    };
+  }
+
   // Strip ALL whitespace (including internal spaces like "HMC- 1234")
   // then uppercase, matching the spec's sanitisation requirement.
   const sanitizedCode = code.replace(/\s+/g, "").toUpperCase();
@@ -39,11 +90,8 @@ export async function lookupTicket(code: string): Promise<LookupResult> {
     .eq("ticket_code", sanitizedCode)
     .maybeSingle();
 
-  // Log raw Supabase response to the SERVER terminal for debugging.
-  console.error("Supabase Track Error:", error);
-  console.log("Supabase Track Data:", data);
-
   if (error) {
+    console.error("[track-ticket] Lookup error:", error.message);
     return {
       found: false,
       error: "Something went wrong while looking up the ticket. Please try again.",

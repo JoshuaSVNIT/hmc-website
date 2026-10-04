@@ -199,8 +199,8 @@ export default function FacilitiesClient({
                       const room = roomMap.get(`${floor}-${wing}`);
                       const hasLabel = Boolean(room?.label && room.label.trim().length > 0);
                       const label = hasLabel ? room!.label.trim() : "Not yet allotted";
-                      const imageUrl = room?.image?.asset?._ref
-                        ? urlFor(room.image).width(480).height(320).fit("crop").auto("format").url()
+                      const imageUrl = (room?.image?.asset?._ref || room?.image?.asset)
+                        ? urlFor(room.image).width(150).auto("format").url()
                         : null;
                       const iconEmoji = room?.icon?.trim() || null;
                       const hasContact = Boolean(room?.contactName?.trim() || room?.contactPhone?.trim());
@@ -242,7 +242,7 @@ export default function FacilitiesClient({
                                   <BuildingIcon size={20} />
                                 </div>
                                 <span
-                                  className={`text-xs mt-1.5 uppercase tracking-wider font-mono font-medium ${
+                                  className={`text-xs mt-1.5 uppercase tracking-wider font-mono font-normal ${
                                     hasLabel ? "text-ink-500" : "text-slate-400"
                                   }`}
                                 >
@@ -272,7 +272,7 @@ export default function FacilitiesClient({
                                 {label}
                               </h3>
                               <p
-                                className={`text-xs mt-1 font-medium ${
+                                className={`text-xs mt-1 font-normal ${
                                   hasLabel ? "text-ink-500" : "text-slate-400 font-mono"
                                 }`}
                               >
@@ -284,7 +284,7 @@ export default function FacilitiesClient({
                             {hasContact && (
                               <div className="pt-2.5 border-t border-ink/5 text-xs space-y-1 text-ink-600">
                                 {room?.contactName?.trim() && (
-                                  <div className="font-medium text-ink truncate">
+                                  <div className="font-normal text-ink truncate">
                                     Incharge: {room.contactName.trim()}
                                   </div>
                                 )}
@@ -329,8 +329,8 @@ export default function FacilitiesClient({
                       const room = roomMap.get(`${floor}-${wing}`);
                       const hasLabel = Boolean(room?.label && room.label.trim().length > 0);
                       const label = hasLabel ? room!.label.trim() : "Not yet allotted";
-                      const imageUrl = room?.image?.asset?._ref
-                        ? urlFor(room.image).width(200).height(200).fit("crop").auto("format").url()
+                      const imageUrl = (room?.image?.asset?._ref || room?.image?.asset)
+                        ? urlFor(room.image).width(80).auto("format").url()
                         : null;
                       const iconEmoji = room?.icon?.trim() || null;
 

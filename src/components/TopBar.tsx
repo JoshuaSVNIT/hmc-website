@@ -6,7 +6,6 @@ import { usePathname, useRouter } from "next/navigation";
 import {
   SearchIcon,
   AlertIcon,
-  UserIcon,
   MenuIcon,
   CloseIcon,
 } from "@/components/icons";
@@ -250,7 +249,7 @@ export default function TopBar({ onMenuOpen }: TopBarProps) {
           </form>
         </div>
 
-        {/* Right actions: Mobile search button + Emergency + Login */}
+        {/* Right actions: Mobile search button + Emergency */}
         <div className="flex items-center gap-2 shrink-0">
           {/* ── MOBILE SEARCH BUTTON (< md): Icon-only magnifying glass ── */}
           <button
@@ -284,15 +283,6 @@ export default function TopBar({ onMenuOpen }: TopBarProps) {
           >
             <AlertIcon size={14} className="text-red-400" />
             <span className="hidden sm:inline">Emergency</span>
-          </Link>
-
-          {/* HMC Admin Portal Link */}
-          <Link
-            href="/admin/login"
-            className="hidden md:inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-bold bg-gold text-ink hover:brightness-105 transition-all shadow-md shadow-black/20"
-          >
-            <UserIcon size={14} />
-            HMC Login
           </Link>
         </div>
       </div>

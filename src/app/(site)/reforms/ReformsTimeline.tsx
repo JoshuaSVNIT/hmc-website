@@ -40,7 +40,7 @@ const ptComponents: PortableTextComponents = {
   },
   block: {
     normal: ({ children }) => (
-      <p className="leading-relaxed text-sm sm:text-base mb-3 text-slate-700">
+      <p className="leading-relaxed font-normal text-sm sm:text-base mb-3 text-slate-700">
         {children}
       </p>
     ),
@@ -159,9 +159,7 @@ export default function ReformsTimeline({ reforms }: { reforms: SanityReform[] }
           const hasCover = Boolean(reform.coverPhoto?.asset?._ref) && !hasImageError;
           const coverUrl = hasCover
             ? urlFor(reform.coverPhoto)
-                .width(1200)
-                .height(900)
-                .fit("crop")
+                .width(600)
                 .auto("format")
                 .url()
             : null;

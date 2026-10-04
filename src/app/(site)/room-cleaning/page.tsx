@@ -101,7 +101,7 @@ export default function RoomCleaningPage() {
                       {entry.srNo}
                     </span>
                   </td>
-                  <td className="py-4 px-6 font-semibold text-slate-900">
+                  <td className="py-4 px-6 font-normal text-slate-900">
                     {entry.name}
                   </td>
                   <td className="py-4 px-6">

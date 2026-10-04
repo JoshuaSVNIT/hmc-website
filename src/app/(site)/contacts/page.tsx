@@ -138,8 +138,8 @@ export default async function ContactsPage() {
                   >
                     {list.map((contact) => {
                       const telHref = `tel:${contact.phone.replace(/[\s\-().]/g, "")}`;
-                      const photoUrl = contact.photo?.asset?._ref
-                        ? urlFor(contact.photo).width(64).height(64).fit("crop").auto("format").url()
+                      const photoUrl = contact.photo?.asset?._ref || contact.photo?.asset
+                        ? urlFor(contact.photo).width(100).auto("format").url()
                         : null;
 
                       return (
@@ -162,7 +162,7 @@ export default async function ContactsPage() {
                                 {contact.label}
                               </div>
                               {contact.title && (
-                                <div className={`text-sm font-semibold mt-0.5 ${cfg.phoneColor}`}>
+                                <div className={`text-sm font-normal mt-0.5 ${cfg.phoneColor}`}>
                                   {contact.title}
                                 </div>
                               )}
