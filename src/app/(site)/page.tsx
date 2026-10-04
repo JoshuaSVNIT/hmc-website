@@ -13,6 +13,7 @@ import {
 } from "@/lib/sanity/queries";
 import { urlFor } from "@/sanity/lib/image";
 import ContactAvatar from "@/components/ContactAvatar";
+import EmergencySectionWrapper from "@/components/EmergencySectionWrapper";
 import {
   ArrowRightIcon,
   BuildingIcon,
@@ -203,7 +204,7 @@ export default async function HomePage() {
         aria-label="Emergency and Supervisor Helplines"
       >
         <div className="max-w-[1400px] mx-auto">
-          <div className="card-surface p-5 sm:p-6 border border-rose-100 shadow-md">
+          <EmergencySectionWrapper>
             <div className="flex items-center justify-between gap-2 pb-3 mb-3.5 border-b border-rose-100">
               <div className="flex items-center gap-2.5">
                 <span className="relative flex h-2.5 w-2.5 shrink-0">
@@ -268,7 +269,7 @@ export default async function HomePage() {
                 })}
               </div>
             )}
-          </div>
+          </EmergencySectionWrapper>
         </div>
       </section>
 

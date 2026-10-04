@@ -1,7 +1,8 @@
 "use server";
 
 import { createAdminClient } from "@/lib/supabase/server";
-import type { TicketTag } from "@/types";
+import { uploadTicketPhoto, getTicketPhotoSignedUrl } from "@/lib/supabase/photos";
+import type { Ticket, TicketTag } from "@/types";
 
 /** Allowed file types for ticket photo uploads (§4 storage constraints) */
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -14,7 +15,7 @@ function generateTicketCode(): string {
 }
 
 export type SubmitTicketResult =
-  | { success: true; ticket_code: string }
+  | { success: true; ticket_code: string; ticket: Ticket | null }
   | { success: false; error: string };
 
 /**
@@ -62,36 +63,18 @@ export async function submitTicket(
       };
     }
 
-    // Upload to Supabase Storage — bucket: "ticket-photos"
-    const ext = photoFile.name.split(".").pop()?.toLowerCase() ?? "jpg";
-    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-    const arrayBuffer = await photoFile.arrayBuffer();
-
-    const { data: uploadData, error: uploadError } = await supabase.storage
-      .from("ticket-photos")
-      .upload(fileName, arrayBuffer, {
-        contentType: photoFile.type,
-        upsert: false,
-      });
-
-    if (uploadError) {
-      console.error("[raise-ticket] Photo upload error:", uploadError);
+    // Upload to Supabase Storage private "ticket-photos" bucket using shared helper
+    const uploadResult = await uploadTicketPhoto(photoFile);
+    if ("error" in uploadResult) {
+      console.error("[raise-ticket] Photo upload error:", uploadResult.error);
       return {
         success: false,
-        error: `Photo upload failed: ${uploadError.message}. Please try again or submit without a photo.`,
+        error: `Photo upload failed: ${uploadResult.error}. Please try again or submit without a photo.`,
       };
     }
 
-    if (!uploadData?.path) {
-      console.error("[raise-ticket] Photo upload returned no storage path");
-      return {
-        success: false,
-        error: "Photo upload failed: missing storage path. Please try again or submit without a photo.",
-      };
-    }
-
-    // Private bucket — store the storage path only (e.g. "179104...-abc.png"), signed URLs are generated server-side upon retrieval
-    photoUrl = uploadData.path;
+    // Standardized relative storage key (e.g. "1791...-xyz.png")
+    photoUrl = uploadResult.path;
   }
 
   // --- Generate unique ticket code (retry on collision) ---
@@ -129,7 +112,11 @@ export async function submitTicket(
   };
   console.log("[raise-ticket] Inserting payload:", JSON.stringify(payload));
 
-  let { error: insertError } = await supabase.from("tickets").insert(payload);
+  let { data: inserted, error: insertError } = await supabase
+    .from("tickets")
+    .insert(payload)
+    .select("*")
+    .single();
 
   // Resilient fallback: if the Supabase database does not have the `phone_no` column yet,
   // retry without `phone_no` and append phone to the description so tickets never fail to submit.
@@ -155,9 +142,12 @@ export async function submitTicket(
       is_anonymous: isAnonymous,
       status: "Open",
     };
-    const { error: fallbackError } = await supabase
+    const { data: fallbackData, error: fallbackError } = await supabase
       .from("tickets")
-      .insert(fallbackPayload);
+      .insert(fallbackPayload)
+      .select("*")
+      .single();
+    inserted = fallbackData;
     insertError = fallbackError;
   }
 
@@ -172,5 +162,12 @@ export async function submitTicket(
     };
   }
 
-  return { success: true, ticket_code: ticketCode };
+  // Build the printable ticket: swap the stored storage key for a signed URL
+  let ticket: Ticket | null = null;
+  if (inserted) {
+    const signed = photoUrl ? await getTicketPhotoSignedUrl(photoUrl, 3600) : null;
+    ticket = { ...(inserted as Ticket), photo_url: signed ?? null };
+  }
+
+  return { success: true, ticket_code: ticketCode, ticket };
 }

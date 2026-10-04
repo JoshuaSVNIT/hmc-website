@@ -17,6 +17,7 @@ export default defineType({
       title: 'Body / Description',
       type: 'array',
       of: [{ type: 'block' }],
+      validation: (Rule) => Rule.required(),
       description: 'Formatted rich text description of the reform and its impact',
     }),
     defineField({
@@ -24,8 +25,7 @@ export default defineType({
       title: 'Cover Photo',
       type: 'image',
       options: { hotspot: true },
-      validation: (Rule) => Rule.required(),
-      description: 'Main feature photo for this timeline entry',
+      description: 'Main feature photo for this timeline entry (optional)',
     }),
     defineField({
       name: 'icon',

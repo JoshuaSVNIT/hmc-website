@@ -398,14 +398,33 @@ function TicketTable({
                     {ticket.description}
                   </p>
                   {ticket.photo_url && (
-                    <a
-                      href={ticket.photo_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs hover:underline mt-0.5 inline-block font-bold text-blue-700"
-                    >
-                      View photo ↗
-                    </a>
+                    <div className="mt-1.5 flex items-center gap-2">
+                      {/^https?:\/\//.test(ticket.photo_url) && (
+                        <a
+                          href={ticket.photo_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Open full-size photo"
+                          className="shrink-0"
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={ticket.photo_url}
+                            alt={`Photo for ${ticket.ticket_code}`}
+                            loading="lazy"
+                            className="w-14 h-14 rounded-md object-cover border border-slate-200"
+                          />
+                        </a>
+                      )}
+                      <a
+                        href={ticket.photo_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs hover:underline inline-block font-bold text-blue-700"
+                      >
+                        View photo ↗
+                      </a>
+                    </div>
                   )}
                 </td>
 
@@ -534,9 +553,13 @@ export default function AdminDashboard({ tickets }: { tickets: Ticket[] }) {
                 <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Ticket Code</th>
                 <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Category</th>
                 <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Room</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Raised By</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Phone</th>
                 <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Status</th>
                 <th className="py-2 px-2.5 font-bold border-r border-gray-400 whitespace-nowrap">Logged</th>
-                <th className="py-2 px-2.5 font-bold">HMC Notes</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400">Description</th>
+                <th className="py-2 px-2.5 font-bold border-r border-gray-400">HMC Notes</th>
+                <th className="py-2 px-2.5 font-bold">Photo</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-300">
@@ -551,14 +574,35 @@ export default function AdminDashboard({ tickets }: { tickets: Ticket[] }) {
                   <td className="py-2 px-2.5 font-mono border-r border-gray-300 whitespace-nowrap">
                     {t.room_no || "—"}
                   </td>
+                  <td className="py-2 px-2.5 border-r border-gray-300">
+                    {t.is_anonymous ? "Anonymous" : t.raiser_name || "—"}
+                  </td>
+                  <td className="py-2 px-2.5 font-mono border-r border-gray-300 whitespace-nowrap">
+                    {t.phone_no || "—"}
+                  </td>
                   <td className="py-2 px-2.5 font-bold border-r border-gray-300 whitespace-nowrap">
                     {t.status}
                   </td>
                   <td className="py-2 px-2.5 font-mono text-[11px] border-r border-gray-300 whitespace-nowrap">
                     {formatDate(t.created_at)}
                   </td>
-                  <td className="py-2 px-2.5 text-xs text-gray-800">
+                  <td className="py-2 px-2.5 text-xs text-gray-800 border-r border-gray-300 whitespace-pre-wrap">
+                    {t.description || "—"}
+                  </td>
+                  <td className="py-2 px-2.5 text-xs text-gray-800 border-r border-gray-300 whitespace-pre-wrap">
                     {t.admin_notes || "—"}
+                  </td>
+                  <td className="py-2 px-2.5">
+                    {t.photo_url && /^https?:\/\//.test(t.photo_url) ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={t.photo_url}
+                        alt={`Photo for ${t.ticket_code}`}
+                        style={{ maxWidth: "150px", maxHeight: "110px", objectFit: "contain" }}
+                      />
+                    ) : (
+                      "—"
+                    )}
                   </td>
                 </tr>
               ))}

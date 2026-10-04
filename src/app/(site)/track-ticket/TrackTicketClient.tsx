@@ -3,6 +3,7 @@
 import { useState, useEffect, useTransition, useRef } from "react";
 import { lookupTicket, type LookupResult } from "./actions";
 import type { Ticket, TicketStatus, TicketTag } from "@/types";
+import PrintableTicket from "@/components/PrintableTicket";
 
 // ─── Tag & Status helpers ─────────────────────────────────────────────────────
 
@@ -62,15 +63,11 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
 
   return (
     <div className="mt-6 space-y-0">
-      {/* Print-only header */}
-      <div className="hidden print:block mb-6">
-        <h1 className="text-xl font-bold text-black font-heading">Swami Vivekanand Bhavan HMC</h1>
-        <p className="text-xs text-gray-600 mt-0.5">Hostel Management Committee — Complaint Ticket</p>
-        <hr className="my-3 border-black" />
-      </div>
+      {/* Self-contained print view: own header + logo, every field, photo */}
+      <PrintableTicket ticket={ticket} />
 
-      {/* Detail card */}
-      <div className="rounded-xl border border-slate-200/90 bg-white overflow-hidden shadow-sm">
+      {/* Detail card (screen only) */}
+      <div className="print:hidden rounded-xl border border-slate-200/90 bg-white overflow-hidden shadow-sm">
         {/* Header row */}
         <div className="px-5 py-4 border-b border-slate-100 flex flex-wrap items-center justify-between gap-3 bg-slate-50/70">
           <div className="flex items-center gap-3">
@@ -214,11 +211,6 @@ function TicketDetailCard({ ticket }: { ticket: Ticket }) {
         </dl>
       </div>
 
-      {/* Print-only footer */}
-      <div className="hidden print:block mt-6 text-xs text-gray-500">
-        <p>Track this ticket at <strong>svbhavan.in/track-ticket</strong> with code: <strong>{ticket.ticket_code}</strong></p>
-        <p className="mt-1">Printed: {new Date().toLocaleString("en-IN")}</p>
-      </div>
     </div>
   );
 }

@@ -268,6 +268,17 @@ export default function TopBar({ onMenuOpen }: TopBarProps) {
           {/* Emergency Helpline CTA */}
           <Link
             href="/#emergency-banner"
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                const el = document.getElementById("emergency-banner");
+                if (el) {
+                  el.scrollIntoView({ behavior: "smooth", block: "start" });
+                  window.history.replaceState(null, "", "/#emergency-banner");
+                  window.dispatchEvent(new CustomEvent("trigger-emergency-highlight"));
+                }
+              }
+            }}
             className="inline-flex items-center gap-1.5 px-3 py-2 rounded-full text-xs font-semibold text-white bg-black/40 border border-red-400/40 hover:bg-red-500/20 transition-colors"
             aria-label="Emergency contacts"
           >

@@ -61,6 +61,14 @@ export async function GET() {
         keywords: ["reforms", "reform", "initiatives", "works", "timeline", "completed", "projects", "upgrades", "renovations", "progress"],
       },
       {
+        id: "srv-room-cleaning",
+        title: "Room Cleaning Duty List",
+        subtitle: "Hostel boys floor-wise duty roster and staff contact numbers (2025–26)",
+        category: "Service",
+        href: "/room-cleaning",
+        keywords: ["cleaning", "room cleaning", "sweeper", "maid", "floor", "housekeeping", "duty", "staff", "roster"],
+      },
+      {
         id: "srv-lan",
         title: "LAN & Internet Setup Guide",
         subtitle: "Wi-Fi router configuration, proxy settings, and troubleshooting",

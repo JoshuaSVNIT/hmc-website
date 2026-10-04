@@ -3,7 +3,8 @@
 import { useState, useEffect, useTransition, useRef } from "react";
 import Link from "next/link";
 import { submitTicket, type SubmitTicketResult } from "./actions";
-import type { TicketTag } from "@/types";
+import type { Ticket, TicketTag } from "@/types";
+import PrintableTicket from "@/components/PrintableTicket";
 
 const ALLOWED_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"];
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
@@ -23,9 +24,11 @@ const TAG_OPTIONS: { value: TicketTag; label: string; emoji: string }[] = [
 
 function SuccessView({
   ticketCode,
+  ticket,
   onReset,
 }: {
   ticketCode: string;
+  ticket: Ticket | null;
   onReset: () => void;
 }) {
   const [copied, setCopied] = useState(false);
@@ -55,8 +58,11 @@ function SuccessView({
   }
 
   return (
-    <div className="flex flex-col items-center text-center py-6 px-2">
-      {/* Print-only header */}
+    <>
+    {/* Full self-contained printable ticket (own header + logo, all fields, photo) */}
+    {ticket && <PrintableTicket ticket={ticket} />}
+    <div className={`flex flex-col items-center text-center py-6 px-2 ${ticket ? "print:hidden" : ""}`}>
+      {/* Fallback print-only header (only used if the saved ticket couldn't be loaded) */}
       <div className="hidden print:block mb-6 text-left w-full max-w-lg">
         <h1 className="text-xl font-bold text-black font-heading">Swami Vivekanand Bhavan HMC</h1>
         <p className="text-xs text-gray-600 mt-1">Hostel Management Committee — Complaint Ticket</p>
@@ -160,6 +166,7 @@ function SuccessView({
         Submit another complaint
       </button>
     </div>
+    </>
   );
 }
 
@@ -318,7 +325,7 @@ export default function RaiseTicketForm() {
   }
 
   if (result?.success) {
-    return <SuccessView ticketCode={result.ticket_code} onReset={handleReset} />;
+    return <SuccessView ticketCode={result.ticket_code} ticket={result.ticket} onReset={handleReset} />;
   }
 
   return (

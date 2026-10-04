@@ -16,7 +16,7 @@ export default function RaiseTicketPage() {
     >
       <div className="max-w-2xl mx-auto">
         {/* Page header */}
-        <div className="mb-8">
+        <div className="mb-8 print:hidden">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Resident Support Portal
@@ -38,12 +38,12 @@ export default function RaiseTicketPage() {
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
+        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-6 sm:p-8 print:border-0 print:shadow-none print:p-0">
           <RaiseTicketForm />
         </div>
 
         {/* Advisory box */}
-        <div className="mt-6 rounded-xl border border-blue-200/90 bg-gradient-to-r from-blue-50/80 to-blue-50/40 p-4 text-sm text-slate-800 shadow-2xs">
+        <div className="print:hidden mt-6 rounded-xl border border-blue-200/90 bg-gradient-to-r from-blue-50/80 to-blue-50/40 p-4 text-sm text-slate-800 shadow-2xs">
           <span className="font-bold text-blue-900">Note:</span> Before submitting LAN or
           electrical complaints, consider reviewing the{" "}
           <Link

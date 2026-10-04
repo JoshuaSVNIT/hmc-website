@@ -134,11 +134,12 @@ export interface SanityGalleryItem {
   videos?: SanityGalleryVideo[] | null;
   eventName: string | null;
   date: string | null; // ISO date string (date type in schema)
+  sortOrder?: number | null;
 }
 
 const ALL_GALLERY_QUERY = `
-  *[_type == "galleryItem"] | order(date desc) {
-    _id, title, images, videos, eventName, date
+  *[_type == "galleryItem"] | order(sortOrder desc, date desc) {
+    _id, title, images, videos, eventName, date, sortOrder
   }
 `;
 
@@ -318,7 +319,7 @@ export interface SanityReform {
 }
 
 const ALL_REFORMS_QUERY = `
-  *[_type == "reform"] | order(sortOrder asc, date desc) {
+  *[_type == "reform"] | order(sortOrder desc, date desc) {
     _id,
     title,
     body,

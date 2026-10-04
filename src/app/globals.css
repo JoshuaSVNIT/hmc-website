@@ -175,12 +175,52 @@ h1, h2, h3, h4, h5, h6 {
   animation: emergency-pulse 1.6s ease-in-out infinite;
 }
 
+/* Emergency section outer boundary highlight when Emergency button is clicked */
+@keyframes emergency-boundary-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    border-color: rgba(254, 205, 211, 1);
+  }
+  20% {
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.5), 0 0 24px rgba(239, 68, 68, 0.35);
+    border-color: rgba(225, 29, 72, 1);
+  }
+  45% {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3), 0 0 12px rgba(239, 68, 68, 0.2);
+    border-color: rgba(239, 68, 68, 0.8);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(239, 68, 68, 0.5), 0 0 24px rgba(239, 68, 68, 0.35);
+    border-color: rgba(225, 29, 72, 1);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    border-color: rgba(254, 205, 211, 1);
+  }
+}
+
+.emergency-boundary-highlight {
+  animation: emergency-boundary-glow 1.8s ease-in-out forwards;
+}
+
+#emergency-banner:target .emergency-card-target {
+  animation: emergency-boundary-glow 1.8s ease-in-out forwards;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .animate-mess-glow,
   .animate-float-soft,
   .animate-hero-fade,
   .animate-emergency-pulse {
     animation: none !important;
+  }
+
+  .emergency-boundary-highlight,
+  #emergency-banner:target .emergency-card-target {
+    animation: none !important;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.5) !important;
+    border-color: rgba(225, 29, 72, 1) !important;
+    transition: box-shadow 0.4s ease, border-color 0.4s ease !important;
   }
 }
 

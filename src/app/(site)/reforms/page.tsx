@@ -37,16 +37,13 @@ export default async function ReformsPage() {
             renovations, mess enhancements, and resident welfare policies
             implemented across Swami Vivekanand Bhavan.
           </p>
-
-          {reforms.length > 0 && (
-            <div
-              className="mt-4 flex items-center gap-3 text-xs font-semibold text-slate-500 font-mono"
-            >
-              <span>{reforms.length} {reforms.length === 1 ? "Initiative" : "Initiatives"} Documented</span>
-              <span>·</span>
-              <span>Sorted by priority sequence</span>
-            </div>
-          )}
+          <p
+            id="reforms-total-count"
+            className="mt-4 inline-flex items-center gap-2 text-sm font-bold text-slate-800 font-mono"
+          >
+            <span className="text-2xl text-blue-700">{reforms.length}</span>
+            {reforms.length === 1 ? "Initiative" : "Initiatives"}
+          </p>
         </div>
 
         {/* Vertical Timeline */}

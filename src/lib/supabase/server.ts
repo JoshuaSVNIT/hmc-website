@@ -1,4 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
+import { createClient as createSupabaseClient } from "@supabase/supabase-js";
 import { cookies } from "next/headers";
 
 /**
@@ -43,30 +44,17 @@ export async function createClient() {
  * NEVER import this in any client component or expose to the browser.
  */
 export async function createAdminClient() {
-  let cookieStore: any = null;
-  try {
-    cookieStore = await cookies();
-  } catch {
-    // Called outside request scope
-  }
-
-  return createServerClient(
+  // Deliberately NOT @supabase/ssr: that client reads the visitor's auth cookies
+  // and sends their user JWT, which overrides the secret key and makes the request
+  // run as `authenticated` (subject to RLS) instead of service role.
+  return createSupabaseClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.SUPABASE_SECRET_KEY!,
     {
-      cookies: {
-        getAll() {
-          return cookieStore?.getAll() ?? [];
-        },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore?.set(name, value, options)
-            );
-          } catch {
-            // intentionally blank — see above
-          }
-        },
+      auth: {
+        persistSession: false,
+        autoRefreshToken: false,
+        detectSessionInUrl: false,
       },
     }
   );

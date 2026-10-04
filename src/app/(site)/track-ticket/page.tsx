@@ -16,7 +16,7 @@ export default function TrackTicketPage() {
     >
       <div className="max-w-2xl mx-auto">
         {/* Page header */}
-        <div className="mb-8">
+        <div className="mb-8 print:hidden">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold tracking-wide uppercase bg-blue-500/10 text-blue-800 border border-blue-500/20 mb-3 shadow-xs">
             <span className="w-1.5 h-1.5 rounded-full bg-blue-600" />
             Live Resolution Status
@@ -42,12 +42,12 @@ export default function TrackTicketPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-6 sm:p-8">
+        <div className="bg-white rounded-xl border border-slate-200/90 shadow-sm p-6 sm:p-8 print:border-0 print:shadow-none print:p-0">
           <TrackTicketClient />
         </div>
 
         {/* Raise new ticket link */}
-        <p className="mt-6 text-center text-sm text-slate-500">
+        <p className="print:hidden mt-6 text-center text-sm text-slate-500">
           Need to report a new issue?{" "}
           <Link
             href="/raise-ticket"
