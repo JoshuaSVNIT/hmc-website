@@ -8,6 +8,15 @@ import type { Ticket, TicketTag } from "@/types";
 const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10 MB
 
+/** Allowed tags for new tickets submitted through the resident portal */
+const ALLOWED_TICKET_TAGS: TicketTag[] = [
+  "Mess",
+  "Elevator",
+  "Cleanliness",
+  "Pests",
+  "Others",
+];
+
 /** Generate a human-readable 6-digit ticket code like HMC-093961 (1,000,000 possible combinations) */
 function generateTicketCode(): string {
   const num = Math.floor(Math.random() * 1_000_000)
@@ -45,7 +54,7 @@ export async function submitTicket(
     return { success: false, error: "Please enter your name." };
   if (!roomNo && !isAnonymous) return { success: false, error: "Room number is required." };
   if (!phoneNo && !isAnonymous) return { success: false, error: "Phone number is required." };
-  if (!tag || !(["Mess","Electrical","Plumbing/Water","Elevator","Cleanliness","Pests","Others"] as string[]).includes(tag))
+  if (!tag || !ALLOWED_TICKET_TAGS.includes(tag))
     return { success: false, error: "Please select a valid complaint category." };
   if (!description)
     return { success: false, error: "Please describe your complaint." };

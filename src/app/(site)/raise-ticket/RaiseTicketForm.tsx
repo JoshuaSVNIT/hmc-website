@@ -11,13 +11,11 @@ const ALLOWED_MIME_TYPES = ["image/jpeg", "image/png", "image/webp"];
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 const TAG_OPTIONS: { value: TicketTag; label: string; emoji: string }[] = [
-  { value: "Mess",           label: "Mess",             emoji: "🍽️" },
-  { value: "Electrical",     label: "Electrical",        emoji: "⚡" },
-  { value: "Plumbing/Water", label: "Plumbing / Water",  emoji: "🚿" },
-  { value: "Elevator",       label: "Elevator",          emoji: "🛗" },
-  { value: "Cleanliness",    label: "Cleanliness",       emoji: "🧹" },
-  { value: "Pests",          label: "Pests",             emoji: "🐜" },
-  { value: "Others",         label: "Others",            emoji: "📋" },
+  { value: "Mess",        label: "Mess",        emoji: "🍽️" },
+  { value: "Elevator",    label: "Elevator",    emoji: "🛗" },
+  { value: "Cleanliness", label: "Cleanliness", emoji: "🧹" },
+  { value: "Pests",       label: "Pests",       emoji: "🐜" },
+  { value: "Others",      label: "Others",      emoji: "📋" },
 ];
 
 // ─── Success View ────────────────────────────────────────────────────────────
