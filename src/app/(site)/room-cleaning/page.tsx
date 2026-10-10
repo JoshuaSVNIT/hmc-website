@@ -19,8 +19,8 @@ const dutyList: DutyEntry[] = [
   { srNo: 1, name: "Satish Mavi", floor: "4th Floor", phone: "+919726985877" },
   { srNo: 2, name: "Alpesh Don", floor: "3rd Floor", phone: "+919409635791" },
   { srNo: 3, name: "Prakash Naik", floor: "2nd Floor", phone: "+918260370133" },
-  { srNo: 4, name: "Manish Lodhi", floor: "5th Floor", phone: "+919265875534" },
-  { srNo: 5, name: "Akshit Gamit", floor: "6th Floor", phone: "+917016670240" },
+  { srNo: 4, name: "Manish Lodhi", floor: "5th Floor + Ground Floor Square Wing", phone: "+919265875534" },
+  { srNo: 5, name: "Akshit Gamit", floor: "6th Floor + 1 Floor Square Wing", phone: "+917016670240" },
   { srNo: 6, name: "Prasan Naik", floor: "7th & 8th Floor", phone: "+919664792989" },
 ];
 
