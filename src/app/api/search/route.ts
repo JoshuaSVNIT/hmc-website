@@ -101,6 +101,14 @@ export async function GET() {
         keywords: ["about", "hmc", "team", "warden", "council", "secretaries", "representatives"],
       },
       {
+        id: "srv-medical",
+        title: "Medical",
+        subtitle: "Emergency helplines, supervisors, and student representatives",
+        category: "Emergency",
+        href: "/medical",
+        keywords: ["medical", "doctor", "health", "dispensary", "hospital", "ambulance", "emergency", "sick", "injury", "medicine", "first aid"],
+      },
+      {
         id: "srv-contacts-all",
         title: "Directory & Helplines",
         subtitle: "Complete hostel contact directory for supervisors and members",

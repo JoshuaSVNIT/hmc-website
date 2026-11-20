@@ -22,6 +22,12 @@ export default defineType({
         defineField({ name: 'phone', title: 'Phone', type: 'string', validation: (Rule) => Rule.required() }),
         defineField({ name: 'order', title: 'Sort Order', type: 'number', initialValue: 0 }),
         defineField({
+            name: 'showOnMedicalPage',
+            title: 'Show on Medical page',
+            type: 'boolean',
+            initialValue: false,
+        }),
+        defineField({
             name: 'photo',
             title: 'Photo',
             type: 'image',

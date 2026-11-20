@@ -24,11 +24,12 @@ export interface SanityContact {
   order: number;
   icon: string | null;
   photo: SanityContactPhoto | null;
+  showOnMedicalPage?: boolean;
 }
 
 const ALL_CONTACTS_QUERY = `
   *[_type == "contact"] | order(order asc) {
-    _id, category, label, title, phone, order, icon,
+    _id, category, label, title, phone, order, icon, showOnMedicalPage,
     photo { asset, hotspot, crop }
   }
 `;

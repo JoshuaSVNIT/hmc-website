@@ -23,6 +23,7 @@ import {
   CalendarIcon,
   ReformsIcon,
   SparkIcon,
+  MedicalIcon,
 } from "@/components/icons";
 
 type NavItem = {
@@ -85,6 +86,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
     ...(showEvents
       ? [{ href: "/events", label: "Events", icon: <CalendarIcon size={18} /> }]
       : []),
+    { href: "/medical", label: "Medical", icon: <MedicalIcon size={18} /> },
     { href: "/contacts", label: "Contact", icon: <PhoneIcon size={18} /> },
   ];
 

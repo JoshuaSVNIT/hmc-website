@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { getAllContacts, type SanityContact, type ContactCategory } from "@/lib/sanity/queries";
 import ContactAvatar from "@/components/ContactAvatar";
+import { formatTelHref } from "@/components/PhoneLink";
 import { urlFor } from "@/sanity/lib/image";
 
 export const metadata: Metadata = {
@@ -137,7 +138,7 @@ export default async function ContactsPage() {
                     className={`rounded-xl border ${cfg.borderColor} bg-white overflow-hidden shadow-xs divide-y divide-slate-100`}
                   >
                     {list.map((contact) => {
-                      const telHref = `tel:${contact.phone.replace(/[\s\-().]/g, "")}`;
+                      const telHref = formatTelHref(contact.phone) || `tel:${contact.phone}`;
                       const photoUrl = contact.photo?.asset?._ref || contact.photo?.asset
                         ? urlFor(contact.photo).width(100).auto("format").url()
                         : null;
