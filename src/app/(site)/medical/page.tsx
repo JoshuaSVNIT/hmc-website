@@ -12,6 +12,58 @@ export const metadata: Metadata = {
     "Medical assistance contacts, emergency helplines, supervisors, and student representatives for Swami Vivekanand Bhavan.",
 };
 
+function ContactRow({ contact }: { contact: SanityContact }) {
+  const initials = contact.label
+    .trim()
+    .split(/\s+/)
+    .map((w) => w[0])
+    .filter(Boolean)
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+
+  const telHref = formatTelHref(contact.phone) || `tel:${contact.phone}`;
+
+  return (
+    <div className="py-3 flex items-center justify-between gap-3">
+      <div className="flex items-center gap-3 min-w-0">
+        <div
+          className="w-10 h-10 rounded-full bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center shrink-0 border border-slate-200"
+          aria-hidden="true"
+        >
+          {initials}
+        </div>
+        <div className="min-w-0">
+          <div className="text-sm sm:text-base font-bold text-slate-900 leading-snug truncate">
+            {contact.label}
+          </div>
+          {contact.title && (
+            <div className="text-xs text-slate-500 mt-0.5 truncate">
+              {contact.title}
+            </div>
+          )}
+          <div className="mt-0.5">
+            <PhoneLink
+              phone={contact.phone}
+              isUrgent={false}
+              showIcon={true}
+              className="min-h-[auto] py-0 text-xs sm:text-sm font-semibold"
+            />
+          </div>
+        </div>
+      </div>
+
+      <a
+        href={telHref}
+        className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-[#3B6FD9] hover:bg-blue-700 transition-colors inline-flex items-center gap-1 shrink-0 min-h-[44px]"
+      >
+        <PhoneIcon size={14} className="shrink-0" aria-hidden="true" />
+        <span>Call</span>
+      </a>
+    </div>
+  );
+}
+
 export default async function MedicalPage() {
   const allContacts = await getAllContacts();
 
@@ -19,13 +71,24 @@ export default async function MedicalPage() {
   const sortByOrder = (a: SanityContact, b: SanityContact) =>
     (a.order ?? 0) - (b.order ?? 0);
 
-  // Filter supervisor contacts from Sanity
+  // Filter supervisor contacts from Sanity (unchanged query)
   const supervisorContacts = allContacts
     .filter(
       (c) =>
         c.category === "Supervisor" ||
         c.category?.toLowerCase() === "supervisor" ||
         c.category?.toLowerCase() === "supervisors"
+    )
+    .sort(sortByOrder);
+
+  // Query contacts with category == "HMC Member" && showOnMedicalPage == true, sorted by order
+  const studentRepContacts = allContacts
+    .filter(
+      (c) =>
+        (c.category === "HMC Member" ||
+          c.category?.toLowerCase() === "hmc member" ||
+          c.category?.toLowerCase() === "hmc") &&
+        Boolean(c.showOnMedicalPage)
     )
     .sort(sortByOrder);
 
@@ -155,67 +218,26 @@ export default async function MedicalPage() {
                   </h2>
                 </div>
 
+                {/* Supervisor Group */}
                 <div className="divide-y divide-slate-100">
-                  {supervisorContacts.map((contact) => {
-                    const initials = contact.label
-                      .trim()
-                      .split(/\s+/)
-                      .map((w) => w[0])
-                      .filter(Boolean)
-                      .slice(0, 2)
-                      .join("")
-                      .toUpperCase();
-
-                    const telHref =
-                      formatTelHref(contact.phone) || `tel:${contact.phone}`;
-
-                    return (
-                      <div
-                        key={contact._id}
-                        className="py-3 flex items-center justify-between gap-3"
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div
-                            className="w-10 h-10 rounded-full bg-slate-100 text-slate-700 font-bold text-sm flex items-center justify-center shrink-0 border border-slate-200"
-                            aria-hidden="true"
-                          >
-                            {initials}
-                          </div>
-                          <div className="min-w-0">
-                            <div className="text-sm sm:text-base font-bold text-slate-900 leading-snug truncate">
-                              {contact.label}
-                            </div>
-                            {contact.title && (
-                              <div className="text-xs text-slate-500 mt-0.5 truncate">
-                                {contact.title}
-                              </div>
-                            )}
-                            <div className="mt-0.5">
-                              <PhoneLink
-                                phone={contact.phone}
-                                isUrgent={false}
-                                showIcon={true}
-                                className="min-h-[auto] py-0 text-xs sm:text-sm font-semibold"
-                              />
-                            </div>
-                          </div>
-                        </div>
-
-                        <a
-                          href={telHref}
-                          className="px-3.5 py-1.5 rounded-lg text-xs font-bold text-white bg-[#3B6FD9] hover:bg-blue-700 transition-colors inline-flex items-center gap-1 shrink-0 min-h-[44px]"
-                        >
-                          <PhoneIcon
-                            size={14}
-                            className="shrink-0"
-                            aria-hidden="true"
-                          />
-                          <span>Call</span>
-                        </a>
-                      </div>
-                    );
-                  })}
+                  {supervisorContacts.map((contact) => (
+                    <ContactRow key={contact._id} contact={contact} />
+                  ))}
                 </div>
+
+                {/* Second Group: Student Representatives (hidden if empty) */}
+                {studentRepContacts.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-800 mb-2">
+                      Student representatives
+                    </h3>
+                    <div className="divide-y divide-slate-100">
+                      {studentRepContacts.map((contact) => (
+                        <ContactRow key={contact._id} contact={contact} />
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>

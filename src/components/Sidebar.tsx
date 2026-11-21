@@ -24,6 +24,7 @@ import {
   ReformsIcon,
   SparkIcon,
   MedicalIcon,
+  UsersIcon,
 } from "@/components/icons";
 
 type NavItem = {
@@ -75,6 +76,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
     { href: "/facilities", label: "Facilities", icon: <BuildingIcon size={18} /> },
     { href: "/mess-menu", label: "Mess & Menu", icon: <UtensilsIcon size={18} /> },
     { href: "/room-cleaning", label: "Room Cleaning", icon: <SparkIcon size={18} /> },
+    { href: "/wing-representatives", label: "Wing Representatives", icon: <UsersIcon size={18} /> },
     { href: "/notices", label: "Notices", icon: <BellIcon size={18} /> },
     {
       href: "/raise-ticket",

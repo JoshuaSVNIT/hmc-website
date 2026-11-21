@@ -9,7 +9,8 @@ import contact from './contact'
 import teamMember from './teamMember'
 import commonRoom from './commonRoom'
 import reform from './reform'
+import wingRep from './wingRep'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [notice, galleryItem, galleryVideo, event, messMenu, contact, teamMember, commonRoom, reform],
+  types: [notice, galleryItem, galleryVideo, event, messMenu, contact, teamMember, commonRoom, reform, wingRep],
 }

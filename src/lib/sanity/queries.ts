@@ -75,6 +75,80 @@ export async function getHMCMembers(): Promise<SanityContact[]> {
   }
 }
 
+// ─── Wing Representative ──────────────────────────────────────────────────────
+
+export interface SanityWingRep {
+  _id: string;
+  floor: string;
+  wing: string;
+  name: string;
+  roomNo: string;
+  phone: string;
+  order?: number;
+}
+
+const ALL_WING_REPS_QUERY = `
+  *[_type == "wingRep"] {
+    _id, floor, wing, name, roomNo, phone, order
+  }
+`;
+
+const FLOOR_SORT_ORDER: Record<string, number> = {
+  ground: 0,
+  "0": 0,
+  "1": 1,
+  "2": 2,
+  "3": 3,
+  "4": 4,
+  "5": 5,
+  "6": 6,
+  "7": 7,
+  "8": 8,
+};
+
+const WING_SORT_ORDER: Record<string, number> = {
+  a: 0,
+  b: 1,
+  c: 2,
+  square: 3,
+  sq: 3,
+};
+
+export async function getAllWingReps(): Promise<SanityWingRep[]> {
+  try {
+    const reps = await client.fetch<SanityWingRep[]>(
+      ALL_WING_REPS_QUERY,
+      {},
+      { next: { revalidate: 60 } }
+    );
+
+    return reps.sort((a, b) => {
+      const aFloorKey = a.floor?.toLowerCase?.() ?? "";
+      const bFloorKey = b.floor?.toLowerCase?.() ?? "";
+      const aFloorOrder = FLOOR_SORT_ORDER[aFloorKey] ?? 99;
+      const bFloorOrder = FLOOR_SORT_ORDER[bFloorKey] ?? 99;
+
+      if (aFloorOrder !== bFloorOrder) {
+        return aFloorOrder - bFloorOrder;
+      }
+
+      const aWingKey = a.wing?.toLowerCase?.() ?? "";
+      const bWingKey = b.wing?.toLowerCase?.() ?? "";
+      const aWingOrder = WING_SORT_ORDER[aWingKey] ?? 99;
+      const bWingOrder = WING_SORT_ORDER[bWingKey] ?? 99;
+
+      if (aWingOrder !== bWingOrder) {
+        return aWingOrder - bWingOrder;
+      }
+
+      return (a.order ?? 0) - (b.order ?? 0);
+    });
+  } catch (err) {
+    console.error("Error fetching wing representatives:", err);
+    return [];
+  }
+}
+
 // ─── Notice (§5) ──────────────────────────────────────────────────────────────
 
 // The `body` field is Portable Text — an array of block objects.
