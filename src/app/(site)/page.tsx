@@ -27,6 +27,8 @@ import {
   ReformsIcon,
 } from "@/components/icons";
 
+export const revalidate = 60;
+
 function portableTextExcerpt(body: SanityNotice["body"], max = 90): string {
   if (!body || !Array.isArray(body)) return "";
   const text = body

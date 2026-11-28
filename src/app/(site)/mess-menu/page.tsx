@@ -3,6 +3,8 @@ import Link from "next/link";
 import { getAllMessMenus, type SanityMessMenu } from "@/lib/sanity/queries";
 import { UtensilsIcon, WrenchIcon } from "@/components/icons";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Weekly Mess Menu — Swami Vivekanand Bhavan HMC",
   description:
